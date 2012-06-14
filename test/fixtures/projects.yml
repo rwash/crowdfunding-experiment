@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  start_ammount: 1
+  goal_ammount: 1
+  current_amount: 1
+
+two:
+  name: MyString
+  start_ammount: 1
+  goal_ammount: 1
+  current_amount: 1
