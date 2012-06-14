@@ -3,6 +3,13 @@
 <p>
   <b>Condition:</b>
   <%= @session.condition %>
+  
+  <% @session.rounds.each do |r| %>
+  	<%= r.id %>
+  	<% r.projects.each do |p| %>
+  		<%= p.id %>
+  	<% end %>
+  <% end %>
 </p>
 
 

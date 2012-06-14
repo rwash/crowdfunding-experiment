@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
-
+<p><% @round.projects.each do |p| %>
+	<%= p.id %>
+	<%end%>
+	</p>
 
 <%= link_to 'Edit', edit_round_path(@round) %> |
 <%= link_to 'Back', rounds_path %>
