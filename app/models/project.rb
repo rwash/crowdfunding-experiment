@@ -6,5 +6,6 @@ class Project < ActiveRecord::Base
 		super
 		self.goal_ammount = 100
 		self.current_amount = 0
+		self.name = "Test Project: " + self.id
 	end
 end
