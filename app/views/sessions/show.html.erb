@@ -5,11 +5,12 @@
   <%= @session.condition %>
   
   <% @session.rounds.each do |r| %>
-  	<%= r.id %>
-  	<% r.projects.each do |p| %>
-  		<%= p.id %>
-  	<% end %>
+  	<%= render r %>
   <% end %>
+  
+  <% @session.users.each do |u| %>
+  	<%= render u %>
+  <%end%>
 </p>
 
 

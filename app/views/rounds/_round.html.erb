@@ -1,0 +1,8 @@
+<p>Round ID: <%= round.id %> </p>
+<% round.projects.each do |p| %>
+	<%= render p %>
+<%end%>
+
+<% round.prefs.each do |p| %>
+	<%= render p %>
+<%end%>

@@ -11,34 +11,73 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614171438) do
+ActiveRecord::Schema.define(:version => 20120616144948) do
+
+  create_table "contributions", :force => true do |t|
+    t.time     "time_contributed"
+    t.integer  "ammount"
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.integer  "round_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "preferences", :force => true do |t|
+    t.string   "group"
+    t.boolean  "flag",          :default => false
+    t.boolean  "ready",         :default => false
+    t.boolean  "contributed",   :default => false
+    t.boolean  "timer_expired", :default => false
+    t.integer  "payout"
+    t.integer  "user_id"
+    t.integer  "round_id"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
 
   create_table "projects", :force => true do |t|
     t.string   "name"
-    t.integer  "start_ammount"
     t.integer  "goal_ammount"
+    t.integer  "start_ammount"
     t.integer  "current_amount"
+    t.string   "group"
+    t.integer  "round_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.integer  "round_id"
   end
 
   create_table "rounds", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "session_id"
+    t.string   "session_id"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.boolean  "finished",   :default => false
+    t.boolean  "started",    :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "sessions", :force => true do |t|
-    t.boolean  "condition"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "condition",     :default => false
+    t.boolean  "started",       :default => false
+    t.integer  "current_round"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "password"
+    t.string   "response_one"
+    t.string   "response_two"
+    t.integer  "payout"
+    t.string   "token"
+    t.integer  "session_id"
+    t.integer  "times_viewed_instructions"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
 end
