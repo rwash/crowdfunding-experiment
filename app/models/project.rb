@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
 	
 	def initialize(attributes = nil, options = {})
 		super
-		self.goal_ammount = 100
+		self.goal_amount = 100
 		self.current_amount = 0
 	end
 	

@@ -10,7 +10,7 @@ class Session < ActiveRecord::Base
 	
 	def generate_users
 		2.times do
-			self.users << User.create
+			self.users << User.create(:name => "temp")
 		end
 		self.save!
 	end

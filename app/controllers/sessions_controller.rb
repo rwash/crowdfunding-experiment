@@ -6,7 +6,7 @@ class SessionsController < InheritedResources::Base
       redirect_to @session
     else
     	flash[:error] = "Failed to create a new session."
-    	redirect_to root_path
+    	redirect_to sessions_path
     end
 	end
 end

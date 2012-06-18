@@ -40,3 +40,4 @@ gem 'jquery-rails'
 gem 'inherited_resources'
 gem "twitter-bootstrap-rails"
 gem 'therubyracer'
+gem 'authlogic'

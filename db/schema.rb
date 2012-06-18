@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
-    t.integer  "goal_ammount"
-    t.integer  "start_ammount"
+    t.integer  "goal_amount"
+    t.integer  "start_amount"
     t.integer  "current_amount"
     t.string   "group"
     t.integer  "round_id"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
     t.string   "token"
     t.integer  "session_id"
     t.integer  "times_viewed_instructions"
+    t.string   "persistence_token",         :null => false
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end
