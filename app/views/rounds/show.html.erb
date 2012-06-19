@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<h2>Pref: <%= render @preferences %></h2>
 
 <%= form_tag "/contributions/submit" do %>
 	<p><% @round.projects.each_with_index do |p,counter| %>

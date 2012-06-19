@@ -10,14 +10,14 @@ class Experiment < ActiveRecord::Base
 	after_create :generate_prefs
 	
 	def generate_users
-		2.times do
+		NUMBER_OF_USERS_PER_GROUP.times do
 			self.users << User.create(:name => "temp")
 		end
 		self.save!
 	end
 	
 	def generate_rounds
-		3.times do
+		NUMBER_OF_ROUNDS.times do
 			self.rounds << Round.create
 		end
 		self.save!

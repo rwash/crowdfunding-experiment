@@ -9,6 +9,7 @@ class CreatePreferences < ActiveRecord::Migration
 	    t.integer :payout
 	    t.integer :user_id
 	    t.integer :round_id
+	    t.integer :kind_of
 
       t.timestamps
     end

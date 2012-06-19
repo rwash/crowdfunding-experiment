@@ -13,10 +13,7 @@ class UsersController < InheritedResources::Base
 	end
 	
 	def submit
-		# save answers to questions and redirect to lime think
-		
-		#but for now
-		flash[:notice] = "You made it throught the question submit controller."
+		flash[:notice] = "You made it throught the question submit controller, but I didnt save anything."
 		redirect_to root_path
 	end
 end

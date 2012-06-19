@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
     t.integer  "payout"
     t.integer  "user_id"
     t.integer  "round_id"
+    t.integer  "kind_of"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
   end

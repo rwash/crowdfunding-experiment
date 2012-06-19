@@ -8,7 +8,7 @@ CrowdfundingExperiment::Application.routes.draw do
 	match "contributions/submit" => "contributions#submit"
   match "/admin/login" => "admin#login"
   
-  match "/round/:id/summary" => "rounds#summary", :as => :round_summary
+  match "/rounds/:id/summary" => "rounds#summary", :as => :round_summary
   match "/experiments/:id/summary" => "experiments#summary", :as => :experiment_summary
 	
   resources :users

@@ -16,9 +16,10 @@ class Round < ActiveRecord::Base
 	end
 	
 	def generate_and_assign_preferences
-		self.users.each do |u|
+		self.users.each_with_index do |u,i|
 			@pref = Preferences.create
 			@pref.user_id = u.id
+			@pref.kind_of = rand(1..6) # CHANGE BEFORE THE FINAL VERSION
 			@pref.save!
 			self.prefs << @pref
 		end

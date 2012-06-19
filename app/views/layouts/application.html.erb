@@ -7,24 +7,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<% if flash[:alert] %>
-<div id="flash">
-	<div class="alert alert-info" ><a class="close" data-dismiss="alert">x</a><%= flash[:alert]%></div>
-</div>
-<% end %>
-<% if flash[:notice] %>
-<div id="flash">
-	<div class="alert alert-success"><a class="close" data-dismiss="alert">x</a><%= flash[:notice] %></div>
-</div>
-<% end %>
-<% if flash[:error] %>
-<div id="flash">
-	<div class="alert alert-error"><a class="close" data-dismiss="alert">x</a><%= flash[:error] %></div>
-</div>
-<% end %>
+<div class="container">
+
+	<% if flash[:alert] %>
+	<div id="flash">
+		<div class="alert alert-info" ><a class="close" data-dismiss="alert">x</a><%= flash[:alert]%></div>
+	</div>
+	<% end %>
+	<% if flash[:notice] %>
+	<div id="flash">
+		<div class="alert alert-success"><a class="close" data-dismiss="alert">x</a><%= flash[:notice] %></div>
+	</div>
+	<% end %>
+	<% if flash[:error] %>
+	<div id="flash">
+		<div class="alert alert-error"><a class="close" data-dismiss="alert">x</a><%= flash[:error] %></div>
+	</div>
+	<% end %>
 
 
 <%= yield %>
+</div>
 <br>______________________________
 <p><%= current_user.name if !current_user.nil? %></p>
 <p><%= link_to "Logout", user_sessions_path, :method => :delete if !current_user.nil?%>

@@ -11,7 +11,8 @@ class Project < ActiveRecord::Base
 	end
 	
 	def generate_name
-		self.name = "Project " + self.id.to_s
+		# self.name = "Project " + self.id.to_s
+		self.name = PROJECT_NAMES[rand(PROJECT_NAMES.length)]
 		self.save!
 	end
 end

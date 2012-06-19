@@ -4,6 +4,6 @@
 
 <p>
 	<%= link_to "Click Here to go to the next round", @next_round unless last_round?(@current_round) %>
-	<%= link_to "Click Here to go to the Experiment Summary", experiment_summary_path(@current_round.experiment) %>
+	<%= link_to "Click Here to go to the Experiment Summary", experiment_summary_path(@current_round.experiment) if last_round?(@current_round)%>
 </p>
 
