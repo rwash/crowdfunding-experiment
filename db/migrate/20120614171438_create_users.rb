@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :response_two
       t.integer :payout
       t.string :token
-      t.integer :session_id
+      t.integer :experiment_id
       t.integer :times_viewed_instructions
       t.string  :persistence_token,   :null => false # for auth logic
       t.timestamps

@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
     t.datetime "updated_at",       :null => false
   end
 
+  create_table "experiments", :force => true do |t|
+    t.boolean  "condition",     :default => false
+    t.boolean  "started",       :default => false
+    t.integer  "current_round"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
   create_table "preferences", :force => true do |t|
     t.string   "group"
     t.boolean  "flag",          :default => false
@@ -48,21 +58,11 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
   end
 
   create_table "rounds", :force => true do |t|
-    t.string   "session_id"
+    t.string   "experiment_id"
     t.time     "start_time"
     t.time     "end_time"
-    t.boolean  "finished",   :default => false
-    t.boolean  "started",    :default => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
-
-  create_table "sessions", :force => true do |t|
-    t.boolean  "condition",     :default => false
+    t.boolean  "finished",      :default => false
     t.boolean  "started",       :default => false
-    t.integer  "current_round"
-    t.time     "start_time"
-    t.time     "end_time"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
   end
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
     t.string   "response_two"
     t.integer  "payout"
     t.string   "token"
-    t.integer  "session_id"
+    t.integer  "experiment_id"
     t.integer  "times_viewed_instructions"
     t.string   "persistence_token",         :null => false
     t.datetime "created_at",                :null => false

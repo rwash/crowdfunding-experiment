@@ -1,0 +1,9 @@
+<p>Hey <%= @user.name %>, hows it going? It is the <%= @current_round.id %> round.</p>
+
+<p><%= render @preferences %></p>
+
+<p>
+	<%= link_to "Click Here to go to the next round", @next_round unless last_round?(@current_round) %>
+	<%= link_to "Click Here to go to the Experiment Summary", experiment_summary_path(@current_round.experiment) %>
+</p>
+

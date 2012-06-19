@@ -1,9 +1,17 @@
 <p id="notice"><%= notice %></p>
-<p><% @round.projects.each do |p| %>
-		<%= p.name %><br>
-		Goal: <%= p.goal_amount %><br>
-		Current: <%= p.current_amount %><br>
-		<%= link_to "Contribute to this proj", new_contributions_path %><br>
-		<br>
-	<%end%>
+
+<%= form_tag "/contributions/submit" do %>
+	<p><% @round.projects.each_with_index do |p,counter| %>
+			<%= p.name %><br>
+			Goal: <%= p.goal_amount %><br>
+			Current: <%= p.current_amount %><br>
+			
+				<%= number_field_tag "amount_#{counter}", 0 %><br>
+				<%= hidden_field_tag "project_id_#{counter}", p.id %>
+				
+			<br>
+			<%end%>
+			<%= hidden_field_tag "current_round_id", @round.id %>
+			<%= submit_tag "Submit" %>
+<% end %>
 </p>

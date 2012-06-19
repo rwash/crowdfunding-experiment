@@ -1,7 +1,8 @@
-class Session < ActiveRecord::Base
+class Experiment < ActiveRecord::Base
 
 	has_many :rounds, :dependent => :destroy
 	has_many :users, :dependent => :destroy
+	has_one :current_round, :class_name => 'Round'
 	# has_one :admin
 	
 	after_create :generate_users

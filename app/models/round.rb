@@ -1,10 +1,10 @@
 class Round < ActiveRecord::Base
 
-	belongs_to :session
+	belongs_to :experiment
 	
 	has_many :projects, :dependent => :destroy
 	has_many :prefs, :class_name => 'Preferences'
-	has_many :users, :through => :session
+	has_many :users, :through => :experiment
 	
 	after_create :generate_projects
 	

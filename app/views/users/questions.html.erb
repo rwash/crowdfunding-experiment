@@ -1,0 +1,13 @@
+<%= form_tag "/questions/submit" do %>
+	<p>What is your name?
+	<%= text_field_tag "question_1", '' %>
+	</p>
+	<p>What is your quest?
+	<%= text_field_tag "question_2", '' %>
+	</p>
+	<p>What is the air speed velocity of an unladen swallow?
+	<%= text_field_tag "question_3", '' %>
+	</p>
+
+	<%= submit_tag "Submit" %>
+<% end %>

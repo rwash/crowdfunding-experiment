@@ -1,6 +1,6 @@
-class CreateSession < ActiveRecord::Migration
+class CreateExperiments < ActiveRecord::Migration
   def change
-    create_table :sessions do |t|
+    create_table :experiments do |t|
       t.boolean :condition, :default => false
       t.boolean :started, :default => false
       t.integer :current_round
