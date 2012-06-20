@@ -14,6 +14,6 @@ class UsersController < InheritedResources::Base
 	
 	def submit
 		flash[:notice] = "You made it throught the question submit controller, but I didnt save anything."
-		redirect_to final_experiment_summary_path
+		redirect_to final_experiment_summary_path(current_experiment)
 	end
 end
