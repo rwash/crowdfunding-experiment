@@ -1,7 +1,23 @@
-<p>Hey <%= @user.name %>, hows it going? It is the <%= @current_round.number %> round.</p>
+<h1>Round Summary</h1>
+<p>&nbsp;</p>
+<div class="row">
+  <div class="span2">
+    <h3>Project Name</h3>
+  </div>
+  
+  <div class="span4">
+    <h3>Funding Status</h3>
+  </div>
+  
+  <div class="span6">
+    &nbsp;
+  </div>
+</div>
+
 <%= render 'stats' %>
-<p>
-	<%= link_to "Click Here to go to the next round", @next_round unless last_round?(@current_round) %>
-	<%= link_to "Click Here to go to the Experiment Summary", experiment_summary_path(@current_round.experiment) if last_round?(@current_round)%>
-</p>
+
+<p>&nbsp;</p>
+<%= link_to "Next Round", @next_round, :class => 'btn-success btn-large' unless last_round?(@current_round) %>
+<%= link_to "Experiment Summary", experiment_summary_path(@current_round.experiment), :class => 'btn-success btn-large' if last_round?(@current_round)%>
+
 
