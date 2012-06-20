@@ -24,7 +24,8 @@ class Experiment < ActiveRecord::Base
 	end
 	
 	def generate_prefs
-		self.rounds.each do |r|
+		self.rounds.each_with_index do |r,i|
+			r.number = i + 1
 			r.generate_and_assign_preferences
 		end
 	end

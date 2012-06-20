@@ -6,6 +6,7 @@ class CreateRounds < ActiveRecord::Migration
     	t.time :end_time
     	t.boolean :finished, :default => false
     	t.boolean :started, :default => false
+    	t.integer :number
 
       t.timestamps
     end
