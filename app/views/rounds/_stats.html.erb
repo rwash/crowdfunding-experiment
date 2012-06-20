@@ -1,3 +1,4 @@
 <% @projects.each do |p| %>
 	<%= render :partial => 'projects/stats', :locals => { :project => p }%>
 <% end %>
+<h2>Payout <%= @preferences.round_payout %></h2>

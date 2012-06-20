@@ -16,4 +16,8 @@ class Project < ActiveRecord::Base
 		self.name = PROJECT_NAMES[rand(PROJECT_NAMES.length)]
 		self.save!
 	end
+	
+	def funded?
+		self.goal_amount <= self.funded_amount
+	end
 end

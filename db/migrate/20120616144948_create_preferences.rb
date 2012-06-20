@@ -6,14 +6,14 @@ class CreatePreferences < ActiveRecord::Migration
 	    t.boolean :ready, :default => false
 	    t.boolean :contributed, :default => false
 	    t.boolean :timer_expired, :default => false
-	    t.integer :round_payout
+	    t.integer :round_payout, :default => 0
 	    t.integer :user_id
 	    t.integer :round_id
 	    t.integer :kind_of
-	    t.integer :a_payout
-	    t.integer :b_payout
-	    t.integer :c_payout
-	    t.integer :d_payout
+	    t.integer :a_payout, :default => 0
+	    t.integer :b_payout, :default => 0
+	    t.integer :c_payout, :default => 0
+	    t.integer :d_payout, :default => 0
 
       t.timestamps
     end
