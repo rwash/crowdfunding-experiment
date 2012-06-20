@@ -12,12 +12,12 @@
   
   <div class="span4">
     <div class="progress">
-      <div class="bar" style="width: number_to_percentage(<%= p.start_amount / p.goal_amount %>);"></div>
+      <div class="bar" style="width: <%= (p.start_amount.to_f / p.goal_amount) * 100 %>%;"></div>
     </div>
   </div>
   
   <div class="span3">
-    Goal: <%= p.start_amount %> / <%= p.goal_amount %>
+    <%= p.start_amount %> / <%= p.goal_amount %>
   </div>
   
   <div class="span3">
