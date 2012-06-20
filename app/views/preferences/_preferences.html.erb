@@ -3,31 +3,33 @@
 </div>
 <br>
 <div class="row">
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th>Project Name</th>
-      <th>Project Payout</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-	  <th>Project A</th>
-	  <th><%= @preferences.a_payout %></th>
-    </tr>
-    <tr>
-	  <th>Project B</th>
-	  <th><%= @preferences.b_payout %></th>
-    </tr>
-    <tr>
-	  <th>Project C</th>
-	  <th><%= @preferences.c_payout %></th>
-    </tr>
-    <tr>
-	  <th>Project D</th>
-	  <th><%= @preferences.d_payout %></th>
-    </tr>
-  </tbody>
-</table>
+  <div class="span6">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Project Name</th>
+          <th>Project Payout</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+    	  <th><%= @projects.first.name %></th>
+    	  <th><%= @preferences.a_payout %></th>
+        </tr>
+        <tr>
+	      <th><%= @projects.second.name %></th>
+	      <th><%= @preferences.b_payout %></th>
+        </tr>
+        <tr>
+	      <th><%= @projects.third.name %></th>
+	      <th><%= @preferences.c_payout %></th>
+        </tr>
+        <tr>
+	      <th><%= @projects.last.name %></th>
+	      <th><%= @preferences.d_payout %></th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 

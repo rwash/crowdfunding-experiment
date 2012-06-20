@@ -2,17 +2,31 @@
 <%= render @preferences %>
 
 <%= form_tag "/contributions/submit" do %>
-	<p><% @current_round.projects.each_with_index do |p,counter| %>
-			<%= p.name %><br>
-			Goal: <%= p.goal_amount %><br>
-			Current: <%= p.current_amount %><br>
-			
-				<%= number_field_tag "amount_#{counter}", 0 , :in => 0..1000 %><br>
-				<%= hidden_field_tag "project_id_#{counter}", p.id %>
-				
-			<br>
-			<%end%>
-			<%= hidden_field_tag "current_round_id", @current_round.id %>
-			<%= submit_tag "Submit" %>
+
+<div class="row">
+  <p><% @current_round.projects.each_with_index do |p,counter| %>
+  
+  <div class="span2">
+    <%= p.name %>
+  </div>
+  
+  <div class="span4">
+    <div class="progress">
+      <div class="bar" style="width: number_to_percentage(<%= p.current_amount / p.goal_amount %>);"></div>
+    </div>
+  </div>
+  
+  <div class="span3">
+    Goal: <%= p.current_amount %> / <%= p.goal_amount %>
+  </div>
+  
+  <div class="span3">
+    <%= number_field_tag "amount_#{counter}", 0 , :in => 0..1000 %><br>
+	<%= hidden_field_tag "project_id_#{counter}", p.id %>
+  </div>
+  
+<%end%>
+  <%= hidden_field_tag "current_round_id", @current_round.id %>
+  <%= submit_tag "Submit", :class => 'btn-success' %>
 <% end %>
-</p>
+</div>

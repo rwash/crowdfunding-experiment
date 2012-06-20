@@ -14,7 +14,7 @@
       <% if current_user.nil? %>
         <span class="brand">Crowdfunding Experiment</span>
       <% else %>
-        <span class="brand">CURRENT ROUND: <%= @current_round.id %></span> 
+        <span class="brand"><% if !@current_round.nil?%>CURRENT ROUND: <%= @current_round.id %><% end %></span> 
       <ul class="nav">
         <li><a href="#">Instructions</a></li>  
       </ul>
@@ -48,11 +48,12 @@
 
 
 <%= yield %>
-
 <br>
+</div>
 <hr>
+<div class="row offset3">
 &copy; 2012
-
+<p>&nbsp;</p>
 </div>
 
 </body>
