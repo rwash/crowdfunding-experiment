@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 	belongs_to :experiment
 	has_many :preferences
 	has_many :rounds, :through => :experiment
+	has_many :contributions
 	
 	after_create :generate_name_and_password
 	
