@@ -1,7 +1,7 @@
 <h3><%= project.name %></h3>
 
 Goal: <%= project.goal_amount %>
-Given Amount: <%= project.current_amount %>
+Given Amount: <%= project.funded_amount %>
 
-<%= "Funded!" if project.goal_amount <= project.current_amount %>
-<%= "Not Funded. :(" if project.goal_amount > project.current_amount %>
+<%= "Funded!" if project.goal_amount <= project.funded_amount %>
+<%= "Not Funded. :(" if project.goal_amount > project.funded_amount %>
