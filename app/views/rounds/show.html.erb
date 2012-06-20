@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
-<h2>Pref: <%= render @preferences %></h2>
+<%= render @preferences %>
 
 <%= form_tag "/contributions/submit" do %>
-	<p><% @round.projects.each_with_index do |p,counter| %>
+	<p><% @current_round.projects.each_with_index do |p,counter| %>
 			<%= p.name %><br>
 			Goal: <%= p.goal_amount %><br>
 			Current: <%= p.current_amount %><br>
@@ -12,7 +12,7 @@
 				
 			<br>
 			<%end%>
-			<%= hidden_field_tag "current_round_id", @round.id %>
+			<%= hidden_field_tag "current_round_id", @current_round.id %>
 			<%= submit_tag "Submit" %>
 <% end %>
 </p>
