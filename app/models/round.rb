@@ -29,9 +29,9 @@ class Round < ActiveRecord::Base
 	
 	def round_over
 		self.projects.each do |p|
-			p.current_amount = 0
+			p.funded_amount = 0
 			p.contributions.each do |c|
-				p.current_amount += c.amount
+				p.funded_amount += c.amount
 			end
 			p.save!
 		end

@@ -1,4 +1,4 @@
-<p>Hey <%= @user.name %>, hows it going? It is the <%= @current_round.id %> round.</p>
+<p>Hey <%= @user.name %>, hows it going? It is the <%= @current_round.number %> round.</p>
 <%= render 'stats' %>
 <p>
 	<%= link_to "Click Here to go to the next round", @next_round unless last_round?(@current_round) %>
