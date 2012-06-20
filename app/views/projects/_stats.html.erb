@@ -1,7 +1,20 @@
-<h3><%= project.name %></h3>
-
-Goal: <%= project.goal_amount %>
-Given Amount: <%= project.funded_amount %>
-
-<%= "Funded!" if project.goal_amount <= project.funded_amount %>
-<%= "Not Funded. :(" if project.goal_amount > project.funded_amount %>
+<div class="row">
+  <div class="span2">
+    <%= project.name %>
+  </div>
+  
+  <div class="span4">
+    <div class="progress">
+      <div class="bar" style="width: <%= project.funded_amount %>%;"></div>
+    </div>
+  </div>
+  
+  <div class="span1">
+    <%= project.funded_amount %> / <%= project.goal_amount %>
+  </div>
+  
+  <div class="span5">
+    <%= "Funded!" if project.goal_amount <= project.funded_amount %>
+    <%= "Not Funded. :(" if project.goal_amount > project.funded_amount %>
+  </div>
+</div>  

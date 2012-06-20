@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 <%= render @preferences %>
-<hr>
+<h2>Credits: 100</h2>
+<p>&nbsp;</p>
 <%= form_tag "/contributions/submit" do %>
 
 <div class="row">
@@ -48,7 +49,7 @@
 <div class="row">
   <div class="span2">
     <%= hidden_field_tag "current_round_id", @current_round.id %>
-    <%= submit_tag "Submit", :class => 'btn-success btn-large' %>
+    &nbsp; &nbsp; &nbsp;<%= submit_tag "Submit", :class => 'btn-success btn-large' %>
   </div>  
 </div>  
 <% end %>
