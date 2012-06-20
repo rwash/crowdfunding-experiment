@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
 
   create_table "contributions", :force => true do |t|
     t.time     "time_contributed"
-    t.integer  "ammount"
+    t.integer  "amount"
     t.integer  "user_id"
     t.integer  "project_id"
     t.integer  "round_id"

@@ -1,0 +1,3 @@
+<% @projects.each do |p| %>
+	<%= render :partial => 'projects/stats', :locals => { :project => p }%>
+<% end %>

@@ -5,6 +5,7 @@ class Round < ActiveRecord::Base
 	has_many :projects, :dependent => :destroy
 	has_many :prefs, :class_name => 'Preferences'
 	has_many :users, :through => :experiment
+	has_many :contributions
 	
 	after_create :generate_projects
 	
@@ -24,5 +25,15 @@ class Round < ActiveRecord::Base
 			self.prefs << @pref
 		end
 		self.save!
+	end
+	
+	def round_over
+		self.projects.each do |p|
+			p.current_amount = 0
+			p.contributions.each do |c|
+				p.current_amount += c.amount
+			end
+			p.save!
+		end
 	end
 end
