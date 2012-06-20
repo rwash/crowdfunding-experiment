@@ -13,7 +13,10 @@ class ContributionsController < InheritedResources::Base
 	def submit
 		@round = Round.find(params[:current_round_id])
 	
-		4.times do |i|
+		@round.projects.each_with_index do |p,i|
+			@prev_contribution = Contribution.where(:user_id => current_user.id, :round_id => @round.id, :project_id => p.id).first
+			@prev_contribution.destroy unless @prev_contribution.nil?
+				
 			if !Contribution.create(:amount => params["amount_#{i}".to_sym], :project_id => params["project_id_#{i}".to_sym], :time_contributed => Time.now, :user_id => current_user.id, :round_id => params[:current_round_id])
 				flash[:error] = "There was an error createing one or more of the contributions."
 			end

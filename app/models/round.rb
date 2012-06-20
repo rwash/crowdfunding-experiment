@@ -29,9 +29,26 @@ class Round < ActiveRecord::Base
 	
 	def round_over
 		self.projects.each do |p|
-			p.funded_amount = 0
+			p.funded_amount = p.start_amount
 			p.contributions.each do |c|
 				p.funded_amount += c.amount
+			end
+			p.save!
+		end
+		
+		self.prefs.each do |p|
+			p.round_payout = 0
+			if self.projects[0].funded?
+				p.round_payout += p.a_payout
+			end
+			if self.projects[1].funded?
+				p.round_payout += p.b_payout
+			end
+			if self.projects[2].funded?
+				p.round_payout += p.c_payout
+			end
+			if self.projects[3].funded?
+				p.round_payout += p.d_payout
 			end
 			p.save!
 		end

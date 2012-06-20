@@ -4,3 +4,4 @@
 <br>
 <br>
 <%= link_to "Start Round", @current_round, :class => 'btn-success btn-large' %>
+<%= link_to "Go Back", :back, :class => 'btn-success btn-large'  if current_experiment.started? %>
