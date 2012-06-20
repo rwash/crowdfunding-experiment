@@ -8,6 +8,7 @@ class Experiment < ActiveRecord::Base
 	after_create :generate_users
 	after_create :generate_rounds
 	after_create :generate_prefs
+	after_create :set_current_round
 	
 	def generate_users
 		NUMBER_OF_USERS_PER_GROUP.times do
@@ -28,5 +29,29 @@ class Experiment < ActiveRecord::Base
 			r.number = i + 1
 			r.generate_and_assign_preferences
 		end
+	end
+	
+	def set_current_round
+		self.current_round = self.rounds.first
+	end
+	
+	def start_experiment
+		self.started = true
+		self.save!
+	end
+	
+	def experiment_over
+		self.users.each do |user|
+			user.payout = 0
+			@preferences = Preferences.where(:user_id => user.id)
+			@preferences.each do |pref|
+				user.payout += pref.round_payout
+			end
+			user.save!
+		end
+	
+		self.finished = true
+		self.end_time = Time.now
+		self.save!
 	end
 end

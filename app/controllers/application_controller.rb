@@ -3,7 +3,7 @@
 
 class ApplicationController < ActionController::Base
   helper :all
-  helper_method :current_user_session, :current_user, :current_experiment
+  helper_method :current_user_session, :current_user, :current_experiment, :last_round
   # filter_parameter_logging :password, :password_confirmation
   
   private
@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
     	return @current_experiment if defined?(@current_experiment)
     	@current_experiment = current_user.experiment
     end
+    
+    def last_round?(round)
+	    	round == round.experiment.rounds.last
+		end
     
     def require_user
       unless current_user

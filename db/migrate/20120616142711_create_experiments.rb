@@ -3,6 +3,7 @@ class CreateExperiments < ActiveRecord::Migration
     create_table :experiments do |t|
       t.boolean :condition, :default => false
       t.boolean :started, :default => false
+      t.boolean :finished, :default => false
       t.integer :current_round
       t.time :start_time
       t.time :end_time
