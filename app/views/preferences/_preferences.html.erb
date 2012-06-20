@@ -1,18 +1,4 @@
-<p>
-<% case @preferences.kind_of %>
-	<% when 1 %>
-		200: A, 150 B, 100 C, 50 D
-	<% when 2 %>
-		200: D, 150 A, 100 B, 50 C
-	<% when 3 %>
-		200: C, 150 D, 100 A, 50 B
-	<% when 4 %>
-		200: B, 150 C, 100 D, 50 A
-	<% when 5 %>
-		200: A, 150 C, 100 B, 50 D
-	<% when 6 %>
-		200: D, 150 B, 100 C, 50 A
-	<% else %>
-		FAIL
-<% end %>
-</p>
+A: <%= @preferences.a_payout %>
+B: <%= @preferences.b_payout %>
+C: <%= @preferences.c_payout %>
+D: <%= @preferences.d_payout %>

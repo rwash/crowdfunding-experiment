@@ -39,10 +39,14 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
     t.boolean  "ready",         :default => false
     t.boolean  "contributed",   :default => false
     t.boolean  "timer_expired", :default => false
-    t.integer  "payout"
+    t.integer  "round_payout"
     t.integer  "user_id"
     t.integer  "round_id"
     t.integer  "kind_of"
+    t.integer  "a_payout"
+    t.integer  "b_payout"
+    t.integer  "c_payout"
+    t.integer  "d_payout"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
   end
