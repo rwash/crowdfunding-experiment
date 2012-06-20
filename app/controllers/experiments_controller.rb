@@ -13,4 +13,8 @@ class ExperimentsController < InheritedResources::Base
 	def summary
 		@user = current_user
 	end
+	
+	def final
+		@user = current_user
+	end
 end

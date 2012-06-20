@@ -10,6 +10,7 @@ CrowdfundingExperiment::Application.routes.draw do
   
   match "/rounds/:id/summary" => "rounds#summary", :as => :round_summary
   match "/experiments/:id/summary" => "experiments#summary", :as => :experiment_summary
+  match "/experiments/:id/final-summary" => "experiments#final", :as => :final_experiment_summary
 	
   resources :users
   resources :projects
