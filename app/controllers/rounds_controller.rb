@@ -7,8 +7,8 @@ class RoundsController < InheritedResources::Base
 	end
 	
 	def show
-		@round =  Round.find(params[:id])
+		@current_round =  Round.find(params[:id])
 		@user = current_user
-		@preferences = Preferences.where(:user_id => @user.id, :round_id => @round.id).first
+		@preferences = Preferences.where(:user_id => @user.id, :round_id => @current_round.id).first
 	end
 end

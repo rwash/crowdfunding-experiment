@@ -1,2 +1,6 @@
-<%= render "shared/instructions" %> Times viewed: <%= current_user.times_viewed_instructions %>
-<%= link_to "Click Here to start the first round", @current_round %>
+<h1>Instructions</h1>
+<%= render "shared/instructions" %>
+<strong>Times viewed: <%= current_user.times_viewed_instructions %></strong>
+<br>
+<br>
+<%= link_to "Start Round", @current_round, :class => 'btn-success btn-large' %>

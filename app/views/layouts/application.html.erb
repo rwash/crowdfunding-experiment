@@ -7,6 +7,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <% if current_user.nil? %>
+        <span class="brand">Crowdfunding Experiment</span>
+      <% else %>
+        <span class="brand">CURRENT ROUND: <%= @current_round.id %></span> 
+      <ul class="nav">
+        <li><a href="#">Instructions</a></li>  
+      </ul>
+      <ul class="nav secondary-nav pull-right">
+        <li class="divider-vertical"></li>
+        <li><a href="#">CURRENT USER: <%= current_user.name if !current_user.nil? %></a></li>
+        <li><%= link_to "LOG OUT", user_sessions_path, :method => :delete if !current_user.nil?%></li>
+      </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <div class="container">
 
 	<% if flash[:alert] %>
@@ -27,10 +48,12 @@
 
 
 <%= yield %>
+
+<br>
+<hr>
+&copy; 2012
+
 </div>
-<br>______________________________
-<p><%= current_user.name if !current_user.nil? %></p>
-<p><%= link_to "Logout", user_sessions_path, :method => :delete if !current_user.nil?%>
 
 </body>
 </html>
