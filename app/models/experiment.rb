@@ -50,8 +50,7 @@ class Experiment < ActiveRecord::Base
 			user.save!
 		end
 	
-		self.finished = true
-		self.end_time = Time.now
+		self.finsihed_calc = true
 		self.save!
 	end
 end

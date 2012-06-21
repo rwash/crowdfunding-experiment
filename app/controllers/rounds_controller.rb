@@ -5,6 +5,9 @@ class RoundsController < InheritedResources::Base
 		@preferences = Preferences.where(:user_id => @user.id, :round_id => @current_round.id).first
 		@next_round = Round.where(:id => @current_round.id + 1).first
 		@projects = Project.where(:round_id => @current_round.id)
+		
+		#current_experiment.current_round = @next_round
+		#current_experiment.save!
 	end
 	
 	def show

@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 	end
 	
 	belongs_to :experiment
-	has_many :preferences
+	has_many :preferences, :class_name => 'Preferences'
 	has_many :rounds, :through => :experiment
 	has_many :contributions
 	
@@ -21,4 +21,5 @@ class User < ActiveRecord::Base
 	def valid_password?(incoming_password)
 		incoming_password == self.password
 	end
+
 end
