@@ -1,6 +1,22 @@
-<%= javascript_include_tag "jquery.calculation" %>
-
 <p id="notice"><%= notice %></p>
+
+
+<script language="JavaScript" type="text/javascript">  
+var count =61  
+var redirect=""  
+  
+function countDown(){  
+ if (count <=0){  
+  window.location = redirect;  
+ }else{  
+  count--;  
+  document.getElementById("timer").innerHTML = "This round will end in "+count+" seconds."  
+  setTimeout("countDown()", 1000)  
+ }  
+}  
+</script>
+
+
 <%= render @preferences %>
 <h2>Credits: 100</h2>
 <p>&nbsp;</p>
