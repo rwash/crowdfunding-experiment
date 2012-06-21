@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
     t.boolean  "condition",     :default => false
     t.boolean  "started",       :default => false
     t.boolean  "finished",      :default => false
+    t.boolean  "finsihed_calc", :default => false
     t.integer  "current_round"
     t.time     "start_time"
     t.time     "end_time"

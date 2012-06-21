@@ -1,5 +1,13 @@
-<% @projects.each do |p| %>
+<% round.projects.each do |p| %>
 	<%= render :partial => 'projects/stats', :locals => { :project => p }%>
 <% end %>
-<p>&nbsp;</p>
-<h2>Round Payout: <%= @preferences.round_payout %> credits</h2>
+
+<table class="table table-striped">
+<thead><tr><td>User</td><td>Payout (for this round)</td></tr></thead>
+<% round.users.each do |u| %>
+ <tr>
+ 	<td><%= u.name %></td>
+ 	<td><%= u.preferences.where(:round_id => round.id).first.round_payout %></td>
+ </tr>
+<% end %>
+</table>

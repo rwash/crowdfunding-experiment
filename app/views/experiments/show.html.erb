@@ -1,18 +1,5 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <b>Condition:</b>
-  <%= @experiment.condition %>
-  
-  <% @experiment.rounds.each do |r| %>
-  	<%= render r %>
-  <% end %>
-  
-  <% @experiment.users.each do |u| %>
-  	<%= render u %>
-  <%end%>
-</p>
-
+<p> Experiment <%= @experiment.id %>
 
 <%= link_to 'Edit', edit_experiment_path(@experiment) %> |
 <%= link_to 'Back', experiments_path %>

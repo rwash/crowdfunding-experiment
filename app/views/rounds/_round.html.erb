@@ -1,4 +1,3 @@
-<p>Round ID: <%= round.id %> </p>
 <% round.projects.each do |p| %>
-	<%= render p %>
+	<ul><%= render :partial => 'projects/stats', :object => p %></ul>
 <%end%>

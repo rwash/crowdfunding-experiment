@@ -14,7 +14,10 @@
   </div>
   
   <div class="span5">
-    <%= "Funded!" if project.goal_amount <= project.funded_amount %>
-    <%= "Not Funded. :(" if project.goal_amount > project.funded_amount %>
+  	<% if project.goal_amount <= project.funded_amount %>
+    	<span class="badge badge-success"><%= "Funded!"%></span>
+    <% else %>
+    	<span class="badge badge-important"><%= "Not Funded. :(" %></span>
+    <% end %>
   </div>
 </div>  

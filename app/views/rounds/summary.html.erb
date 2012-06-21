@@ -14,7 +14,9 @@
   </div>
 </div>
 <p>&nbsp;</p>
-<%= render 'stats' %>
+<%= render :partial => 'stats', :locals => { :round => @current_round } %>
+<p>&nbsp;</p>
+<h2>Round Payout: <%= @preferences.round_payout %> credits</h2>
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>

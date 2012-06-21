@@ -18,7 +18,20 @@ class UsersController < InheritedResources::Base
 	end
 	
 	def submit
-		flash[:notice] = "You made it throught the question submit controller, but I didnt save anything."
+		current_user.response_one = params[:question_1]
+		current_user.response_two = params[:question_2]
+		current_user.save!
+		
+		current_experiment.users.each do |u|
+			if u.response_one.nil? || u.response_two.nil?
+				return redirect_to final_experiment_summary_path(current_experiment)
+			end
+		end
+	
+		current_experiment.finished = true
+		current_experiment.end_time = Time.now
+		current_experiment.save!
+		
 		redirect_to final_experiment_summary_path(current_experiment)
 	end
 end
