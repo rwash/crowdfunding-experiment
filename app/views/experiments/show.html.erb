@@ -1,26 +1,5 @@
 <p id="notice"><%= notice %></p>
-<<<<<<< HEAD
 <p> Experiment <%= @experiment.id %>
-=======
-<h1>Round Details</h1>
-
-  <strong>Condition:</strong>
-  <%= @experiment.condition %>
-  
-  <h3>Experiment Users</h3>
-  <ul>
-  <% @experiment.users.each do |u| %>
-  	<%= render u %>
-  <%end%>
-  </ul>
-  
-  <h3>Projects</h3>
-  <% @experiment.rounds.each do |r| %>
-  	<%= render r %>
-  <% end %>
-
-
->>>>>>> 843132e72980aa9924a1154abe1412e0091d1513
 
 <%= link_to 'Edit', edit_experiment_path(@experiment) %> |
 <%= link_to 'Back', experiments_path %>
