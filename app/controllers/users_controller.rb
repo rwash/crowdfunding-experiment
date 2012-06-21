@@ -2,10 +2,15 @@ class UsersController < InheritedResources::Base
 	def instructions
 		@user = current_user
 		
+		if !current_experiment.started
+			current_experiment.start_time = Time.now
+			current_experiment.save!
+		end
+		
 		@user.times_viewed_instructions = current_user.times_viewed_instructions + 1
 		@user.save!
 		
-		@current_round = @user.experiment.current_round
+		@first_round = @user.experiment.current_round
 	end
 	
 	def questions

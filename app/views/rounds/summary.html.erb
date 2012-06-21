@@ -18,7 +18,7 @@
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<%= link_to "Next Round", @next_round, :class => 'btn-success btn-large' unless last_round?(@current_round) %>
-<%= link_to "Experiment Summary", experiment_summary_path(@current_round.experiment), :class => 'btn-success btn-large' if last_round?(@current_round)%>
+<%= link_to "Ready for Next Round", round_waiting_path(@next_round), :class => 'btn-success btn-large' unless last_round?(@current_round) %>
+<%= link_to "Experiment Summary", experiment_summary_waiting_path(current_experiment), :class => 'btn-success btn-large' if last_round?(@current_round)%>
 
 

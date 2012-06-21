@@ -16,12 +16,20 @@ class ContributionsController < InheritedResources::Base
 		@round.projects.each_with_index do |p,i|
 			@prev_contribution = Contribution.where(:user_id => current_user.id, :round_id => @round.id, :project_id => p.id).first
 			@prev_contribution.destroy unless @prev_contribution.nil?
-				
-			if !Contribution.create(:amount => params["amount_#{i}".to_sym], :project_id => params["project_id_#{i}".to_sym], :time_contributed => Time.now, :user_id => current_user.id, :round_id => params[:current_round_id])
+			if params["amount_#{i}".to_sym] == ""
+				@amount = 0
+			else
+				@amount = params["amount_#{i}".to_sym]
+			end
+			
+			if !Contribution.create(:amount => @amount, :project_id => params["project_id_#{i}".to_sym], :time_contributed => Time.now, :user_id => current_user.id, :round_id => params[:current_round_id])
 				flash[:error] = "There was an error createing one or more of the contributions."
 			end
 		end
 		
-		redirect_to round_summary_path(@round)
+		@preferences = Preferences.where(:user_id => current_user.id, :round_id => @round.id).first
+		@preferences.ready_save_and_check_summary
+		
+		redirect_to summary_waiting_path(@round)
 	end
 end

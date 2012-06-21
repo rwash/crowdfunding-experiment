@@ -1,9 +1,38 @@
 class Preferences < ActiveRecord::Base
 	has_one :round
-	has_one :user
+	belongs_to :user
 	
 	validates :kind_of, :inclusion => 1..6
 	after_create :fill_in_payouts
+	
+	#saves them and checks if they are the last one ready for the next round
+	def ready_save_and_check_summary
+		self.finished_and_ready = true
+		self.save!
+		@round = Round.find(self.round_id)
+		@round.prefs.each do |p|
+			if !p.finished_and_ready
+				return
+			end
+		end
+		
+		@round.finished = true
+		@round.save!
+	end
+	
+	def ready_save_and_check_round
+		self.ready_to_start = true
+		self.save!
+		@round = Round.find(self.round_id)
+		@round.prefs.each do |p|
+			if !p.ready_to_start
+				return
+			end
+		end
+		
+		@round.started = true
+		@round.save!
+	end
 	
 	def fill_in_payouts
 		case self.kind_of

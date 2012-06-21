@@ -3,7 +3,8 @@ class CreatePreferences < ActiveRecord::Migration
     create_table :preferences do |t|
 	    t.string :group
 	    t.boolean :flag, :default => false
-	    t.boolean :ready, :default => false
+	    t.boolean :finished_and_ready, :default => false
+	    t.boolean :ready_to_start, :default => false
 	    t.boolean :contributed, :default => false
 	    t.boolean :timer_expired, :default => false
 	    t.integer :round_payout, :default => 0

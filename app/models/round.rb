@@ -27,7 +27,15 @@ class Round < ActiveRecord::Base
 		self.save!
 	end
 	
+	def round_started
+		self.start_time = Time.now
+		self.save!
+	end
+	
 	def round_over
+		self.end_time = Time.now
+		self.save!
+		
 		self.projects.each do |p|
 			p.funded_amount = p.start_amount
 			p.contributions.each do |c|
