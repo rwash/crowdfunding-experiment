@@ -1,4 +1,7 @@
-<p>Round ID: <%= round.id %> </p>
-<% round.projects.each do |p| %>
+<h4>Round <%= round.id %>:</h4>
+
+<ul>
+  <% round.projects.each do |p| %>
 	<%= render p %>
-<%end%>
+  <%end%>
+</ul>

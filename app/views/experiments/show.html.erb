@@ -1,17 +1,21 @@
 <p id="notice"><%= notice %></p>
+<h1>Round Details</h1>
 
-<p>
-  <b>Condition:</b>
+  <strong>Condition:</strong>
   <%= @experiment.condition %>
   
-  <% @experiment.rounds.each do |r| %>
-  	<%= render r %>
-  <% end %>
-  
+  <h3>Experiment Users</h3>
+  <ul>
   <% @experiment.users.each do |u| %>
   	<%= render u %>
   <%end%>
-</p>
+  </ul>
+  
+  <h3>Projects</h3>
+  <% @experiment.rounds.each do |r| %>
+  	<%= render r %>
+  <% end %>
+
 
 
 <%= link_to 'Edit', edit_experiment_path(@experiment) %> |
