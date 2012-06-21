@@ -19,7 +19,7 @@
 	<%= render :partial => 'projects/stats', :locals => { :project => p }%>
 <% end %>
 
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
 <thead><tr><td>User</td><td>Payout (for this round)</td></tr></thead>
 <% round.users.each do |u| %>
  <tr>

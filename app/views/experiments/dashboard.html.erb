@@ -13,7 +13,6 @@
 	<% elsif r.started %>
 		<h3>Round In Progress</h3>
 		
-		<table class="table table-striped">
 		<% r.users.each do |u| %>
 			<tr>
 			<td><%= u.name %></td>
@@ -26,13 +25,11 @@
 			</td>
 			</tr>
 		<% end %>
-		</table>
 		
 		
 	<% else %>
 		<h3>Round Not Started</h3>
 		
-		<table class="table table-striped">
 		<% r.users.each do |u| %>
 			<tr>
 			<td><%= u.name %></td>
@@ -45,7 +42,6 @@
 			</td>
 			</tr>
 		<% end %>
-		</table>
 		
 	<% end %>
 	<br>
@@ -53,7 +49,7 @@
 
 <% if @experiment.finsihed_calc %>
 <h2>Experiment Summary</h2>
-	<table class="table table-striped">
+	<table class="table table-striped table-bordered">
 	<thead><tr><td>User</td><td>Status</td><td>Payout</td></tr></thead>
 	<% @experiment.users.each do |u| %>
 		<tr>
