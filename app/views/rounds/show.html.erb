@@ -17,7 +17,7 @@ function countDown(){
 </script>
 
 
-<%= render @preferences %>
+<%= render @preferences if @preferences %>
 <h2>Credits: <%= AMOUNT_USER_CAN_DONATE_PER_ROUND %></h2>
 <p>&nbsp;</p>
 <%= form_tag "/contributions/submit" do %>

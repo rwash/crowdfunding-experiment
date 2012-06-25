@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
     t.integer  "funded_amount"
     t.string   "group"
     t.integer  "round_id"
+    t.string   "admin_name"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

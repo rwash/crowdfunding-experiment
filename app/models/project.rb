@@ -6,8 +6,7 @@ class Project < ActiveRecord::Base
 	
 	def initialize(attributes = nil, options = {})
 		super
-		self.goal_amount = 100
-		self.start_amount = rand(0..99)
+		self.goal_amount = 400
 		self.funded_amount = 0
 	end
 	

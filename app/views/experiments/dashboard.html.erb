@@ -1,14 +1,75 @@
 <% if !@experiment.finished %>
 	<meta http-equiv="refresh" content="3" />
 <% end %>
+<div class="page-header">
 <h1>Experiment <%= @experiment.id %></h1>
+</div>
+<br>
 
-<% @experiment.rounds.each do |r| %>
-	<%# next if r.number > @experiment.current_round.number %>
+<% if @experiment.finsihed_calc %>
+<h2>Experiment Summary</h2>
+	<table class="table table-striped table-bordered">
+	<thead><tr><td>User</td><td>Status</td><td>Payout</td></tr></thead>
+	<% @experiment.users.each do |u| %>
+		<tr>
+		<td><%= u.name %></td>
+		<td>
+		<% if u.response_one.nil? or u.response_two.nil? %>
+			<span class="badge badge-warning">Answering Questions</span></td>
+		<% else %>
+			<span class="badge badge-success">Finsihed</span> <td><%= u.payout %></td>
+		<% end %>
+		</td>
+		</tr>
+	<% end %>
+	</table>
+	<br>
+<% end %>
+
+<% @experiment.rounds.order("number DESC").each do |r| %>
 	<h2>Round <%= r.number %></h2>
 	<% if r.finished %>
 		<h3>Round Complete</h3>
-		<%= render :partial => 'rounds/stats', :locals => { :round => r } %>
+		<div class="row">
+		  <div class="span2">
+		    <h3>Project Name</h3>
+		  </div>
+		  
+		  <div class="span4">
+		    <h3>Funding Status</h3>
+		  </div>
+		  
+		  <div class="span6">
+		    &nbsp;
+		  </div>
+		</div>
+		<p>&nbsp;</p>
+		
+		<% r.projects.each do |p| %>
+			<%= render :partial => 'projects/stats', :locals => { :project => p, :admin => true }%>
+		<% end %>
+		
+		<table class="table table-striped table-bordered">
+		<thead><tr>
+			<td>User</td>
+			<td>A Payout</td>
+			<td>B Payout</td>
+			<td>C Payout</td>
+			<td>D Payout</td>
+			<td>Payout (for this round)</td>
+			</tr></thead>
+		<% r.users.each do |u| %>
+			<% @pref = Preferences.where(:user_id => u.id, :round_id => r.id).first %>
+		 <tr>
+		 	<td><%= u.name %></td>
+		 	<td><%= @pref.a_payout %></td>
+		 	<td><%= @pref.b_payout %></td>
+		 	<td><%= @pref.c_payout %></td>
+		 	<td><%= @pref.d_payout %></td>
+		 	<td><%= @pref.round_payout %></td>
+		 </tr>
+		<% end %>
+		</table>
 		
 	<% elsif r.started %>
 		<h3>Round In Progress</h3>
@@ -25,7 +86,7 @@
 			</td>
 			</tr>
 		<% end %>
-		
+		<br>
 		
 	<% else %>
 		<h3>Round Not Started</h3>
@@ -45,24 +106,4 @@
 		
 	<% end %>
 	<br>
-<% end %>
-
-<% if @experiment.finsihed_calc %>
-<h2>Experiment Summary</h2>
-	<table class="table table-striped table-bordered">
-	<thead><tr><td>User</td><td>Status</td><td>Payout</td></tr></thead>
-	<% @experiment.users.each do |u| %>
-		<tr>
-		<td><%= u.name %></td>
-		<td>
-		<% if u.response_one.nil? or u.response_two.nil? %>
-			<span class="badge badge-warning">Answering Questions</span></td>
-		<% else %>
-			<span class="badge badge-success">Finsihed</span> <td><%= u.payout %></td>
-		<% end %>
-		</td>
-		</tr>
-	<% end %>
-	</table>
-
 <% end %>

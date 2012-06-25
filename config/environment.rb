@@ -7,6 +7,16 @@ CrowdfundingExperiment::Application.initialize!
 NUMBER_OF_USERS_PER_GROUP = 2
 NUMBER_OF_ROUNDS = 3
 NUMBER_OF_GROUPS = 2
-AMOUNT_USER_CAN_DONATE_PER_ROUND = 100
+AMOUNT_USER_CAN_DONATE_PER_ROUND = 150
+USER_PAYOUTS = [200,150,100,50]
+PROJECT_START_AMOUNTS = [300,200,100,0]
 
-PROJECT_NAMES = ["Jakes Project", "Toms Project", "Bills Project", "Larrys Project"]
+require 'csv'    
+PROJECT_NAMES = []
+CSV.foreach("colors.csv", :headers => false) do |row|
+  PROJECT_NAMES << row[0]
+end
+
+PROJECT_NAMES.each do |n|
+	n.gsub!(";",'')
+end

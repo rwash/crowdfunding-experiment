@@ -1,11 +1,15 @@
 <div class="row">
   <div class="span2">
-    <%= project.name %>
+  	<% if admin == true %>
+  		<%= project.admin_name %>
+  	<% else %>
+    	<%= project.name %>
+    <% end %>
   </div>
   
   <div class="span4">
     <div class="progress">
-      <div class="bar" style="width: <%= project.funded_amount %>%;"></div>
+      <div class="bar" style="width: <%= (project.funded_amount.to_f / project.goal_amount) * 100 %>%;"></div>
     </div>
   </div>
   

@@ -7,6 +7,7 @@ class CreateProjects < ActiveRecord::Migration
 	    t.integer :funded_amount
 	    t.string :group
 	    t.integer :round_id
+	    t.string :admin_name
 
       t.timestamps
     end

@@ -16,8 +16,24 @@
 <p>&nbsp;</p>
 
 <% @current_round.projects.each do |p| %>
-	<%= render :partial => 'projects/stats', :locals => { :project => p }%>
+	<%= render :partial => 'projects/stats', :locals => { :project => p, :admin => false }%>
 <% end %>
+
+<table class="table table-striped table-bordered">
+	<thead><tr>
+		<td>A Payout</td>
+		<td>B Payout</td>
+		<td>C Payout</td>
+		<td>D Payout</td>
+		</tr></thead>
+	 <tr>
+	 	<td><%= @preferences.a_payout %></td>
+	 	<td><%= @preferences.b_payout %></td>
+	 	<td><%= @preferences.c_payout %></td>
+	 	<td><%= @preferences.d_payout %></td>
+	 </tr>
+</table>
+
 
 <h2>Round Payout: <%= @preferences.round_payout %> credits</h2>
 

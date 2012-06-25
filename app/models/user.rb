@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 	after_create :generate_name_and_password
 	
 	def generate_name_and_password
-		self.name = "User_" + self.id.to_s unless self.name == 'admin'
+		self.name = "User" + self.id.to_s unless self.name == 'admin'
 		self.password = "password"
 		self.times_viewed_instructions = 0
 		self.save!

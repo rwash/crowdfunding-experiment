@@ -8,11 +8,32 @@ class Round < ActiveRecord::Base
 	has_many :contributions
 	
 	after_create :generate_projects
-	
+		
 	def generate_projects
-		4.times do
-			self.projects << Project.create
-		end
+		@project = Project.new
+		@project.admin_name = 'A'
+		@project.start_amount = PROJECT_START_AMOUNTS[0]
+		@project.save!
+		self.projects << @project
+
+		@project = Project.new
+		@project.admin_name = 'B'
+		@project.start_amount = PROJECT_START_AMOUNTS[1]
+		@project.save!
+		self.projects << @project
+		
+		@project = Project.new
+		@project.admin_name = 'C'
+		@project.start_amount = PROJECT_START_AMOUNTS[2]
+		@project.save!
+		self.projects << @project
+		
+		@project = Project.new
+		@project.admin_name = 'D'
+		@project.start_amount = PROJECT_START_AMOUNTS[3]
+		@project.save!
+		self.projects << @project
+		
 		self.save!
 	end
 	

@@ -37,35 +37,35 @@ class Preferences < ActiveRecord::Base
 	def fill_in_payouts
 		case self.kind_of
 		when 1
-			self.a_payout = 200
-			self.b_payout = 150
-			self.c_payout = 100
-			self.d_payout = 50
+			self.a_payout = USER_PAYOUTS[0]
+			self.b_payout = USER_PAYOUTS[1]
+			self.c_payout = USER_PAYOUTS[2]
+			self.d_payout = USER_PAYOUTS[3]
 		when 2
-			self.d_payout = 200
-			self.a_payout = 150
-			self.b_payout = 100
-			self.c_payout = 50
+			self.d_payout = USER_PAYOUTS[0]
+			self.a_payout = USER_PAYOUTS[1]
+			self.b_payout = USER_PAYOUTS[2]
+			self.c_payout = USER_PAYOUTS[3]
 		when 3
-			self.c_payout = 200
-			self.d_payout = 150
-			self.a_payout = 100
-			self.b_payout = 50
+			self.c_payout = USER_PAYOUTS[0]
+			self.d_payout = USER_PAYOUTS[1]
+			self.a_payout = USER_PAYOUTS[2]
+			self.b_payout = USER_PAYOUTS[3]
 		when 4
-			self.b_payout = 200
-			self.c_payout = 150
-			self.d_payout = 100
-			self.a_payout = 50
+			self.b_payout = USER_PAYOUTS[0]
+			self.c_payout = USER_PAYOUTS[1]
+			self.d_payout = USER_PAYOUTS[2]
+			self.a_payout = USER_PAYOUTS[3]
 		when 5
-			self.a_payout = 200
-			self.c_payout = 150
-			self.b_payout = 100
-			self.d_payout = 50
+			self.a_payout = USER_PAYOUTS[0]
+			self.c_payout = USER_PAYOUTS[1]
+			self.b_payout = USER_PAYOUTS[2]
+			self.d_payout = USER_PAYOUTS[3]
 		when 6
-			self.d_payout = 200
-			self.b_payout = 150
-			self.c_payout = 100
-			self.a_payout = 50
+			self.d_payout = USER_PAYOUTS[0]
+			self.b_payout = USER_PAYOUTS[1]
+			self.c_payout = USER_PAYOUTS[2]
+			self.a_payout = USER_PAYOUTS[3]
 		end
 		self.save!
 	end

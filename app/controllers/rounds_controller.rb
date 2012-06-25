@@ -13,7 +13,7 @@ class RoundsController < InheritedResources::Base
 	def show
 		@current_round =  Round.find(params[:id])
 		@user = current_user
-		@preferences = Preferences.where(:user_id => @user.id, :round_id => @current_round.id).first
+		@preferences = Preferences.where(:user_id => @user.id, :round_id => @current_round.id).first unless @user.name == 'admin'
 		@projects = Project.where(:round_id => @current_round.id)
 	end
 	
@@ -35,7 +35,7 @@ class RoundsController < InheritedResources::Base
 		
 		if @current_round.started
 			current_experiment.start_experiment unless current_experiment.started
-			current_experiment.current_round = @current_round
+			# current_experiment.current_round = @current_round
 			current_experiment.save!
 					
 			@current_round.round_started
