@@ -1,5 +1,6 @@
 <h2>Total Payout: </h2>
-<h3><%= @user.payout unless @user.payout.nil?%><%= "0" if @user.payout.nil? %> credits</h3>
+<h3><%= @user.payout unless @user.payout.nil?%><%= "0" if @user.payout.nil? %> credits or <%= @user.payout/450 %> dollars.</h3>
 
 <p>&nbsp;</p>
+<p>Click continue below to ansawer two questions.</p>
 <p><%= link_to "Continue", questions_path, :class => 'btn-success btn-large' %>

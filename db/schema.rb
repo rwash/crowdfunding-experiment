@@ -24,15 +24,15 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
   end
 
   create_table "experiments", :force => true do |t|
-    t.boolean  "condition",     :default => false
-    t.boolean  "started",       :default => false
-    t.boolean  "finished",      :default => false
-    t.boolean  "finsihed_calc", :default => false
+    t.boolean  "return_credits", :default => false
+    t.boolean  "started",        :default => false
+    t.boolean  "finished",       :default => false
+    t.boolean  "finsihed_calc",  :default => false
     t.integer  "current_round"
     t.time     "start_time"
     t.time     "end_time"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "preferences", :force => true do |t|
@@ -80,13 +80,17 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "password"
-    t.string   "response_one"
-    t.string   "response_two"
     t.integer  "payout"
     t.string   "token"
     t.integer  "experiment_id"
     t.integer  "times_viewed_instructions"
     t.string   "persistence_token",         :null => false
+    t.string   "question_1A"
+    t.string   "question_1B"
+    t.integer  "question_2A"
+    t.integer  "question_2B"
+    t.integer  "question_2C"
+    t.integer  "question_2D"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end

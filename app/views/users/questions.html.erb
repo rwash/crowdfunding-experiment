@@ -1,13 +1,65 @@
 <%= form_tag "/questions/submit" do %>
-	<p>What is your name?
-	<%= text_field_tag "question_1", '' %>
+	<h3>Question 1</h3>
+	<p>In the following crowdfunding scenario you alone will determine the funding of the projects below.  No other participants will be donating to these projects.  You have 150 credits to allocate to one of the two projects, each of which need 150 credits to be completed. Project A needs 300 credits total, but we have contributed 150 seed credits, so it only has 150 credits left to be funded.  Project B needs 150 credits total, and has no seed credits.  If you fund project A you will receive a 150 credit payout.  If you fund project B you will receive a 200 credit payout.</p>
+	<p>How much would you give to each project?</p>
+	<p>Project A
+	<%= text_field_tag "question_1A", '0', :in => 0...150 %>
 	</p>
-	<p>What is your quest?
-	<%= text_field_tag "question_2", '' %>
+		<p>Project B
+	<%= text_field_tag "question_1B", '0', :in => 0...150 %>
 	</p>
-	<p>What is the air speed velocity of an unladen swallow?
-	<%= text_field_tag "question_3", '' %>
-	</p>
+	
+	<h3>Question 2</h3>
+	<p>Assume you are faced with the following scenario during the course of the experiment:</p>
+	<div class="well">
+	<div class="row">
+  <div class="span2">
+    <h3>Project Name</h3>
+  </div>
+  
+  <div class="span4">
+    <h3>Funding Status</h3>
+  </div>
+  
+  <div class="span1">
+    &nbsp;
+  </div>
+</div>
 
-	<%= submit_tag "Submit", :class => 'btn-success btn-large' %>
+<% @projects.each do |project| %>
+	<div class="row">
+	  <div class="span2">
+	    	<%= project.name %>
+	  </div>
+	  
+	  <div class="span4">
+	    <div class="progress">
+	      <div class="bar" style="width: <%= (project.start_amount.to_f / project.goal_amount) * 100 %>%;"></div>
+	    </div>
+	  </div>
+	  
+	  <div class="span1">
+	    <%= project.start_amount %> / <%= project.goal_amount %>
+	  </div>
+	  
+	</div>  
+<% end %>
+	</div>
+	
+<div class="row">
+	<div class="span12">
+		<p>Please rate the riskiness associated with an investment in each project. (1=riskless, 7=extremely risky)</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span12">
+		<% @projects.each_with_index do |p,i| %>
+			<%= p.name %><br>
+			<%= number_field_tag "question_2#{i}", 4, :in => 1...8 %><br><br>
+		<% end %>
+	</div>
+</div>
+
+<%= submit_tag "Submit", :class => 'btn-success btn-large' %>
 <% end %>

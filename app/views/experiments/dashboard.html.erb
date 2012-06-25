@@ -14,7 +14,7 @@
 		<tr>
 		<td><%= u.name %></td>
 		<td>
-		<% if u.response_one.nil? or u.response_two.nil? %>
+		<% if u.question_1A.nil? %>
 			<span class="badge badge-warning">Answering Questions</span></td>
 		<% else %>
 			<span class="badge badge-success">Finsihed</span> <td><%= u.payout %></td>

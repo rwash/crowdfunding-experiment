@@ -1,6 +1,6 @@
 class ExperimentsController < InheritedResources::Base
 	def create
-		@experiment = Experiment.new(params[:session])
+		@experiment = Experiment.new(params[:experiment])
 
     if @experiment.save
       redirect_to dashboard_path(@experiment)

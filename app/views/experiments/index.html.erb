@@ -1,18 +1,22 @@
 <h1>Listing Experiments</h1>
 
-<table>
+<table class="table-striped">
+	<thead>
   <tr>
-    <th>Experiment</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <td>Experiment Id</td>
+    <td>Start Time</td>
+    <td>Return Credits</td>
+    <td>Actions</td>
+    <td></td>
   </tr>
+	</thead>
 
 <% @experiments.each do |experiment| %>
   <tr>
-    <td><%= experiment.condition %></td>
-    <td><%= link_to 'Show', experiment %></td>
-    <td><%= link_to 'Edit', edit_experiment_path(experiment) %></td>
+  	<td><%= experiment.id %></td>
+  	<td><%=l experiment.start_time, :format => :default %></td>
+  	<td><%= experiment.return_credits %></td>
+    <td><%= link_to 'Show', dashboard_path(experiment) %></td>
     <td><%= link_to 'Destroy', experiment, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>

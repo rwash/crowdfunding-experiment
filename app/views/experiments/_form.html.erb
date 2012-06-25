@@ -12,9 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :condition %><br />
-    <%= f.check_box :condition %>
+    <%= f.label :return_credits %>
+    <%= f.radio_button :return_credits, true %> Credits are returned to users if proejct is not funded.<br>
+    <%= f.radio_button :return_credits, false %> Credits ARE NOT returned to users if project is funded.
   </div>
+  <br>
   <div class="actions">
     <%= f.submit %>
   </div>

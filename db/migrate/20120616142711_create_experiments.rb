@@ -1,7 +1,7 @@
 class CreateExperiments < ActiveRecord::Migration
   def change
     create_table :experiments do |t|
-      t.boolean :condition, :default => false
+      t.boolean :return_credits, :default => false
       t.boolean :started, :default => false
       t.boolean :finished, :default => false
       t.boolean :finsihed_calc, :default => false

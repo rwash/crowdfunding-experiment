@@ -1,6 +1,6 @@
-<p>Hey <%= @user.name %>, You are at the FINAL experiment summary page.</p>
+<h2>Final Payout: </h2>
+<h3><%= @user.payout unless @user.payout.nil?%><%= "0" if @user.payout.nil? %> credits or <%= @user.payout/450 %> dollars.</h3>
 
-<h2>Total Payout: </h2>
-<h3><%= @user.payout unless @user.payout.nil?%><%= "0" if @user.payout.nil? %> credits</h3>
-
+<p>&nbsp;</p>
+<p>Next, you will be forwarded to another survey.</p>
 <p><%= link_to "Click Here to leave the site and go the Lime survey thing", root_path %>

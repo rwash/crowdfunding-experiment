@@ -6,7 +6,7 @@ CrowdfundingExperiment::Application.routes.draw do
 	match "/questions/submit" => "users#submit"
 	
 	match "/contributions/submit" => "contributions#submit"
-  
+	  
   match "/rounds/:id/summary" => "rounds#summary", :as => :round_summary
   match "/rounds/:id/summary/waiting" => "rounds#waiting_for_summary", :as => :summary_waiting
   match "/rounds/:id/waiting" => "rounds#waiting_for_round", :as => :round_waiting
