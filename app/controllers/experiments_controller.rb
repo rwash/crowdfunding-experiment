@@ -25,7 +25,17 @@ class ExperimentsController < InheritedResources::Base
 	end
 	
 	def dashboard
+		require_admin
 		@experiment = Experiment.find(params[:id])
 	end
 	
+	def new
+		require_admin
+		@experiment = Experiment.new
+	end
+	
+	def index
+		require_admin
+		@experiments = Experiment.all
+	end
 end

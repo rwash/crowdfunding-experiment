@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :name
       t.string :password
       t.integer :payout
+      t.integer :questions_payout
       t.string :token
       t.integer :experiment_id
       t.integer :times_viewed_instructions

@@ -15,6 +15,13 @@ class ContributionsController < InheritedResources::Base
 		@preferences = Preferences.where(:user_id => current_user.id, :round_id => @round.id).first
 		
 		if params[:expired].nil?
+		
+			#checks to make sure they havnt alread submitted a contributon
+			@prev_contribution = Contribution.where(:user_id => current_user.id, :round_id => @round.id).first
+			if !@prev_contribution.nil?
+				flash[:error] = "You cannot edit your contribution after you have submitted."
+				return redirect_to round_summary_path(@round)
+			end
 	
 			@total = 0
 			@round.projects.size.times do |i|
@@ -27,10 +34,7 @@ class ContributionsController < InheritedResources::Base
 			end
 
 	
-			@round.projects.each_with_index do |p,i|
-				@prev_contribution = Contribution.where(:user_id => current_user.id, :round_id => @round.id, :project_id => p.id).first
-				@prev_contribution.destroy unless @prev_contribution.nil?
-				
+			@round.projects.each_with_index do |p,i|			
 				if params["amount_#{i}".to_sym] == ""
 					@amount = 0
 				else

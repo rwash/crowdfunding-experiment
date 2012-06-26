@@ -1,6 +1,26 @@
 <h2>Final Payout: </h2>
-<h3><%= @user.payout unless @user.payout.nil?%><%= "0" if @user.payout.nil? %> credits or <%= @user.payout/450 %> dollars.</h3>
+<table class="table">
+<thead>
+	<tr>
+	<td>Round Number</td>
+	<td>Round Payout</td>
+	</tr>
+</thead>
+
+<% @user.preferences.each_with_index do |p,i| %>
+	<tr>
+		<td><%= Round.find(p.round_id).number %></td>
+		<td><%= p.round_payout %></td>
+	</tr>
+<% end %>
+<tr>
+	<td>Questions</td>
+	<td><%= current_user.questions_payout %></td>
+</tr>
+</table>
+
+<h3>Total: <%= @user.payout unless @user.payout.nil?%><%= "0" if @user.payout.nil? %> credits or <%= @user.payout/450 %> dollars.</h3>
 
 <p>&nbsp;</p>
-<p>Next, you will be forwarded to another survey.</p>
-<p><%= link_to "Click Here to leave the site and go the Lime survey thing", root_path %>
+<p><h4>Next, click the link below to be forwarded to the rest of the survey.</h4></p>
+<p><%= link_to "Click Here to leave the site and go the Lime survey thing", root_path , :class => 'btn-success btn-large'%></p>

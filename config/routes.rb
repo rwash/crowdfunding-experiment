@@ -5,6 +5,8 @@ CrowdfundingExperiment::Application.routes.draw do
 	match "/questions" => "users#questions", :as => :questions
 	match "/questions/submit" => "users#submit"
 	
+	match "/preferences/:id/flag" => "preferences#flag", :as => :flag_user
+	
 	match "/contributions/submit" => "contributions#submit"
 	  
   match "/rounds/:id/summary" => "rounds#summary", :as => :round_summary
@@ -16,14 +18,13 @@ CrowdfundingExperiment::Application.routes.draw do
   match "/experiments/:id/final-summary/waiting" => "experiments#waiting_for_summary", :as => :experiment_summary_waiting
   match "/experiments/:id/final-summary" => "experiments#final_summary", :as => :final_experiment_summary
   
-  resources :users
-  resources :projects
-  resources :rounds
-  resources :experiments
-  resources :preferences
-  resource :user_sessions
-  resources :contributions
-  # we want to cut these down to only the ones we need
+  resources :users, :only => [:create]
+  resources :projects, :only => [:create]
+  resources :rounds, :only => [:create, :show]
+  resources :experiments, :only => [:new, :create, :index]
+  resources :preferences, :only => [:create]
+  resource :user_sessions, :only => [:create, :destroy]
+  resources :contributions, :only => [:create]
 
   root :to => "user_sessions#new"
 end

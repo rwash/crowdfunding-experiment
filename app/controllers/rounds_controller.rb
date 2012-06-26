@@ -35,7 +35,7 @@ class RoundsController < InheritedResources::Base
 		
 		if @current_round.started
 			current_experiment.start_experiment unless current_experiment.started
-			# current_experiment.current_round = @current_round
+			current_experiment.current_round_number = @current_round.number
 			current_experiment.save!
 					
 			@current_round.round_started

@@ -2,7 +2,6 @@ class Experiment < ActiveRecord::Base
 
 	has_many :rounds, :dependent => :destroy
 	has_many :users, :dependent => :destroy
-	has_one :current_round, :class_name => 'Round'
 	# has_one :admin
 	
 	after_create :generate_users
@@ -32,7 +31,8 @@ class Experiment < ActiveRecord::Base
 	end
 	
 	def set_current_round
-		self.current_round = self.rounds.first
+		self.current_round_number = 1
+		self.save!
 	end
 	
 	def start_experiment

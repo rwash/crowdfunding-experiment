@@ -10,7 +10,7 @@ class UsersController < InheritedResources::Base
 		@user.times_viewed_instructions = current_user.times_viewed_instructions + 1
 		@user.save!
 		
-		@first_round = @user.experiment.current_round
+		@first_round = current_experiment.rounds.first
 	end
 	
 	def questions
@@ -31,13 +31,17 @@ class UsersController < InheritedResources::Base
 		end
 		
 		if params[:question_1A].to_i >= 150
+			current_user.questions_payout = 150
 			current_user.payout += 150
 		elsif params[:question_1B].to_i >= 150
+			current_user.questions_payout = 200
 			current_user.payout += 200
 		elsif current_experiment.return_credits
+			current_user.questions_payout = 150
 			current_user.payout += 150
 		else
 			current_user.payout += (150 - params[:question_1A].to_i - params[:question_1B].to_i)
+			current_user.questions_payout = (150 - params[:question_1A].to_i - params[:question_1B].to_i)
 		end
 	
 		current_user.question_1A = params[:question_1A]

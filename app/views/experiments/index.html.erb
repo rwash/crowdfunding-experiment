@@ -1,6 +1,8 @@
+<div class="row">
+<div class="span12">
 <h1>Listing Experiments</h1>
 
-<table class="table-striped">
+<table class="table">
 	<thead>
   <tr>
     <td>Experiment Id</td>
@@ -14,10 +16,9 @@
 <% @experiments.each do |experiment| %>
   <tr>
   	<td><%= experiment.id %></td>
-  	<td><%=l experiment.start_time, :format => :default %></td>
+  	<td><%=l experiment.start_time, :format => :default unless experiment.start_time.nil?%></td>
   	<td><%= experiment.return_credits %></td>
     <td><%= link_to 'Show', dashboard_path(experiment) %></td>
-    <td><%= link_to 'Destroy', experiment, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
@@ -25,3 +26,5 @@
 <br />
 
 <%= link_to 'New Experiment', new_experiment_path %>
+</div>
+</div>
