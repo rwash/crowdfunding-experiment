@@ -3,11 +3,18 @@ class RoundsController < InheritedResources::Base
 		@current_round = Round.find(params[:id])
 		@user = current_user
 		@preferences = Preferences.where(:user_id => @user.id, :round_id => @current_round.id).first
-		@next_round = Round.where(:id => @current_round.id + 1).first
-		@projects = Project.where(:round_id => @current_round.id)
 		
-		#current_experiment.current_round = @next_round
-		#current_experiment.save!
+		@temp_rounds = current_experiment.rounds.where(:number => @current_round.number + 1)
+		@next_round = nil
+		unless @temp_rounds.first.nil?
+			if @user.preferences.where(:round_id => @temp_rounds.first.id).first.nil?
+				@next_round = @temp_rounds.last
+			else
+				@next_round = @temp_rounds.first
+			end
+		end
+	
+		@projects = Project.where(:round_id => @current_round.id)
 	end
 	
 	def show

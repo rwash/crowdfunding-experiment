@@ -15,13 +15,13 @@ class Experiment < ActiveRecord::Base
 		NUMBER_OF_USERS_PER_GROUP.times do
 			@user1 = User.create(:name => "temp")
 			self.users << @user1
-			self.groups.first.users << @user1
-			self.groups.first.save!
+			#self.groups.first.users << @user1
+			#self.groups.first.save!
 			
 			@user2 = User.create(:name => "temp")
 			self.users << @user2
-			self.groups.last.users << @user2
-			self.groups.last.save!
+			#self.groups.last.users << @user2
+			#self.groups.last.save!
 		end
 		self.save!
 	end
@@ -77,19 +77,27 @@ class Experiment < ActiveRecord::Base
 					@prefs = @roundPrefs.where(:kind_of => ((r + i) % 6) + 1).first
 					@prefs.user_id = u.id
 					@prefs.save!
+					
+					u.group_id = @group.id
+					u.save!
 				else #last 6 people
 
 					if self.groups.first.rounds.where(:number => r + 1).first.prefs.where(:kind_of => ((r + i) % 6) + 1).first.user_id.nil?
 						@prefs = self.groups.first.rounds.where(:number => r + 1).first.prefs.where(:kind_of => ((r + i) % 6) + 1).first
 						@prefs.user_id = u.id
 						@prefs.save!
+						
+						u.group_id = self.groups.first.id
+						u.save!
 					elsif self.groups.last.rounds.where(:number => r + 1).first.prefs.where(:kind_of => ((r + i) % 6) + 1).first.user_id.nil?
 						@prefs = self.groups.last.rounds.where(:number => r + 1).first.prefs.where(:kind_of => ((r + i) % 6) + 1).first
 						@prefs.user_id = u.id
 						@prefs.save!
+						
+						u.group_id = self.groups.last.id
+						u.save!
 					else
 						qq = xx
-
 					end
 
 				end

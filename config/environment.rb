@@ -13,7 +13,7 @@ PROJECT_START_AMOUNTS = [300,200,100,0]
 
 require 'csv'    
 PROJECT_NAMES = []
-CSV.foreach("colors2.csv", :headers => false) do |row|
+CSV.foreach("colors4.csv", :headers => false) do |row|
   PROJECT_NAMES << row[0]
 end
 
@@ -22,6 +22,7 @@ PROJECT_NAMES.each do |n|
 end
 
 TOKENS = []
-CSV.foreach("tokens.csv", :headers => false) do |row|
+#CSV.foreach("tokens.csv", :headers => false) do |row|
+CSV.foreach("dummyTokens.csv", :headers => false) do |row|
   TOKENS << row[0]
 end

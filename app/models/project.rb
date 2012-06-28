@@ -18,7 +18,7 @@ class Project < ActiveRecord::Base
 		# if we run out of names refill the array again
 		if PROJECT_NAMES == []
 			require 'csv'
-			CSV.foreach("colors2.csv", :headers => false) do |row|
+			CSV.foreach("colors4.csv", :headers => false) do |row|
 			  PROJECT_NAMES << row[0]
 			end
 			

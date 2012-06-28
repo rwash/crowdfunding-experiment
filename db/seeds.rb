@@ -9,7 +9,9 @@ end
 	@experiment = Experiment.create(:return_credits => false)
 end
 
+# real tests
 10.times do |i|
+	puts i
 	if i%2 == 0
 		@experiment = Experiment.create(:return_credits => true)
 	else
