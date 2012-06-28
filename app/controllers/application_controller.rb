@@ -37,4 +37,15 @@ class ApplicationController < ActionController::Base
         return redirect_to root_path
       end
     end
+    
+    def check_round(round)
+    	if current_user.nil? || Preferences.where(:round_id => round.id, :user_id => current_user.id).first.nil?
+    		flash[:error] = "Not allowed to view round you dont belong to."
+        return redirect_to root_path
+    	end
+    	if current_user.nil? || round.started == false
+    		flash[:error] = "Not allowed to view round that hasn't started."
+        return redirect_to root_path
+    	end
+    end
 end

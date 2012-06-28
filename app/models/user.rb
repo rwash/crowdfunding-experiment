@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
 		end
 		
 		self.name = "User" + self.id.to_s
+		self.token = TOKENS[0]
+		TOKENS.delete(TOKENS[0])
 		
 		chars = ('a'..'z').to_a
     self.password = (0...3).collect { chars[rand(chars.length)] }.join
