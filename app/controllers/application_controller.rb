@@ -3,7 +3,7 @@
 
 class ApplicationController < ActionController::Base
   helper :all
-  helper_method :current_user_session, :current_user, :current_experiment, :last_round
+  helper_method :current_user_session, :current_user, :current_experiment, :current_group, :last_round
   # filter_parameter_logging :password, :password_confirmation
   
   private
@@ -22,12 +22,17 @@ class ApplicationController < ActionController::Base
     	@current_experiment = current_user.experiment
     end
     
+    def current_group
+    	return @group if defined?(@group)
+    	@group = Group.find(current_user.group_id) unless current_user.name == 'admin'
+    end
+    
     def last_round?(round)
-	    	round == round.experiment.rounds.last
+	    	round == round.group.rounds.last
 		end
     
     def require_admin
-      unless current_user.name == 'admin'
+      if current_user.nil? || current_user.name != 'admin'
         flash[:error] = "You must be logged in as an admin to access this page."
         return redirect_to root_path
       end

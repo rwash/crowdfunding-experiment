@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120616144948) do
+ActiveRecord::Schema.define(:version => 20120626171813) do
 
   create_table "contributions", :force => true do |t|
     t.time     "time_contributed"
@@ -29,10 +29,17 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
     t.boolean  "finished",             :default => false
     t.boolean  "finsihed_calc",        :default => false
     t.integer  "current_round_number", :default => 0
-    t.time     "start_time"
-    t.time     "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.integer  "experiment_id"
+    t.string   "name"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "preferences", :force => true do |t|
@@ -67,14 +74,14 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
   end
 
   create_table "rounds", :force => true do |t|
-    t.string   "experiment_id"
-    t.time     "start_time"
-    t.time     "end_time"
-    t.boolean  "finished",      :default => false
-    t.boolean  "started",       :default => false
+    t.string   "group_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.boolean  "finished",   :default => false
+    t.boolean  "started",    :default => false
     t.integer  "number"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -84,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20120616144948) do
     t.integer  "questions_payout"
     t.string   "token"
     t.integer  "experiment_id"
+    t.integer  "group_id"
     t.integer  "times_viewed_instructions"
     t.string   "persistence_token",         :null => false
     t.string   "question_1A"

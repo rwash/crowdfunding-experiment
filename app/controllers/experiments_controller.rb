@@ -1,13 +1,18 @@
 class ExperimentsController < InheritedResources::Base
 	def create
+		require_admin
 		@experiment = Experiment.new(params[:experiment])
-
+		
     if @experiment.save
       redirect_to dashboard_path(@experiment)
     else
-    	flash[:error] = "Failed to create a new session."
+    	flash[:error] = "Failed to create a new experiment."
     	redirect_to experiments_path
     end
+	end
+	
+	def users
+		@experiment = Experiment.find(params[:id])
 	end
 	
 	def summary
@@ -27,6 +32,8 @@ class ExperimentsController < InheritedResources::Base
 	def dashboard
 		require_admin
 		@experiment = Experiment.find(params[:id])
+		@roundsA = @experiment.groups.first.rounds.order("number DESC")
+		@roundsB = @experiment.groups.last.rounds.order("number DESC")
 	end
 	
 	def new

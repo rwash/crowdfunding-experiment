@@ -3,14 +3,15 @@ class UsersController < InheritedResources::Base
 		@user = current_user
 		
 		if !current_experiment.started
-			current_experiment.start_time = Time.now
+			current_experiment.start_time = DateTime.now
 			current_experiment.save!
 		end
 		
 		@user.times_viewed_instructions = current_user.times_viewed_instructions + 1
 		@user.save!
 		
-		@first_round = current_experiment.rounds.first
+		@current_round = Group.find(@user.group_id).rounds.where(:number => current_experiment.current_round_number).first
+		@first_round = Group.find(@user.group_id).rounds.first
 	end
 	
 	def questions
@@ -59,7 +60,7 @@ class UsersController < InheritedResources::Base
 		end
 	
 		current_experiment.finished = true
-		current_experiment.end_time = Time.now
+		current_experiment.end_time = DateTime.now
 		current_experiment.save!
 		
 		redirect_to final_experiment_summary_path(current_experiment)

@@ -14,6 +14,7 @@ CrowdfundingExperiment::Application.routes.draw do
   match "/rounds/:id/waiting" => "rounds#waiting_for_round", :as => :round_waiting
   
   match "/experiments/:id/admin" => "experiments#dashboard", :as => :dashboard
+  match "/experiments/:id/users" => "experiments#users", :as => :experiment_users
   match "/experiments/:id/summary" => "experiments#summary", :as => :experiment_summary
   match "/experiments/:id/final-summary/waiting" => "experiments#waiting_for_summary", :as => :experiment_summary_waiting
   match "/experiments/:id/final-summary" => "experiments#final_summary", :as => :final_experiment_summary

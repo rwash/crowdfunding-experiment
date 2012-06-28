@@ -16,12 +16,14 @@
       <% else %>
         <span class="brand"><% if !@current_round.nil?%>CURRENT ROUND: <%= @current_round.number %><% end %></span> 
       <ul class="nav">
-        <li><%= link_to "Instructions", instructions_path %></li>  
+        <li><%= link_to "Instructions", instructions_path unless current_user.name == 'admin' %></li>  
       </ul>
       <ul class="nav secondary-nav pull-right">
         <li class="divider-vertical"></li>
-        <li><a href="#">CURRENT USER: <%= current_user.name if !current_user.nil? %></a></li>
-        <li><%= link_to "LOG OUT", user_sessions_path, :method => :delete if !current_user.nil?%></li>
+        <li><a href="#">Prefs Type: <%= @preferences.kind_of if @preferences %></a></li>
+        <li><a href="#">Current Group: <%= current_group.name unless current_group.nil? %></a></li>
+        <li><a href="#">CURRENT USER: <%= current_user.name unless current_user.nil? %></a></li>
+        <li><%= link_to "LOG OUT", user_sessions_path, :method => :delete unless current_user.nil?%></li>
       </ul>
       <% end %>
     </div>

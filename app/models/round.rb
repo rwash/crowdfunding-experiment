@@ -1,10 +1,10 @@
 class Round < ActiveRecord::Base
 
-	belongs_to :experiment
-	
+	belongs_to :group
+	has_one :experiment, :through => :group
 	has_many :projects, :dependent => :destroy
 	has_many :prefs, :class_name => 'Preferences'
-	has_many :users, :through => :experiment
+	has_many :users, :through => :prefs
 	has_many :contributions
 	
 	after_create :generate_projects
@@ -37,24 +37,13 @@ class Round < ActiveRecord::Base
 		self.save!
 	end
 	
-	def generate_and_assign_preferences
-		self.users.each_with_index do |u,i|
-			@pref = Preferences.create
-			@pref.user_id = u.id
-			@pref.kind_of = rand(1..6) # CHANGE BEFORE THE FINAL VERSION
-			@pref.save!
-			self.prefs << @pref
-		end
-		self.save!
-	end
-	
 	def round_started
-		self.start_time = Time.now
+		self.start_time = DateTime.now
 		self.save!
 	end
 	
 	def round_over
-		self.end_time = Time.now
+		self.end_time = DateTime.now
 		self.save!
 		
 		self.projects.each do |p|
@@ -65,7 +54,7 @@ class Round < ActiveRecord::Base
 			p.save!
 		end
 		
-		@experiment = Experiment.find(self.experiment_id)
+		@experiment = self.experiment
 		self.prefs.each do |p|
 			if self.projects[0].funded?
 				p.round_payout += p.a_payout

@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :questions_payout
       t.string :token
       t.integer :experiment_id
+      t.integer :group_id
       t.integer :times_viewed_instructions
       t.string  :persistence_token,   :null => false # for auth logic
       t.string :question_1A

@@ -10,7 +10,7 @@
 <% if @experiment.finsihed_calc %>
 <h2>Experiment Summary</h2>
 	<table class="table table-striped table-bordered">
-	<thead><tr><td>User</td><td>Status</td><td>Payout</td></tr></thead>
+	<thead><tr><td>User</td><td>Status</td><td>Payout (credits)</td><td>Payout (dollars)</td></tr></thead>
 	<% @experiment.users.each do |u| %>
 		<tr>
 		<td><%= u.name %></td>
@@ -18,7 +18,9 @@
 		<% if u.question_1A.nil? %>
 			<span class="badge badge-warning">Answering Questions</span></td>
 		<% else %>
-			<span class="badge badge-success">Finsihed</span> <td><%= u.payout %></td>
+			<span class="badge badge-success">Finsihed</span>
+			<td><%= u.payout %></td>
+			<td><%= to_dollars(u.payout) %></td>
 		<% end %>
 		</td>
 		</tr>
@@ -27,11 +29,20 @@
 	<br>
 <% end %>
 
-<% @experiment.rounds.order("number DESC").each do |r| %>
+<% NUMBER_OF_ROUNDS.times do |i| %>
+<%# 0.times do %>
+<% 2.times do |j|%>
+
+<% if j==0 %>
+<% r = @roundsA[i] %>
+<% else %>
+<% r = @roundsB[i] %>
+<% end %>
+	
 	<% if r.number > @experiment.current_round_number %>
 		<% next %>
 	<% end %>
-	<h2>Round <%= r.number %></h2>
+	<h2>Round <%= r.number %> <small>Group <%= r.group.name %></small></h2>
 	<% if r.finished %>
 		<h3>Round Complete</h3>
 		<div class="row">
@@ -50,7 +61,7 @@
 		<p>&nbsp;</p>
 		
 		<% r.projects.each do |p| %>
-			<%= render :partial => 'projects/stats', :locals => { :project => p, :admin => true }%>
+			<%#= render :partial => 'projects/stats', :locals => { :project => p, :admin => true }%>
 		<% end %>
 		
 		<table class="table table-striped table-bordered">
@@ -115,7 +126,9 @@
 			</td>
 			</tr>
 		<% end %>
-		
+	
 	<% end %>
 	<br>
+<% end %>
+
 <% end %>

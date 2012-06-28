@@ -10,15 +10,18 @@
     <td>Return Credits</td>
     <td>Actions</td>
     <td></td>
+    <td></td>
   </tr>
 	</thead>
 
 <% @experiments.each do |experiment| %>
   <tr>
   	<td><%= experiment.id %></td>
+  	<td><%=l experiment.created_at, :format => :default unless experiment.start_time.nil?%></td>
   	<td><%=l experiment.start_time, :format => :default unless experiment.start_time.nil?%></td>
   	<td><%= experiment.return_credits %></td>
     <td><%= link_to 'Show', dashboard_path(experiment) %></td>
+    <td><%= link_to 'Users', experiment_users_path(experiment) %></td>
   </tr>
 <% end %>
 </table>
