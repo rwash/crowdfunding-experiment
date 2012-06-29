@@ -10,14 +10,16 @@ class UsersController < InheritedResources::Base
 		@user.times_viewed_instructions = current_user.times_viewed_instructions + 1
 		@user.save!
 		
-		@current_round = Group.find(@user.group_id).rounds.where(:number => current_experiment.current_round_number).first
-		# @first_round = Group.find(@user.group_id).rounds.first
+		@current_round = current_experiment.rounds.where(:number => current_experiment.current_round_number, :group_id => @user.group_id).first
+		
 		@temp_rounds = current_experiment.rounds.where(:number => 1)
 		@first_round = nil
-		if @user.preferences.where(:round_id => @temp_rounds.first.id).first.nil?
-			@first_round = @temp_rounds.last
-		else
-			@first_round = @temp_rounds.first
+		unless @temp_rounds.nil?
+			if @user.preferences.where(:round_id => @temp_rounds.first.id).first.nil?
+				@first_round = @temp_rounds.last
+			else
+				@first_round = @temp_rounds.first
+			end
 		end
 	end
 	

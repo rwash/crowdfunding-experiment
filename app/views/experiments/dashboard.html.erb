@@ -44,7 +44,7 @@
 	<% end %>
 	<h2>Round <%= r.number %> <small>Group <%= r.group.name %></small></h2>
 	<% if r.finished %>
-		<h3>Round Complete</h3>
+		<h3>Round Complete <small>Id <%= r.id %></small></h3>
 		<div class="row">
 		  <div class="span2">
 		    <h3>Project Name</h3>
@@ -95,14 +95,14 @@
 		</table>
 		
 	<% elsif r.started %>
-		<h3>Round In Progress</h3>
+		<h3>Round In Progress <small>Id <%= r.id %></small></h3>
 		
 		<% r.users.each do |u| %>
 			<tr>
 			<td><%= u.name %></td>
 			<td>
 			<% if Preferences.where(:user_id => u.id, :round_id => r.id).first.finished_and_ready %>
-				<span class="badge badge-success">Finished and Ready for Summary</span>
+				<span class="badge badge-success">Finished</span>
 			<% else %>
 				<span class="badge badge-warning">Still Picking</span>
 			<% end %>
