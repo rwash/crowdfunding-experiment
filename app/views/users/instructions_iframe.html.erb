@@ -1,0 +1,10 @@
+<h1>Instructions</h1>
+<%= render "shared/instructions_return_short" if current_experiment.return_credits %>
+<%= render "shared/instructions_no_return_short" unless current_experiment.return_credits %>
+<br>
+<div class="row">
+  <div class="span8 offset1">
+    <strong>Times viewed: <%= current_user.times_viewed_instructions %></strong>
+  </div>
+</div>
+<br>
