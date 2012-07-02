@@ -85,7 +85,7 @@ $(document).ready(function() {
   </div>
   
   <div class="span5">
-    <%= text_field_tag "amount_#{counter}", 0 , :in => 0..151, :id => "contribution_#{counter}" %><br>
+    <%= text_field_tag "amount_#{counter}", :in => 0..151, :id => "contribution_#{counter}", :placeholder => '0' %><br>
 	<%= hidden_field_tag "project_id_#{counter}", p.id %>
   </div>
   
