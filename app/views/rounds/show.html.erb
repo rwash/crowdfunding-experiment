@@ -13,6 +13,14 @@ function countDown(){
   setTimeout("countDown()", 1000)  
  }  
 }  
+
+function validateform() {
+			var total = parseInt($('#contribution_0').val()) + parseInt($('#contribution_1').val()) + parseInt($('#contribution_2').val()) + parseInt($('#contribution_3').val());
+			if (total != 150) {
+				$("#notice").html("<span class=\"badge badge-important\">Your contributions cannont total more than 150 credits.</span>")
+				return false;
+			} else form.submit();
+	}
 </script>
 
 <script type='text/javascript'>
@@ -39,7 +47,7 @@ $(document).ready(function() {
 <%= render @preferences if @preferences %>
 <h2>Credits: <span id="credits"></span>​</h2>
 <p>&nbsp;</p>
-<%= form_tag "/contributions/submit" do %>
+<%= form_tag "/contributions/submit" , :id => 'form' do %>
 
 <div class="row">
   <div class="span2">
@@ -86,7 +94,7 @@ $(document).ready(function() {
 <div class="row">
   <div class="span2">
     <%= hidden_field_tag "current_round_id", @current_round.id %>
-    &nbsp; &nbsp; &nbsp;<%= submit_tag "Submit", :class => 'btn-success btn-large' %>
+    &nbsp; &nbsp; &nbsp;<%= button_to_function "Submit", "validateform()", :class => 'btn-success btn-large' %>
   </div>  
 </div>  
 <% end %>
