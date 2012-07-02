@@ -34,17 +34,17 @@
 <% 2.times do |j|%>
 
 <% if j==0 %>
-<% r = @roundsA[i] %>
+	<% r = @roundsA[i] %>
 <% else %>
-<% r = @roundsB[i] %>
+	<% r = @roundsB[i] %>
+<% end %>
+<% if r.nil? %>
+	<% break %>
 <% end %>
 	
-	<% if r.number > @experiment.current_round_number %>
-		<% next %>
-	<% end %>
-	<h2>Round <%= r.number %> <small>Group <%= r.group.name %></small></h2>
+	<h2>Round <%= r.number %> <small>Id <%= r.id %> | Group <%= r.group.name %> | 
 	<% if r.finished %>
-		<h3>Round Complete <small>Id <%= r.id %></small></h3>
+		Round Complete </small></h2>
 		<div class="row">
 		  <div class="span2">
 		    <h3>Project Name</h3>
@@ -61,7 +61,7 @@
 		<p>&nbsp;</p>
 		
 		<% r.projects.each do |p| %>
-			<%#= render :partial => 'projects/stats', :locals => { :project => p, :admin => true }%>
+			<%= render :partial => 'projects/stats', :locals => { :project => p, :admin => true }%>
 		<% end %>
 		
 		<table class="table table-striped table-bordered table-condensed">
@@ -74,7 +74,7 @@
 			<td>D Payout</td>
 			<td>Payout (for this round)</td>
 			</tr></thead>
-		<% r.users.each do |u| %>
+		<% r.users.order('id ASC').each do |u| %>
 			<% @pref = Preferences.where(:user_id => u.id, :round_id => r.id).first %>
 		 <tr>
 		 	<td>
@@ -95,9 +95,8 @@
 		</table>
 		
 	<% elsif r.started %>
-		<h3>Round In Progress <small>Id <%= r.id %></small></h3>
-		
-		<% r.users.each do |u| %>
+		Round In Progress </small></h2>		
+		<% r.users.order("id ASC").each do |u| %>
 			<tr>
 			<td><%= u.name %></td>
 			<td>
@@ -109,17 +108,16 @@
 			</td>
 			</tr>
 		<% end %>
-		<br>
 		
 	<% else %>
-		<h3>Round Not Started</h3>
+		Round Not Started </small></h2>
 		
 		<% r.users.each do |u| %>
 			<tr>
 			<td><%= u.name %></td>
 			<td>
 			<% if Preferences.where(:user_id => u.id, :round_id => r.id).first.ready_to_start %>
-				<span class="badge badge-success">Ready for Next Round</span>
+				<span class="badge badge-success">Ready</span>
 			<% else %>
 				<span class="badge badge-warning">Not Ready</span>
 			<% end %>

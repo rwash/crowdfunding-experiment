@@ -6,7 +6,7 @@
       <% else %>
         <span class="brand"><% if !@current_round.nil?%>CURRENT ROUND: <%= @current_round.number %><% end %></span> 
       <ul class="nav">
-        <li><%= link_to "Instructions", instructions_iframe_path, :class => 'iframe' unless current_user.name == 'admin' %></li>  
+        <li><%= link_to "Instructions", '/instructions_iframe?header=false', :class => 'iframe' unless current_user.name == 'admin' %></li>  
       </ul>
       <ul class="nav secondary-nav pull-right">
         <li class="divider-vertical"></li>

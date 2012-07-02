@@ -20,7 +20,7 @@ class ContributionsController < InheritedResources::Base
 			@prev_contribution = Contribution.where(:user_id => current_user.id, :round_id => @round.id).first
 			if !@prev_contribution.nil?
 				flash[:error] = "You cannot edit your contribution after you have submitted."
-				return redirect_to round_summary_path(@round)
+				return redirect_to summary_waiting_path(@round)
 			end
 	
 			@total = 0
@@ -32,20 +32,6 @@ class ContributionsController < InheritedResources::Base
 				flash[:error] = "You can not donate more then the allotted amount."
 				return redirect_to @round
 			end
-
-	
-			@round.projects.each_with_index do |p,i|			
-				if params["amount_#{i}".to_sym] == ""
-					@amount = 0
-				else
-					@amount = params["amount_#{i}".to_sym]
-				end
-				
-				if !Contribution.create(:amount => @amount, :project_id => params["project_id_#{i}".to_sym], :time_contributed => Time.now, :user_id => current_user.id, :round_id => params[:current_round_id])
-					flash[:error] = "There was an error createing one or more of the contributions."
-				end
-				
-			end
 			
 			#give users back the money they didnt spend/donate
 			@preferences.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND - @total
@@ -55,6 +41,20 @@ class ContributionsController < InheritedResources::Base
 			@preferences.timer_expired = true
 			@preferences.save!
 		end
+		
+			@round.projects.each_with_index do |p,i|			
+				if params["amount_#{i}".to_sym] == ""
+					@amount = 0
+				else
+					@amount = params["amount_#{i}".to_sym]
+				end
+				
+				if !Contribution.create(:amount => @amount, :project_id => params["project_id_#{i}".to_sym], :time_contributed => Time.now, :user_id => current_user.id, :round_id => @round.id)
+					flash[:error] = "There was an error createing one or more of the contributions."
+					return redirect_to root_path
+				end
+				
+			end
 		
 		
 		@preferences.ready_save_and_check_summary

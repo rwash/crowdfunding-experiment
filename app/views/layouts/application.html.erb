@@ -7,13 +7,13 @@
   <%= csrf_meta_tags %>
   <script type="text/javascript">
     $(document).ready(function(){
-      $(".iframe").colorbox({iframe:true, width:"60%", height:"100%"});
+      $(".iframe").colorbox({iframe:true, width:"75%", height:"100%"});
     });
   </script>
 </head>
 <body>
 
-<%= render :partial => "layouts/header" unless @skip_header %> 
+<%= render :partial => "layouts/header" unless params[:header] %> 
 
 <div class="container">
 

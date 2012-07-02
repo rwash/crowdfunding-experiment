@@ -28,9 +28,9 @@ class RoundsController < InheritedResources::Base
 	def waiting_for_summary
 		@current_round = Round.find(params[:id])
 		if current_experiment.rounds.where(:number => @current_round.number).first.finished && current_experiment.rounds.where(:number => @current_round.number).last.finished # TODO this line is really bad			
-			@current_round.round_over
+			@current_round.round_over if current_user == @current_round.users.first # a cheap way to make sure it only happens once
 			if last_round?(@current_round)
-				current_experiment.experiment_over
+				current_experiment.experiment_over if current_user == current_experiment.users.first # a cheap way to make sure it only happens once
 			end
 			redirect_to round_summary_path(@current_round)
 		end
@@ -38,6 +38,11 @@ class RoundsController < InheritedResources::Base
 	
 	def waiting_for_round
 		@current_round = Round.find(params[:id])
+		unless current_user.group_id == @current_round.group_id
+			current_user.group_id = @current_round.group_id
+			current_user.save!
+		end
+		
 		@pref = Preferences.where(:user_id => current_user.id, :round_id => @current_round.id).first if @pref.nil?
 		@pref.ready_save_and_check_round unless @pref.ready_to_start
 		

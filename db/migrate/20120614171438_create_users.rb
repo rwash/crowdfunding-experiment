@@ -3,8 +3,8 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.string :name
       t.string :password
-      t.integer :payout
-      t.integer :questions_payout
+      t.integer :payout, :default => 0
+      t.integer :questions_payout, :default => 0
       t.string :token
       t.integer :experiment_id
       t.integer :group_id

@@ -1,6 +1,62 @@
 <%= form_tag "/questions/submit" do %>
 	<h3>Question 1</h3>
-	<p>In the following crowdfunding scenario you alone will determine the funding of the projects below.  No other participants will be donating to these projects.  You have 150 credits to allocate to one of the two projects, each of which need 150 credits to be completed. Project A needs 300 credits total, but we have contributed 150 seed credits, so it only has 150 credits left to be funded.  Project B needs 150 credits total, and has no seed credits.  If you fund project A you will receive a 150 credit payout.  If you fund project B you will receive a 200 credit payout.</p>
+	<p>
+	You alone will determine the funding of the projects below. You have 150 credits to allocate to one of the two projects, each of which needs 150 credits to be completed. Project A needs 300 credits total, but we have contributed 150 seed credits, so it only has 150 credits left to be funded. Project B needs 150 credits total, and has no seed credits.
+	</p>
+
+	<p><b>Credits earned in this question will go into your credit bank.</b></p>
+	
+	<div class="well">
+	<div class="row">
+  <div class="span2">
+    <h3>Project Name</h3>
+  </div>
+  
+  <div class="span4">
+    <h3>Funding Status</h3>
+  </div>
+  
+  <div class="span1">
+    &nbsp;
+  </div>
+</div>
+
+	<div class="row">
+	  <div class="span2">
+	    	A
+	  </div>
+	  
+	  <div class="span4">
+	    <div class="progress">
+	      <div class="bar" style="width: 50%;"></div>
+	    </div>
+	  </div>
+	  
+	  <div class="span1">
+	    150/300
+	  </div>
+	  
+	</div>  
+	  
+	 <div class="row">
+	  <div class="span2">
+	    	B
+	  </div>
+	  
+	  <div class="span4">
+	    <div class="progress">
+	      <div class="bar" style="width: 50%;"></div>
+	    </div>
+	  </div>
+	  
+	  <div class="span1">
+	    0/150
+	  </div>
+	  
+	</div>  
+</div>
+
+	
 	<p>How much would you give to each project?</p>
 	<p>Project A
 	<%= text_field_tag "question_1A", '0', :in => 0...150 %>
@@ -56,7 +112,14 @@
 	<div class="span12">
 		<% @projects.each_with_index do |p,i| %>
 			<%= p.name %><br>
-			<%= number_field_tag "question_2#{i}", 4, :in => 1...8 %><br><br>
+			<%= radio_button_tag "question_2#{i}", 1 %> 1
+			<%= radio_button_tag "question_2#{i}", 2 %> 2
+			<%= radio_button_tag "question_2#{i}", 3 %> 3
+			<%= radio_button_tag "question_2#{i}", 4 , true %> 4
+			<%= radio_button_tag "question_2#{i}", 5 %> 5
+			<%= radio_button_tag "question_2#{i}", 6 %> 6
+			<%= radio_button_tag "question_2#{i}", 7 %> 7
+			<br><br>
 		<% end %>
 	</div>
 </div>

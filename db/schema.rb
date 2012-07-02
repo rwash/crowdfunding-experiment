@@ -87,21 +87,21 @@ ActiveRecord::Schema.define(:version => 20120626171813) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "password"
-    t.integer  "payout"
-    t.integer  "questions_payout"
+    t.integer  "payout",                    :default => 0
+    t.integer  "questions_payout",          :default => 0
     t.string   "token"
     t.integer  "experiment_id"
     t.integer  "group_id"
     t.integer  "times_viewed_instructions"
-    t.string   "persistence_token",         :null => false
+    t.string   "persistence_token",                        :null => false
     t.string   "question_1A"
     t.string   "question_1B"
     t.integer  "question_2A"
     t.integer  "question_2B"
     t.integer  "question_2C"
     t.integer  "question_2D"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
 end

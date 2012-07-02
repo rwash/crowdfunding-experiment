@@ -23,6 +23,11 @@ class UsersController < InheritedResources::Base
 		end
 	end
 	
+	def instructions_iframe
+		current_user.times_viewed_instructions = current_user.times_viewed_instructions + 1
+		current_user.save!
+	end
+	
 	def questions
 		@user = current_user
 		@projects = []

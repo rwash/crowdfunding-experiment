@@ -7,7 +7,7 @@
 	</tr>
 </thead>
 
-<% @user.preferences.each_with_index do |p,i| %>
+<% @user.preferences.order('updated_at ASC').each_with_index do |p,i| %>
 	<tr>
 		<td><%= Round.find(p.round_id).number %></td>
 		<td><%= p.round_payout %></td>

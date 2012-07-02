@@ -32,8 +32,14 @@ class ExperimentsController < InheritedResources::Base
 	def dashboard
 		require_admin
 		@experiment = Experiment.find(params[:id])
-		@roundsA = @experiment.groups.first.rounds.order("number DESC")
-		@roundsB = @experiment.groups.last.rounds.order("number DESC")
+		@roundsA = @experiment.groups.first.rounds.where(:number => (1..@experiment.current_round_number)).order("number DESC")
+		@roundsB = @experiment.groups.last.rounds.where(:number => (1..@experiment.current_round_number)).order("number DESC")
+		
+		if @roundsA.first.finished and @roundsB.first.finished
+			@roundsA = @experiment.groups.first.rounds.where(:number => (1..@experiment.current_round_number + 1)).order("number DESC")
+			@roundsB = @experiment.groups.last.rounds.where(:number => (1..@experiment.current_round_number + 1)).order("number DESC")
+		end
+		
 	end
 	
 	def new

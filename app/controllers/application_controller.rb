@@ -45,7 +45,11 @@ class ApplicationController < ActionController::Base
     	end
     	if current_user.nil? || round.started == false
     		flash[:error] = "Not allowed to view round that hasn't started."
-        return redirect_to root_path
+        return redirect_to round_waiting_path(round)
+    	end
+    	if current_user.nil? || round.finished == true
+    		flash[:error] = "Round has finished."
+    		return redirect_to summary_waiting_path(round)
     	end
     end
 end
