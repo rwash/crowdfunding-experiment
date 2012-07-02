@@ -1,7 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-
-<script language="JavaScript" type="text/javascript">  
+<script type="text/javascript">  
 var count =61
 var redirect="/contributions/submit?expired=1&current_round_id=<%=@current_round.id%>"  
   
@@ -16,9 +15,29 @@ function countDown(){
 }  
 </script>
 
+<script type='text/javascript'>
+$(function(){
+$(document).ready(function() {
+    var credits = 150
+    $('#credits').text(credits)
+    $('#contribution_0').keyup(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+    $('#contribution_1').keyup(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+    $('#contribution_2').keyup(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+    $('#contribution_3').keyup(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+});
+}); 
+</script>
 
 <%= render @preferences if @preferences %>
-<h2>Credits: <%= AMOUNT_USER_CAN_DONATE_PER_ROUND %></h2>
+<h2>Credits: <span id="credits"></span>​</h2>
 <p>&nbsp;</p>
 <%= form_tag "/contributions/submit" do %>
 
@@ -58,7 +77,7 @@ function countDown(){
   </div>
   
   <div class="span5">
-    <%= number_field_tag "amount_#{counter}", 0 , :in => 0..1000 %><br>
+    <%= text_field_tag "amount_#{counter}", 0 , :in => 0..151, :id => "contribution_#{counter}" %><br>
 	<%= hidden_field_tag "project_id_#{counter}", p.id %>
   </div>
   
