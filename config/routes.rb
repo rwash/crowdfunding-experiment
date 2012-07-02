@@ -1,7 +1,6 @@
 CrowdfundingExperiment::Application.routes.draw do
 
 	match "/instructions" => "users#instructions", :as => :instructions
-	
 	match "/instructions_iframe" => "users#instructions_iframe", :as => :instructions_iframe
 	
 	match "/questions" => "users#questions", :as => :questions

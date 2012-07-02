@@ -12,19 +12,12 @@ class Project < ActiveRecord::Base
 	
 	def generate_name
 		# self.name = "Project " + self.id.to_s
-		self.name = PROJECT_NAMES[0]
-		PROJECT_NAMES.delete(PROJECT_NAMES[0])
+		self.name = $project_names[0]
+		$project_names.delete($project_names[0])
 		
 		# if we run out of names refill the array again
-		if PROJECT_NAMES == []
-			require 'csv'
-			CSV.foreach("colors4.csv", :headers => false) do |row|
-			  PROJECT_NAMES << row[0]
-			end
-			
-			PROJECT_NAMES.each do |n|
-				n.gsub!(";",'')
-			end
+		if $project_names == []
+			reseed_names
 		end
 		
 		self.save!
@@ -32,5 +25,17 @@ class Project < ActiveRecord::Base
 	
 	def funded?
 		self.goal_amount <= self.funded_amount
+	end
+	
+	def reseed_names
+			require 'csv'
+			$project_names = []
+			CSV.foreach("colors4.csv", :headers => false) do |row|
+			  $project_names << row[0]
+			end
+			
+			$project_names.each do |n|
+				n.gsub!(";",'')
+			end
 	end
 end
