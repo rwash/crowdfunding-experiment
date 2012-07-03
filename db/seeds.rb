@@ -8,7 +8,7 @@ puts 'pilot'
 end
 
 1.times do
-	puts '3'
+	puts '2'
 	@experiment = Experiment.create(:return_credits => false)
 end
 
