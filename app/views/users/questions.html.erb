@@ -32,6 +32,11 @@ function validateform() {
   <div class="span1">
     &nbsp;
   </div>
+  
+  <div class="span2">
+		<h3>Payout</h3>
+	</div>
+	  
 </div>
 
 	<div class="row">
@@ -50,7 +55,7 @@ function validateform() {
 	  </div>
 	  
 	  <div class="span2">
-	  	Payout 150
+	  	<b>150</b>
 	  </div>
 	  
 	</div>  
@@ -71,7 +76,7 @@ function validateform() {
 	  </div>
 	  
 	  <div class="span2">
-	  	Payout 200
+	  	<b>200</b>
 	  </div>
 	  
 	</div>  
@@ -80,10 +85,10 @@ function validateform() {
 	
 	<p>How much would you give to each project?</p>
 	<p>Project Red
-	<%= text_field "question_1A", '0', :id => 'question_1A' %>
+	<%= text_field "question_1A", '0', :placeholder => '0', :id => 'question_1A' %>
 	</p>
 		<p>Project Blue
-	<%= text_field "question_1B", '0', :id => 'question_1B' %>
+	<%= text_field "question_1B", '0', :placeholder => '0', :id => 'question_1B' %>
 	</p>
 	
 	<h3>Question 2</h3>

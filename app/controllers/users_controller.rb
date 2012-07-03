@@ -29,6 +29,7 @@ class UsersController < InheritedResources::Base
 	end
 	
 	def questions
+		
 		@user = current_user
 		@projects = []
 		4.times {|i| @projects << Project.create(:start_amount => PROJECT_START_AMOUNTS[i]) }
@@ -40,23 +41,35 @@ class UsersController < InheritedResources::Base
 			return redirect_to final_experiment_summary_path(current_experiment)
 		end
 		
-		if (params[:question_1A].to_i + params[:question_1B].to_i) > 150 ||  params[:question_1A].to_i < 0 || params[:question_1B].to_i < 0
+		if params[:question_1A] == ''
+			@amountA = 0
+		else
+			@amountA = params[:question_1A].to_i
+		end
+		
+		if params[:question_1B] == ''
+			@amountB = 0
+		else
+			@amountB = params[:question_1B].to_i
+		end
+		
+		if (@amountA + @amountB) > 150 ||  @amountA < 0 || @amountB < 0
 			flash[:error] = "Cannot give more then 150 credits for question 1."
 			return redirect_to questions_path
 		end
 		
-		if params[:question_1A].to_i >= 150
+		if @amountA >= 150
 			current_user.questions_payout = 150
 			current_user.payout += 150
-		elsif params[:question_1B].to_i >= 150
+		elsif @amountB >= 150
 			current_user.questions_payout = 200
 			current_user.payout += 200
 		elsif current_experiment.return_credits
 			current_user.questions_payout = 150
 			current_user.payout += 150
 		else
-			current_user.payout += (150 - params[:question_1A].to_i - params[:question_1B].to_i)
-			current_user.questions_payout = (150 - params[:question_1A].to_i - params[:question_1B].to_i)
+			current_user.payout += (150 - @amountA - @amountB)
+			current_user.questions_payout = (150 - @amountA - @amountB)
 		end
 	
 		current_user.question_1A = params[:question_1A]

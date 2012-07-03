@@ -43,13 +43,15 @@ class ContributionsController < InheritedResources::Base
 		end
 		
 			@round.projects.each_with_index do |p,i|			
-				if params["amount_#{i}".to_sym] == ""
+				if params["amount_#{i}".to_sym] == "" || !params[:expired].nil?
 					@amount = 0
+					@project_id = p.id
 				else
 					@amount = params["amount_#{i}".to_sym]
+					@project_id = params["project_id_#{i}".to_sym]
 				end
 				
-				if !Contribution.create(:amount => @amount, :project_id => params["project_id_#{i}".to_sym], :time_contributed => Time.now, :user_id => current_user.id, :round_id => @round.id)
+				if !Contribution.create(:amount => @amount, :project_id => @project_id, :time_contributed => Time.now, :user_id => current_user.id, :round_id => @round.id)
 					flash[:error] = "There was an error createing one or more of the contributions."
 					return redirect_to root_path
 				end
