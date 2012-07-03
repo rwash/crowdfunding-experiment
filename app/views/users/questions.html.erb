@@ -1,7 +1,7 @@
 <%= form_tag "/questions/submit" do %>
 	<h3>Question 1</h3>
 	<p>
-	You alone will determine the funding of the projects below. You have 150 credits to allocate to one of the two projects, each of which needs 150 credits to be completed. Project A needs 300 credits total, but we have contributed 150 seed credits, so it only has 150 credits left to be funded. Project B needs 150 credits total, and has no seed credits.
+	You alone will determine the funding of the projects below. You have 150 credits to allocate to one of the two projects, each of which needs 150 credits to be completed. Project Red needs 300 credits total, but we have contributed 150 seed credits, so it only has 150 credits left to be funded. Project Blue needs 150 credits total, and has no seed credits.
 	</p>
 
 	<p><b>Credits earned in this question will go into your credit bank.</b></p>
@@ -23,7 +23,7 @@
 
 	<div class="row">
 	  <div class="span2">
-	    	A
+	    	Red
 	  </div>
 	  
 	  <div class="span4">
@@ -36,21 +36,29 @@
 	    150/300
 	  </div>
 	  
+	  <div class="span2">
+	  	Payout 150
+	  </div>
+	  
 	</div>  
 	  
 	 <div class="row">
 	  <div class="span2">
-	    	B
+	    	Blue
 	  </div>
 	  
-	  <div class="span4">
+	  <div class="span2">
 	    <div class="progress">
-	      <div class="bar" style="width: 50%;"></div>
+	      <div class="bar" style="width: 0%;"></div>
 	    </div>
 	  </div>
 	  
-	  <div class="span1">
+	  <div class="span1 offset2">
 	    0/150
+	  </div>
+	  
+	  <div class="span2">
+	  	Payout 200
 	  </div>
 	  
 	</div>  
@@ -58,10 +66,10 @@
 
 	
 	<p>How much would you give to each project?</p>
-	<p>Project A
+	<p>Project Red
 	<%= text_field_tag "question_1A", '0', :in => 0...150 %>
 	</p>
-		<p>Project B
+		<p>Project Blue
 	<%= text_field_tag "question_1B", '0', :in => 0...150 %>
 	</p>
 	

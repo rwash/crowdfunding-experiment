@@ -17,7 +17,7 @@ function countDown(){
 function validateform() {
 			var total = parseInt($('#contribution_0').val()) + parseInt($('#contribution_1').val()) + parseInt($('#contribution_2').val()) + parseInt($('#contribution_3').val());
 			if (total > 150) {
-				$("#notice").html("<h2 class=\"alert alert-error\">Your contributions cannont total more than 150 credits.<a class=\"close\" data-dismiss=\"alert\"><h2>x</h2></a></h2>")
+				$("#notice").html("<span class=\"badge badge-important\">Your contributions cannont total more than 150 credits.</span>")
 				return false;
 			} else form.submit();
 	}
@@ -85,8 +85,8 @@ $(document).ready(function() {
   </div>
   
   <div class="span5">
-    <%= text_field "amount_#{counter}", nil, :id => "contribution_#{counter}", :placeholder => '0' %><br>
-	<%= hidden_field_tag "project_id_#{counter}", p.id %>
+    <%= text_field_tag "amount_#{counter}", nil, :value => '0', :in => 1...150, :id => "contribution_#{counter}" %><br>
+    <%= hidden_field_tag "project_id_#{counter}", p.id %>
   </div>
   
 <%end%>

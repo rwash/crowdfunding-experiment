@@ -27,8 +27,8 @@ class RoundsController < InheritedResources::Base
 	
 	def waiting_for_summary
 		@current_round = Round.find(params[:id])
-		if current_experiment.rounds.where(:number => @current_round.number).first.finished && current_experiment.rounds.where(:number => @current_round.number).last.finished # TODO this line is really bad			
-			@current_round.round_over if current_user == @current_round.users.first # a cheap way to make sure it only happens once
+		if current_experiment.rounds.where(:number => @current_round.number).first.finished && current_experiment.rounds.where(:number => @current_round.number).last.finished # TODO this line is really bad	
+		
 			if last_round?(@current_round)
 				current_experiment.experiment_over if current_user == current_experiment.users.first # a cheap way to make sure it only happens once
 			end
