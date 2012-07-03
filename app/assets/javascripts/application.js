@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require colorbox
+//= placeholder
 //= require_tree .
