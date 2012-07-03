@@ -80,6 +80,8 @@ class Round < ActiveRecord::Base
 				# p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[3].id).first.amount
 			end
 			
+			self.finished = true
+			self.save!
 			p.save!
 		end
 	end
