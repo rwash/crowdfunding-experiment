@@ -85,10 +85,10 @@ function validateform() {
 	
 	<p>How much would you give to each project?</p>
 	<p>Project Red
-	<%= text_field "question_1A", '0', :placeholder => '0', :id => 'question_1A' %>
+	<%= text_field_tag "question_1A", nil,  :placeholder => '0', :id => 'question_1A', :presence => true %>
 	</p>
 		<p>Project Blue
-	<%= text_field "question_1B", '0', :placeholder => '0', :id => 'question_1B' %>
+	<%= text_field_tag "question_1B", nil, :placeholder => '0', :id => 'question_1B', :presence => true %>
 	</p>
 	
 	<h3>Question 2</h3>

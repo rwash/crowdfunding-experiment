@@ -38,6 +38,7 @@ class ContributionsController < InheritedResources::Base
 			@preferences.save!
 							
 		else
+			@preferences.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND
 			@preferences.timer_expired = true
 			@preferences.save!
 		end

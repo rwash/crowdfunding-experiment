@@ -36,18 +36,23 @@ class UsersController < InheritedResources::Base
 	end
 	
 	def submit
+		if params[:question_1A][0] == '' || params[:question_1B][0] == ''
+			flash[:error] = "Cannot leave question one blank."
+			return redirect_to questions_path
+		end
+		
 		if !current_user.question_1A.nil?
 			flash[:error] = "You already answered the questions. (If you havn't talk to the admin.)"
 			return redirect_to final_experiment_summary_path(current_experiment)
 		end
 		
-		if params[:question_1A] == ''
+		if params[:question_1A] == "" || params[:question_1A].nil?
 			@amountA = 0
 		else
 			@amountA = params[:question_1A].to_i
 		end
 		
-		if params[:question_1B] == ''
+		if params[:question_1B] == "" || params[:question_1B].nil?
 			@amountB = 0
 		else
 			@amountB = params[:question_1B].to_i
