@@ -1,3 +1,6 @@
-<h1>Instructions</h1>
+<style>
+	body{ padding-top: 20px; ! important; }
+</style>
+
 <%= render "shared/instructions_return" if current_experiment.return_credits %>
 <%= render "shared/instructions_no_return" unless current_experiment.return_credits %>

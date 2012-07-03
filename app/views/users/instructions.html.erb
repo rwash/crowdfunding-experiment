@@ -1,7 +1,9 @@
 <h1>Instructions</h1>
+<p>&nbsp;</p>
 <%= render "shared/instructions_return" if current_experiment.return_credits %>
 <%= render "shared/instructions_no_return" unless current_experiment.return_credits %>
 <br>
 <br>
 <%= link_to "Go Back", @current_round, :class => 'btn-success btn-large'  if current_experiment.started? %>
 <%= link_to "Start the First Round", round_waiting_path(@first_round), :class => 'btn-success btn-large' unless current_experiment.started?%>
+<p>&nbsp;</p>

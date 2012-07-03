@@ -30,7 +30,6 @@ function validateform() {
 </script>
 
 <script type='text/javascript'>
-$(function(){
 $(document).ready(function() {
     var credits = 150
     $('#credits').text(credits)
@@ -46,7 +45,6 @@ $(document).ready(function() {
     $('#contribution_3').keyup(function() {
         $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
     });
-});
 }); 
 </script>
 
