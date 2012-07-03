@@ -8,6 +8,16 @@ class Round < ActiveRecord::Base
 	has_many :contributions
 	
 	after_create :generate_projects
+	
+	def check_if_all_done
+		self.prefs.each do |p|
+			if !p.finished_and_ready
+				return false
+			end
+		end
+		
+		self.round_over
+	end
 		
 	def generate_projects
 		@project = Project.new
@@ -55,7 +65,20 @@ class Round < ActiveRecord::Base
 		end
 		
 		@experiment = self.experiment
+			
 		self.prefs.each do |p|
+			p.round_payout = 0
+			
+			@total = 0
+
+			@total = Contribution.where(:user_id => p.user_id, :project_id => self.projects[0].id).first.amount + Contribution.where(:user_id => p.user_id, :project_id => self.projects[1].id).first.amount + Contribution.where(:user_id => p.user_id, :project_id => self.projects[2].id).first.amount + Contribution.where(:user_id => p.user_id, :project_id => self.projects[3].id).first.amount
+			
+			if p.timer_expired
+				p.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND
+			else
+				p.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND - @total
+			end
+			
 			if self.projects[0].funded?
 				p.round_payout += p.a_payout
 			elsif @experiment.return_credits

@@ -21,10 +21,10 @@
 
 <table class="table table-striped table-bordered">
 	<thead><tr>
-		<td>A Payout</td>
-		<td>B Payout</td>
-		<td>C Payout</td>
-		<td>D Payout</td>
+		<td><%= @current_round.projects.order('id ASC').first.name %> Payout</td>
+		<td><%= @current_round.projects.order('id ASC').second.name %> Payout</td>
+		<td><%= @current_round.projects.order('id ASC').third.name %> Payout</td>
+		<td><%= @current_round.projects.order('id ASC').fourth.name %> Payout</td>
 		</tr></thead>
 	 <tr>
 	 	<td><%= @preferences.a_payout %></td>
@@ -34,7 +34,36 @@
 	 </tr>
 </table>
 
-
+<table class="table">
+	<thead><tr>
+	<td>stuff</td>
+	</tr></thead>
+	<% if @current_round.projects[0].funded? %>
+		<tr><%= @preferences.a_payout %> + </tr>
+	<% else %>
+		<tr><%= @contributions.where(:project_id => @current_round.projects[0]).first.amount %> back + </tr>
+	<% end %>
+	
+	<% if @current_round.projects[1].funded? %>
+		<tr><%= @preferences.b_payout %> + </tr>
+	<% else %>
+		<tr><%= @contributions.where(:project_id => @current_round.projects[1]).first.amount %> back + </tr>
+	<% end %>
+	
+	<% if @current_round.projects[2].funded? %>
+		<tr><%= @preferences.c_payout %> + </tr>
+	<% else %>
+		<tr><%= @contributions.where(:project_id => @current_round.projects[2]).first.amount %> back + </tr>
+	<% end %>
+	
+	<% if @current_round.projects[3].funded? %>
+		<tr><%= @preferences.d_payout %> + </tr>
+	<% else %>
+		<tr><%= @contributions.where(:project_id => @current_round.projects[3]).first.amount %> back + </tr>
+	<% end %>
+	
+	<tr><%= @not_donated  %> back</tr>
+</table>
 <h2>Round Payout: <%= @preferences.round_payout %> credits</h2>
 
 <p>&nbsp;</p>

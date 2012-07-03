@@ -34,16 +34,16 @@ class ContributionsController < InheritedResources::Base
 			end
 			
 			#give users back the money they didnt spend/donate
-			@preferences.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND - @total
-			@preferences.save!
+			#@preferences.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND - @total
+			#@preferences.save!
 							
 		else
-			@preferences.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND
+			#@preferences.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND
 			@preferences.timer_expired = true
 			@preferences.save!
 		end
 		
-			@round.projects.each_with_index do |p,i|			
+			@round.projects.order('id ASC').each_with_index do |p,i|			
 				if params["amount_#{i}".to_sym] == "" || !params[:expired].nil?
 					@amount = 0
 					@project_id = p.id
