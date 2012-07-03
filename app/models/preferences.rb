@@ -16,8 +16,7 @@ class Preferences < ActiveRecord::Base
 			end
 		end
 		
-		@round.finished = true
-		@round.save!
+		@round.round_over
 	end
 	
 	def ready_save_and_check_round
