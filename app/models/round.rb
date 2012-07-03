@@ -59,25 +59,25 @@ class Round < ActiveRecord::Base
 			if self.projects[0].funded?
 				p.round_payout += p.a_payout
 			elsif @experiment.return_credits
-				p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[0].id).first.amount
+				# p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[0].id).first.amount
 			end
 			
 			if self.projects[1].funded?
 				p.round_payout += p.b_payout
 			elsif @experiment.return_credits
-				p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[1].id).first.amount
+				# p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[1].id).first.amount
 			end
 			
 			if self.projects[2].funded?
 				p.round_payout += p.c_payout
 			elsif @experiment.return_credits
-				p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[2].id).first.amount
+				# p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[2].id).first.amount
 			end
 			
 			if self.projects[3].funded?
 				p.round_payout += p.d_payout
 			elsif @experiment.return_credits
-				p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[3].id).first.amount
+				# p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[3].id).first.amount
 			end
 			
 			p.save!
