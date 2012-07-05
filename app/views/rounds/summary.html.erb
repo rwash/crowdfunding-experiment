@@ -18,57 +18,121 @@
 <% @current_round.projects.each do |p| %>
 	<%= render :partial => 'projects/stats', :locals => { :project => p, :admin => false }%>
 <% end %>
-
-<table class="table table-striped table-bordered">
-	<thead><tr>
-		<td><%= @current_round.projects.order('id ASC').first.name %> Payout</td>
-		<td><%= @current_round.projects.order('id ASC').second.name %> Payout</td>
-		<td><%= @current_round.projects.order('id ASC').third.name %> Payout</td>
-		<td><%= @current_round.projects.order('id ASC').fourth.name %> Payout</td>
-		</tr></thead>
-	 <tr>
-	 	<td><%= @preferences.a_payout %></td>
-	 	<td><%= @preferences.b_payout %></td>
-	 	<td><%= @preferences.c_payout %></td>
-	 	<td><%= @preferences.d_payout %></td>
-	 </tr>
-</table>
-
-<table class="table">
-	<thead><tr>
-	<td>stuff</td>
-	</tr></thead>
-	<% if @current_round.projects[0].funded? %>
-		<tr><%= @preferences.a_payout %> + </tr>
-	<% else %>
-		<tr><%= @contributions.where(:project_id => @current_round.projects[0]).first.amount %> back + </tr>
-	<% end %>
-	
-	<% if @current_round.projects[1].funded? %>
-		<tr><%= @preferences.b_payout %> + </tr>
-	<% else %>
-		<tr><%= @contributions.where(:project_id => @current_round.projects[1]).first.amount %> back + </tr>
-	<% end %>
-	
-	<% if @current_round.projects[2].funded? %>
-		<tr><%= @preferences.c_payout %> + </tr>
-	<% else %>
-		<tr><%= @contributions.where(:project_id => @current_round.projects[2]).first.amount %> back + </tr>
-	<% end %>
-	
-	<% if @current_round.projects[3].funded? %>
-		<tr><%= @preferences.d_payout %> + </tr>
-	<% else %>
-		<tr><%= @contributions.where(:project_id => @current_round.projects[3]).first.amount %> back + </tr>
-	<% end %>
-	
-	<tr><%= @not_donated  %> back</tr>
-</table>
-<h2>Round Payout: <%= @preferences.round_payout %> credits</h2>
-
 <p>&nbsp;</p>
+
+<div class="row">
+  <div class="span12">
+  <h2>Round Details</h2>
+  <br>
+    <table class="table table-striped table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th><h3>Project Name</h3></th>
+          <th><h3>Payouts</h3></th>
+          <th><h3>Funding Status</h3></th>
+          <th><h3>Credits Earned</h3></th>
+          <% if current_experiment.return_credits%>
+            <th><h3>Credits Returned</h3></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+    	  <th><%= @current_round.projects.order('id ASC').first.name %></th>
+    	  <th><%= @preferences.a_payout %></th>
+    	  <th>
+	    	  <% if @current_round.projects[0].goal_amount <= @current_round.projects[0].funded_amount %>
+    	        Funded
+              <% else %>
+    	        Not Funded
+              <% end %>
+    	  </th>
+    	  <th>
+            <% if @current_round.projects[0].funded? %>
+              <%= @preferences.a_payout %>
+            <% else %>
+              0
+            <% end %>
+          </th>
+    	  <% if current_experiment.return_credits and !@current_round.projects[0].funded? %>
+            <th><%= @contributions.where(:project_id => @current_round.projects[0]).first.amount %></th>
+          <% end %>
+        </tr>
+        <tr>
+	      <th><%= @current_round.projects.order('id ASC').second.name %></th>
+	      <th><%= @preferences.b_payout %></th>
+	      <th>
+	    	  <% if @current_round.projects[1].goal_amount <= @current_round.projects[1].funded_amount %>
+    	        Funded
+              <% else %>
+    	        Not Funded
+              <% end %>
+    	  </th>
+	      <th>
+            <% if @current_round.projects[1].funded? %>
+              <%= @preferences.b_payout %>
+            <% else %>
+              0
+            <% end %>
+          </th>
+	      <% if current_experiment.return_credits and !@current_round.projects[1].funded? %>
+            <th><%= @contributions.where(:project_id => @current_round.projects[1]).first.amount %></th>
+          <% end %>
+        </tr>
+        <tr>
+	      <th><%= @current_round.projects.order('id ASC').third.name %></th>
+	      <th><%= @preferences.c_payout %></th>
+	      <th>
+	    	  <% if @current_round.projects[2].goal_amount <= @current_round.projects[2].funded_amount %>
+    	        Funded
+              <% else %>
+    	        Not Funded
+              <% end %>
+    	  </th>
+	      <th>
+            <% if @current_round.projects[2].funded? %>
+              <%= @preferences.c_payout %>
+            <% else %>
+              0
+            <% end %>
+          </th>
+	      <% if current_experiment.return_credits and !@current_round.projects[2].funded? %>
+            <th><%= @contributions.where(:project_id => @current_round.projects[2]).first.amount %></th>
+          <% end %>
+        </tr>
+        <tr>
+	      <th><%= @current_round.projects.order('id ASC').fourth.name %></th>
+	      <th><%= @preferences.d_payout %></th>
+	      <th>
+	    	  <% if @current_round.projects[3].goal_amount <= @current_round.projects[3].funded_amount %>
+    	        Funded
+              <% else %>
+    	        Not Funded
+              <% end %>
+    	  </th>
+	      <th>
+            <% if @current_round.projects[3].funded? %>
+              <%= @preferences.d_payout %>
+            <% else %>
+              0   
+            <% end %>
+          </th>
+	      <% if current_experiment.return_credits and !@current_round.projects[3].funded? %>
+            <th><%= @contributions.where(:project_id => @current_round.projects[3]).first.amount %></th> 
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h3>Credits Not Donated: <%= @not_donated %></h3>
+<br>
+<h2>Total Round Payout: <%= @preferences.round_payout %> credits</h2>
+
 <p>&nbsp;</p>
 <%= link_to "Ready for Next Round", round_waiting_path(@next_round), :class => 'btn-success btn-large' unless last_round?(@current_round) %>
 <%= link_to "Experiment Summary", experiment_summary_waiting_path(current_experiment), :class => 'btn-success btn-large' if last_round?(@current_round)%>
+<p>&nbsp;</p>
 
 

@@ -1,21 +1,23 @@
 <h2>Crowdfunding Experment</h2>
 <p>
-Crowdfunding websites, such as Kickstarter and Indiegogo, serve as an intermediary between project designers who need funds, and donors who want to see their favorite projects completed.  This study will allow us to study the behavior of these websites' donors.  In the first portion of this study you will play the role of a donor whose objective is to allocate money to his or her preferred projects.  Instead of donating money, you will be given credits to distribute to these fake projects.  At the end of the experiment, these credits can be exchanged for real money.
+Crowdfunding websites, such as Kickstarter and Indiegogo, serve as an intermediary between project designers who need funds, and donors who want to see their favorite projects completed.  This study will help us understand the behavior of these websites’ donors. You will play the role of a donor contributing to projects through a crowdfunding website.   Instead of donating money, you will be given credits to distribute to these fake projects.  At the end of the experiment, these credits can be exchanged for real money.
 </p>
 
 <h3>Objective</h3>
 <p>
-The objective of this game is to make contributions to the projects that maximize your credit payouts.  You will earn a payout for each project that is fully funded (receives 400 credits total).  The more projects that receive funding, the more credits you will receive.  To encourage you to collect as many credits as possible, these credits will be converted into US dollars at the end of the experiment.
+Your objective in this game is to earn the most credits that you can.  To encourage you to accumulate credits, credits will be converted into US Dollars at the end of this experiment.  Each round you will be given 150 credits, and you will earn credits for each project that is fully funded.  The more projects that receive funding, the more credits you will receive.  Any credits you don’t donate you will get to keep. Contributions to unfunded projects will be returned to you.
 </p>
 
 <h3>Setup</h3>
 <p>
-The experiment will have 18 identical rounds.  In each round you will be randomly divided into two groups, so you will play with different people each round.  You will each be given 150 credits in each round, and will have the opportunity to contribute to 4 projects. These projects will each need 400 credits to be fully funded, but the researchers will contribute seed money to each project beforehand to make some projects easier to fund. 
-In each round, you will be told your payouts for each project.  Some projects are worth more to you than other projects.  You will earn the specified payout if and only if the project receives enough donations to fully fund the project. Other players will have different payouts.
+The experiment will have 18 rounds.  In each round you will be randomly divided into two groups, so you will play with different people each round.  <strong>Each person in your group will contribute to the same 4 projects.</strong>  Each player in the group will be given 150 credits at the start of the round. Each project needs 400 credits from your group to be fully funded.  To help make this task easier, the researchers will contribute seed credits to each group’s projects before the round.
 </p>
-<p>&nbsp;</p>
-<%= image_tag 'instructions-screenshot.png', :class => 'thumbnail' %>
-<p>&nbsp;</p>
+
+<h3>Project Payouts</h3>
+<p>
+<strong>At the end of each round you will receive a payout for each project that your group funds, regardless of whether or not you contributed to the funding of that project.</strong> During each round, you will see a table that specifies what this payout will be for each project.  Some projects will be worth more to you than other projects. <strong>Every person in your group will have different payouts than you have.</strong>  Your payout table will change each round, so pay close attention.  Again, you will receive the payout if and only if your group’s project has at least 400 credits at the end of the round.
+</p>
+
 <h3>Rules</h3>
 	<ul>
 		<li>You have one minute per round to make your decision</li>
@@ -24,17 +26,24 @@ In each round, you will be told your payouts for each project.  Some projects ar
 		<li>Credits you earn in each round will be set aside to accumulate in your credit bank</li>
 		<li>Credits in your bank cannot be used to fund projects in subsequent rounds</li>
 	</ul>
-	
+
 <h3>Credits</h3>
 <p>
-Each round you will be given 150 credits to contribute to projects.  At the end of each round your earnings will be deposited into your credit bank.  There are 3 ways to earn credits for your credit bank:
+Each round you will be given 150 credits to contribute to projects.  You can donate all 150 of your credits, donate a portion of your credits, or donate none at all.  Any credits you choose not to contribute you will keep, and they will be added to your credit bank. At the end of each round your earnings from your group’s funded projects will be deposited into your credit bank.   <strong>Additionally, any credits that you donated to projects that your group did not fully fund will be returned to you.</strong>  There are 3 ways to earn credits for your credit bank:
 </p>
 <ul>
-	<li>You will earn credits for any fully funded projects according to your payout table</li>
-	<li>Any credits that you choose not to donate will be kept and added to your bank</li>
+	<li>You will earn credits for any project your group funds, these credits will be added to your bank</li>
+	<li>Any credits that you did not donate will be kept and added to your bank</li>
 	<li>Any credits you donate to unfunded projects will be returned to you and added to your credit bank</li>
 </ul>
 
 <p>
 At the end of the experiment the credits you have earned in your credit bank will be converted into cash at an exchange rate of $1 for every <%= CREDITS_TO_DOLLAR %> credits.
 </p>
+
+<h3>Round Page</h3>
+<p>
+This is a screenshot of what you will see in each round:
+</p>
+<p>&nbsp;</p>
+<%= image_tag 'instructions-screenshot.png', :class => 'thumbnail' %>
