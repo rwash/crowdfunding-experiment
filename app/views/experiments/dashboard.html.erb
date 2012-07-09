@@ -1,3 +1,9 @@
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".iframe-flag").colorbox({iframe:true, width:"43%", height:"45%"});
+    });
+  </script>
+
 <% if !@experiment.finished %>
 	<meta http-equiv="refresh" content="6" />
 <% end %>
@@ -81,7 +87,7 @@
 		 		<% if @pref.flag %>
 		 			<%= link_to "unflag", unflag_user_path(@pref), :class => "label label-info" %>
 		 		<% else %>
-		 			<%= link_to "flag", "/preferences/#{@pref.id}/flag?header=false", :class => 'iframe' %>
+		 			<%= link_to "flag", "/preferences/#{@pref.id}/flag?header=false", :onclick => "window.open(this.href,'window','width=580,height=275,resizable,scrollbars,toolbar,menubar') ;return false;" %>
 		 			<%#= link_to "flag", flag_user_path(@pref) %>
 		 		<% end %>
 		 	</td>
