@@ -11,7 +11,11 @@ AMOUNT_USER_CAN_DONATE_PER_ROUND = 150
 USER_PAYOUTS = [200,150,100,50]
 PROJECT_START_AMOUNTS = [300,200,100,0]
 CREDITS_TO_DOLLAR = 350
-TOKEN_SOURCE = 'dummyTokens.csv'
+if Rails.env.production?
+	TOKEN_SOURCE = 'tokens.csv'
+else
+	TOKEN_SOURCE = 'dummyTokens.csv'
+end
 
 require 'csv'    
 $project_names = []
