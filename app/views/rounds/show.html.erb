@@ -11,7 +11,9 @@ var count =61
 var redirect="/contributions/submit?expired=1&current_round_id=<%=@current_round.id%>"  
   
 function countDown(){  
- if (count <=0){  
+ if (count <=0){
+  document.getElementById("timer").innerHTML = "<h2 class=\"alert alert-error\">This round has ended! Redirecting...</h2>"
+  $(".submit").hide(0);  
   window.location = redirect;  
  }else{  
   count--;  
@@ -95,7 +97,7 @@ $(document).ready(function() {
   
 <%end%>
 <p>&nbsp;</p>
-<div class="row">
+<div class="row submit">
   <div class="span2">
     <%= hidden_field_tag "current_round_id", @current_round.id %>
     &nbsp; &nbsp; &nbsp;<%= button_to_function "Submit", "validateform()", :class => 'btn-success btn-large' %>

@@ -11,22 +11,24 @@ function validateform() {
 
 </script>
 
+<div id="question1">
 <%= form_tag "/questions/submit", :id => 'form' do %>
 	<h3>Question 1</h3>
-	<p>
-	You alone will determine the funding of the projects below. You have 150 credits to allocate to one of the two projects, each of which needs 150 credits to be completed. Project Red needs 300 credits total, but we have contributed 150 seed credits, so it only has 150 credits left to be funded. Project Blue needs 150 credits total, and has no seed credits.
-	</p>
+	<br>
+	<p><strong>You alone will determine the funding of the projects below.</strong> You have 150 credits to allocate to one of the two projects, each of which needs 150 credits to be completed. Project Red needs 300 credits total, but already has 150 seed credits. Project Blue needs 150 credits total, and has no seed credits. If project Red is funded, you will recieve 150 credits. If project Blue is funded you will recieve 200 credits.</p>
 
-	<p><b>Credits earned in this question will go into your credit bank.</b></p>
+	<p><strong><em>Credits earned in this question will go into your credit bank.</strong></em></p>
 	
 	<div class="well">
 	<div class="row">
   <div class="span2">
     <h3>Project Name</h3>
+    <br>
   </div>
   
   <div class="span4">
     <h3>Funding Status</h3>
+    <br>
   </div>
   
   <div class="span1">
@@ -35,6 +37,7 @@ function validateform() {
   
   <div class="span2">
 		<h3>Payout</h3>
+		<br>
 	</div>
 	  
 </div>
@@ -83,15 +86,21 @@ function validateform() {
 </div>
 
 	
-	<p>How much would you give to each project?</p>
+	<h4>How much would you give to each project?</h4>
+	<br>
 	<p>Project Red
 	<%= text_field_tag "question_1A", nil,  :placeholder => '0', :id => 'question_1A', :presence => true %>
 	</p>
 		<p>Project Blue
 	<%= text_field_tag "question_1B", nil, :placeholder => '0', :id => 'question_1B', :presence => true %>
 	</p>
-	
+	<br>
+	<p><a class="btn btn-success btn-large" id="nextq" href="#">Next Question</a></p>
+</div>
+
+<div id="question2" style="display: none">	
 	<h3>Question 2</h3>
+	<br>
 	<p>Assume you are faced with the following scenario during the course of the experiment:</p>
 	<div class="well">
 	<div class="row">
@@ -130,7 +139,7 @@ function validateform() {
 	
 <div class="row">
 	<div class="span12">
-		<p>Please rate the riskiness associated with an investment in each project. (1=riskless, 7=extremely risky)</p>
+		<p>Please rate the riskiness associated with an investment in each project. (1=not risky, 7=extremely risky)</p>
 	</div>
 </div>
 
@@ -153,3 +162,11 @@ function validateform() {
 <%#= submit_tag "Submit", :class => 'btn-success btn-large' %>
 <%= button_to_function "Submit", "validateform()", :class => 'btn-success btn-large' %>
 <% end %>
+</div>
+
+<script>
+  $("#nextq").click(function () {
+    $("#question2").show(0);
+    $("#question1").hide(0);
+  });
+</script>
