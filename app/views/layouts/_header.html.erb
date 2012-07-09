@@ -4,7 +4,7 @@
       <% if current_user.nil? %>
         <span class="brand">Crowdfunding Experiment</span>
       <% else %>
-        <span class="brand"><% if !@current_round.nil?%>CURRENT ROUND: <%= @current_round.number %><% end %></span> 
+        <span class="brand"><%= "Round #{@current_round.number} of #{NUMBER_OF_ROUNDS}" unless @current_round.nil? %></span> 
       <ul class="nav">
         <li><%= link_to "Instructions", '/instructions_iframe?header=false', :class => 'iframe' unless current_user.name == 'admin' %></li>  
       </ul>
