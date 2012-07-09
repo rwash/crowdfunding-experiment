@@ -56,7 +56,9 @@
           </th>
     	  <% if current_experiment.return_credits and !@current_round.projects[0].funded? %>
             <th><%= @contributions.where(:project_id => @current_round.projects[0]).first.amount %></th>
-          <% end %>
+        <% else %>
+        	<th/>
+        <% end %>
         </tr>
         <tr>
 	      <th><%= @current_round.projects.order('id ASC').second.name %></th>
@@ -64,9 +66,9 @@
 	      <th>
 	    	  <% if @current_round.projects[1].goal_amount <= @current_round.projects[1].funded_amount %>
     	        Funded
-              <% else %>
+          <% else %>
     	        Not Funded
-              <% end %>
+           <% end %>
     	  </th>
 	      <th>
             <% if @current_round.projects[1].funded? %>
@@ -77,7 +79,9 @@
           </th>
 	      <% if current_experiment.return_credits and !@current_round.projects[1].funded? %>
             <th><%= @contributions.where(:project_id => @current_round.projects[1]).first.amount %></th>
-          <% end %>
+        <% else %>
+        	<th/>
+        <% end %>
         </tr>
         <tr>
 	      <th><%= @current_round.projects.order('id ASC').third.name %></th>
@@ -85,9 +89,9 @@
 	      <th>
 	    	  <% if @current_round.projects[2].goal_amount <= @current_round.projects[2].funded_amount %>
     	        Funded
-              <% else %>
+          <% else %>
     	        Not Funded
-              <% end %>
+          <% end %>
     	  </th>
 	      <th>
             <% if @current_round.projects[2].funded? %>
@@ -98,7 +102,9 @@
           </th>
 	      <% if current_experiment.return_credits and !@current_round.projects[2].funded? %>
             <th><%= @contributions.where(:project_id => @current_round.projects[2]).first.amount %></th>
-          <% end %>
+        <% else %>
+        	<th/>
+        <% end %>
         </tr>
         <tr>
 	      <th><%= @current_round.projects.order('id ASC').fourth.name %></th>
@@ -106,9 +112,9 @@
 	      <th>
 	    	  <% if @current_round.projects[3].goal_amount <= @current_round.projects[3].funded_amount %>
     	        Funded
-              <% else %>
+          <% else %>
     	        Not Funded
-              <% end %>
+          <% end %>
     	  </th>
 	      <th>
             <% if @current_round.projects[3].funded? %>
@@ -118,8 +124,10 @@
             <% end %>
           </th>
 	      <% if current_experiment.return_credits and !@current_round.projects[3].funded? %>
-            <th><%= @contributions.where(:project_id => @current_round.projects[3]).first.amount %></th> 
-          <% end %>
+            <th><%= @contributions.where(:project_id => @current_round.projects[3]).first.amount %></th>
+        <% else %>
+        	<th/>
+        <% end %>
         </tr>
       </tbody>
     </table>

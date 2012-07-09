@@ -7,6 +7,7 @@ CrowdfundingExperiment::Application.routes.draw do
 	match "/questions/submit" => "users#submit"
 	
 	match "/preferences/:id/flag" => "preferences#flag", :as => :flag_user
+	match "/preferences/:id/unflag" => "preferences#unflag", :as => :unflag_user
 	
 	match "/contributions/submit" => "contributions#submit"
 	  

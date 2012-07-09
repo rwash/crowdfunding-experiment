@@ -79,7 +79,7 @@
 		 <tr>
 		 	<td>
 		 		<% if @pref.flag %>
-		 			<%= link_to "flagged", '#', :class => "label label-info" %>
+		 			<%= link_to "unflag", unflag_user_path(@pref), :class => "label label-info" %>
 		 		<% else %>
 		 			<%= link_to "flag", flag_user_path(@pref) %>
 		 		<% end %>
