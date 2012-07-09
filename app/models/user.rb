@@ -18,8 +18,14 @@ class User < ActiveRecord::Base
 		end
 		
 		self.name = "User" + self.id.to_s
-		self.token = TOKENS[0]
-		TOKENS.delete(TOKENS[0])
+		self.token = $tokens[0]
+		$tokens.delete($tokens[0])
+		
+		if $tokens == []
+			CSV.foreach(TOKEN_SOURCE, :headers => false) do |row|
+			  $tokens << row[0]
+			end
+		end
 		
 		chars = ('a'..'z').to_a
     self.password = (0...3).collect { chars[rand(chars.length)] }.join

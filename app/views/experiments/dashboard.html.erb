@@ -81,7 +81,8 @@
 		 		<% if @pref.flag %>
 		 			<%= link_to "unflag", unflag_user_path(@pref), :class => "label label-info" %>
 		 		<% else %>
-		 			<%= link_to "flag", flag_user_path(@pref) %>
+		 			<%= link_to "flag", "/preferences/#{@pref.id}/flag?header=false", :class => 'iframe' %>
+		 			<%#= link_to "flag", flag_user_path(@pref) %>
 		 		<% end %>
 		 	</td>
 		 	<td><%= u.name %></td>

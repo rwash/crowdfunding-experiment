@@ -11,6 +11,7 @@ AMOUNT_USER_CAN_DONATE_PER_ROUND = 150
 USER_PAYOUTS = [200,150,100,50]
 PROJECT_START_AMOUNTS = [300,200,100,0]
 CREDITS_TO_DOLLAR = 350
+TOKEN_SOURCE = 'dummyTokens.csv'
 
 require 'csv'    
 $project_names = []
@@ -22,8 +23,9 @@ $project_names.each do |n|
 	n.gsub!(";",'')
 end
 
-TOKENS = []
+
+$tokens = []
 #CSV.foreach("tokens.csv", :headers => false) do |row|
-CSV.foreach("dummyTokens.csv", :headers => false) do |row|
-  TOKENS << row[0]
+CSV.foreach(TOKEN_SOURCE, :headers => false) do |row|
+  $tokens << row[0]
 end

@@ -57,7 +57,7 @@
     	  <% if current_experiment.return_credits and !@current_round.projects[0].funded? %>
             <th><%= @contributions.where(:project_id => @current_round.projects[0]).first.amount %></th>
         <% else %>
-        	<th/>
+        	<th>0</th>
         <% end %>
         </tr>
         <tr>
@@ -80,7 +80,7 @@
 	      <% if current_experiment.return_credits and !@current_round.projects[1].funded? %>
             <th><%= @contributions.where(:project_id => @current_round.projects[1]).first.amount %></th>
         <% else %>
-        	<th/>
+        	<th>0</th>
         <% end %>
         </tr>
         <tr>
@@ -103,7 +103,7 @@
 	      <% if current_experiment.return_credits and !@current_round.projects[2].funded? %>
             <th><%= @contributions.where(:project_id => @current_round.projects[2]).first.amount %></th>
         <% else %>
-        	<th/>
+        	<th>0</th>
         <% end %>
         </tr>
         <tr>
@@ -126,7 +126,7 @@
 	      <% if current_experiment.return_credits and !@current_round.projects[3].funded? %>
             <th><%= @contributions.where(:project_id => @current_round.projects[3]).first.amount %></th>
         <% else %>
-        	<th/>
+        	<th>0</th>
         <% end %>
         </tr>
       </tbody>

@@ -1,0 +1,6 @@
+<%= form_tag "/preferences/submit-flag"  do %>
+	<%= text_area_tag "note", nil, :class => 'input-xlarge' %>
+	<%= hidden_field_tag "id", @preferences.id %>
+	<br>
+	<%= submit_tag "Submit" , :class => 'btn-success btn-large' %>
+<% end %>
