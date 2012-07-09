@@ -12,7 +12,7 @@ var redirect="/contributions/submit?expired=1&current_round_id=<%=@current_round
   
 function countDown(){  
  if (count <=0){
-  document.getElementById("timer").innerHTML = "<h2 class=\"alert alert-error\">Out of time! Redirecting...</h2>"
+  document.getElementById("timer").innerHTML = "<h2 class=\"alert alert-error\">This round has ended! Redirecting...</h2>"
   $(".submit").hide(0);  
   window.location = redirect;  
  }else{  
