@@ -30,121 +30,158 @@
           <th><h3>Project Name</h3></th>
           <th><h3>Payouts</h3></th>
           <th><h3>Funding Status</h3></th>
-          <th><h3>Credits Earned</h3></th>
-          <% if current_experiment.return_credits%>
-            <th><h3>Credits Returned</h3></th>
-          <% end %>
+          <th><h3>Credits</h3></th>
+          <%# if current_experiment.return_credits%>
+            <!-- <th><h3>Credits Returned</h3></th> -->
+          <%# end %>
         </tr>
       </thead>
       <tbody>
         <tr>
+        
+        <!-- name A -->
     	  <th><%= @current_round.projects.order('id ASC').first.name %></th>
+    	  <!-- payout -->
     	  <th><%= @preferences.a_payout %></th>
+    	  
+    	  <!-- funding status -->
     	  <th>
 	    	  <% if @current_round.projects[0].goal_amount <= @current_round.projects[0].funded_amount %>
-    	        Funded
+    	        <font color="#468847">Funded</font>
               <% else %>
-    	        Not Funded
+    	        <font color="#B94A48">Not Funded</font>
               <% end %>
     	  </th>
+    	  
+    	  <!-- credits earned -->
     	  <th>
             <% if @current_round.projects[0].funded? %>
-              <%= @preferences.a_payout %>
+              <font color="#468847"><%= @preferences.a_payout %> credits earned</font>
+            <% elsif current_experiment.return_credits %>
+            	<font color="#B94A48"><%= @contributions.where(:project_id => @current_round.projects[0]).first.amount %> credits returned</font>
             <% else %>
               0
             <% end %>
-          </th>
-    	  <% if current_experiment.return_credits and !@current_round.projects[0].funded? %>
-            <th><%= @contributions.where(:project_id => @current_round.projects[0]).first.amount %></th>
-        <% else %>
-        	<th>0</th>
-        <% end %>
+        </th>
         </tr>
         <tr>
+        
+        <!-- name B -->
 	      <th><%= @current_round.projects.order('id ASC').second.name %></th>
+	      <!-- payout -->
 	      <th><%= @preferences.b_payout %></th>
+	      
+	      <!-- funding status -->
 	      <th>
 	    	  <% if @current_round.projects[1].goal_amount <= @current_round.projects[1].funded_amount %>
-    	        Funded
+    	        <font color="#468847">Funded</font>
           <% else %>
-    	        Not Funded
+    	        <font color="#B94A48">Not Funded</font>
            <% end %>
     	  </th>
-	      <th>
+    	  
+    	  <!-- credits earned -->
+    	  <th>
             <% if @current_round.projects[1].funded? %>
-              <%= @preferences.b_payout %>
+              <font color="#468847"><%= @preferences.b_payout %> credits earned</font>
+            <% elsif current_experiment.return_credits %>
+            	<font color="#B94A48"><%= @contributions.where(:project_id => @current_round.projects[1]).first.amount %> credits returned</font>
             <% else %>
               0
             <% end %>
-          </th>
-	      <% if current_experiment.return_credits and !@current_round.projects[1].funded? %>
-            <th><%= @contributions.where(:project_id => @current_round.projects[1]).first.amount %></th>
-        <% else %>
-        	<th>0</th>
-        <% end %>
+        </th>
         </tr>
         <tr>
+        
+        <!-- name C -->
 	      <th><%= @current_round.projects.order('id ASC').third.name %></th>
+	      <!-- payout -->
 	      <th><%= @preferences.c_payout %></th>
+	      
+	      <!-- funding status -->
 	      <th>
 	    	  <% if @current_round.projects[2].goal_amount <= @current_round.projects[2].funded_amount %>
-    	        Funded
+    	        <font color="#468847">Funded</font>
           <% else %>
-    	        Not Funded
+    	        <font color="#B94A48">Not Funded</font>
           <% end %>
     	  </th>
-	      <th>
+    	  
+    	  <!-- credits earned -->
+    	  <th>
             <% if @current_round.projects[2].funded? %>
-              <%= @preferences.c_payout %>
+              <font color="#468847"><%= @preferences.c_payout %> credits earned</font>
+            <% elsif current_experiment.return_credits %>
+            	<font color="#B94A48"><%= @contributions.where(:project_id => @current_round.projects[2]).first.amount %> credits returned</font>
             <% else %>
               0
             <% end %>
-          </th>
-	      <% if current_experiment.return_credits and !@current_round.projects[2].funded? %>
-            <th><%= @contributions.where(:project_id => @current_round.projects[2]).first.amount %></th>
-        <% else %>
-        	<th>0</th>
-        <% end %>
+        </th>
         </tr>
         <tr>
+        
+        <!-- name D -->
 	      <th><%= @current_round.projects.order('id ASC').fourth.name %></th>
+	      <!-- payout -->
 	      <th><%= @preferences.d_payout %></th>
+	      <!-- funding status -->
 	      <th>
 	    	  <% if @current_round.projects[3].goal_amount <= @current_round.projects[3].funded_amount %>
-    	        Funded
+    	        <font color="#468847">Funded</font>
           <% else %>
-    	        Not Funded
+    	        <font color="#B94A48">Not Funded</font>
           <% end %>
     	  </th>
-	      <th>
+    	  
+    	  <!-- credits earned -->
+    	  <th>
             <% if @current_round.projects[3].funded? %>
-              <%= @preferences.d_payout %>
+              <font color="#468847"><%= @preferences.d_payout %> credits earned</font>
+            <% elsif current_experiment.return_credits %>
+            	<font color="#B94A48"><%= @contributions.where(:project_id => @current_round.projects[3]).first.amount %> credits returned</font>
             <% else %>
-              0   
+              0
             <% end %>
-          </th>
-	      <% if current_experiment.return_credits and !@current_round.projects[3].funded? %>
-            <th><%= @contributions.where(:project_id => @current_round.projects[3]).first.amount %></th>
-        <% else %>
-        	<th>0</th>
-        <% end %>
+        </th>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<h3>Credits Not Donated: <%= @not_donated %></h3>
-<br>
 <div class="row">
-<div class="span4">
-<h2>Total Round Payout: <%#= @preferences.round_payout %></h2>
-<h2>Total Credits Banked: <%#= current_user.payout %></h2>
+	<div class="span4 offset8">
+		<h3>Credits Not Donated: <font color="#F89406"><%= @not_donated %></font></h3>
+	</div>
+<br>
 </div>
-<div class="span4">
-<h2><%= @preferences.round_payout %></h2>
-<h2><%= current_user.payout %></h2>
-</div>
+
+<div class="row">
+	<div class="span4">
+	<h2>Total Round Payout: </h2>
+	<h2>Total Credits Banked: </h2>
+	</div>
+	
+	<div class="span8">
+	<h2><%= @preferences.round_payout %> <small> =
+		<font color="#F89406">
+		<%= @not_donated %>
+		</font>
+		<font color="#468847"> 
+		<%= " + #{@preferences.a_payout}" if @current_round.projects[0].funded? %> 
+		<%= " + #{@preferences.b_payout}" if @current_round.projects[1].funded? %> 
+		<%= " + #{@preferences.c_payout}" if @current_round.projects[2].funded? %> 
+		<%= " + #{@preferences.d_payout}" if @current_round.projects[3].funded? %>
+		</font>
+		<font color="#B94A48">
+		<%= " + #{@contributions.where(:project_id => @current_round.projects[0]).first.amount}" unless @current_round.projects[0].funded?%>
+		<%= " + #{@contributions.where(:project_id => @current_round.projects[1]).first.amount}" unless @current_round.projects[1].funded?%>
+		<%= " + #{@contributions.where(:project_id => @current_round.projects[2]).first.amount}" unless @current_round.projects[2].funded?%>
+		<%= " + #{@contributions.where(:project_id => @current_round.projects[3]).first.amount}" unless @current_round.projects[3].funded?%>
+		</font> 
+	</small></h2>
+	<h2><%= current_user.payout %></h2>
+	</div>
 </div>
 
 <p>&nbsp;</p>

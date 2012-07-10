@@ -37,15 +37,47 @@ $(document).ready(function() {
     $('#credits').text(credits)
     $('#contribution_0').keyup(function() {
         $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+        if(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val() < 0)
+        {
+	        $('#credits').css("color", "red");
+        }
+        else
+        {
+	        $('#credits').css("color", "black");
+        }
     });
     $('#contribution_1').keyup(function() {
         $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+        if(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val() < 0)
+        {
+	        $('#credits').css("color", "red");
+        }
+        else
+        {
+	        $('#credits').css("color", "black");
+        }
     });
     $('#contribution_2').keyup(function() {
         $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+        if(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val() < 0)
+        {
+	        $('#credits').css("color", "red");
+        }
+        else
+        {
+	        $('#credits').css("color", "black");
+        }
     });
     $('#contribution_3').keyup(function() {
         $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+        if(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val() < 0)
+        {
+	        $('#credits').css("color", "red");
+        }
+        else
+        {
+	        $('#credits').css("color", "black");
+        }
     });
 }); 
 </script>
