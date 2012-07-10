@@ -1,3 +1,5 @@
+
+
 <p id="notice"><%= notice %></p>
 <script type="text/javascript">
 
@@ -8,6 +10,17 @@ function validateform() {
 				return false;
 			} else form.submit();
 	}
+
+$(document).ready(function() {
+    var credits = 150
+    $('#credits').text(credits)
+    $('#question_1A').keyup(function() {
+        $('#credits').text(credits - $('#question_1A').val() - $('#question_1B').val());
+    });
+    $('#question_1B').keyup(function() {
+        $('#credits').text(credits - $('#question_1A').val() - $('#question_1B').val());
+    });
+}); 
 
 </script>
 
@@ -21,7 +34,32 @@ function validateform() {
 
 	<p><strong><em>Credits earned in this question will go into your credit bank.</strong></em></p>
 	
-	<div class="well">
+	<div class="row">
+  <div class="span6">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><h4>Project Name</h4></th>
+          <th><h4>Project Payout</h4></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+    	  <th>Red</th>
+    	  <th>150</th>
+        </tr>
+        <tr>
+	      <th>Blue</th>
+	      <th>200</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+	
+	<h2>Credits: <span id="credits"></span></h2>
+	<p>&nbsp;</p>
+	
 	<div class="row">
   <div class="span2">
     <h3>Project Name</h3>
@@ -38,7 +76,7 @@ function validateform() {
   </div>
   
   <div class="span2">
-		<h3>Payout</h3>
+		<h3>Contributions</h3>
 		<br>
 	</div>
 	  
@@ -59,9 +97,11 @@ function validateform() {
 	    150/300
 	  </div>
 	  
-	  <div class="span2">
-	  	<b>150</b>
-	  </div>
+	  <div class="span5">
+	    	<p>Project Red
+		<%= text_field_tag "question_1A", nil,  :placeholder => '0', :id => 'question_1A', :presence => true %>
+		</p>
+		</div>
 	  
 	</div>  
 	  
@@ -80,22 +120,13 @@ function validateform() {
 	    0/150
 	  </div>
 	  
-	  <div class="span2">
-	  	<b>200</b>
-	  </div>
-	  
-	</div>  
+	  <div class="span5">
+	    	<p>Project Red
+		<%= text_field_tag "question_1B", nil, :placeholder => '0', :id => 'question_1B', :presence => true %>
+		</p>
+		</div>
 </div>
 
-	
-	<h4>How much would you give to each project?</h4>
-	<br>
-	<p>Project Red
-	<%= text_field_tag "question_1A", nil,  :placeholder => '0', :id => 'question_1A', :presence => true %>
-	</p>
-		<p>Project Blue
-	<%= text_field_tag "question_1B", nil, :placeholder => '0', :id => 'question_1B', :presence => true %>
-	</p>
 	<br>
 	<p><a class="btn btn-success btn-large" id="nextq" href="#">Next Question</a></p>
 </div>
