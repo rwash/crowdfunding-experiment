@@ -1,6 +1,7 @@
 class Preferences < ActiveRecord::Base
 	has_one :round
 	belongs_to :user
+	has_one :number, :through => :round
 	
 	validates :kind_of, :inclusion => 1..6
 	after_create :fill_in_payouts
