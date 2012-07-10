@@ -27,7 +27,10 @@ function validateform() {
 			if (total > 150) {
 				$("#notice").html("<h2 class=\"alert alert-error\">Your contributions cannont total more than 150 credits.<a class=\"close\" data-dismiss=\"alert\"><h2>x</h2></a></h2>")
 				return false;
-			} else form.submit();
+			} else 
+			  $(".submit").hide(0);
+			  $("#loading").show(0);
+			  form.submit();
 	}
 </script>
 
@@ -119,6 +122,21 @@ $(document).ready(function() {
     <%= hidden_field_tag "current_round_id", @current_round.id %>
     &nbsp; &nbsp; &nbsp;<%= button_to_function "Submit", "validateform()", :class => 'btn-success btn-large' %>
   </div>  
-</div>  
+</div> 
+	<div id="loading">
+		<h3><%= image_tag 'loading.gif' %> Your answers have been submitted, please wait...</h3>
+	</div> 
 <% end %>
 </div>
+
+
+
+<div id="loading">
+	<h3><%= image_tag 'loading.gif' %> Your answers have been submitted, please wait...</h3>
+</div>
+
+<style>
+	#loading {
+		display: none;
+	}
+</style>
