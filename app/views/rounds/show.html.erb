@@ -27,7 +27,10 @@ function validateform() {
 			if (total > 150) {
 				$("#notice").html("<h2 class=\"alert alert-error\">Your contributions cannont total more than 150 credits.<a class=\"close\" data-dismiss=\"alert\"><h2>x</h2></a></h2>")
 				return false;
-			} else form.submit();
+			} else 
+			  $(".submit").hide(0);
+			  $("#loading").show(0);
+			  form.submit();
 	}
 </script>
 
@@ -79,6 +82,19 @@ $(document).ready(function() {
 	        $('#credits').css("color", "black");
         }
     });
+    
+    $('#contribution_0').change(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+    $('#contribution_1').change(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+    $('#contribution_2').change(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+    $('#contribution_3').change(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
 }); 
 </script>
 
@@ -122,13 +138,16 @@ $(document).ready(function() {
   </div>
   
   <div class="span5">
-    <%= text_field_tag "amount_#{counter}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{counter}" %><br>
+    <%= number_field_tag "amount_#{counter}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{counter}" %><br>
     <%= hidden_field_tag "project_id_#{counter}", p.id %>
   </div>
   
 <%end%>
-<div class="span4 offset7">
-	<h2>Credits: <span id="credits"></span>​</h2>
+
+<div class="row">
+  <div class="span3 offset8">
+    <h2>&nbsp; &nbsp;Credits: <span id="credits"></span>​</h2>
+  </div>
 </div>
 <p>&nbsp;</p>
 <div class="row submit">
@@ -136,6 +155,21 @@ $(document).ready(function() {
     <%= hidden_field_tag "current_round_id", @current_round.id %>
     &nbsp; &nbsp; &nbsp;<%= button_to_function "Submit", "validateform()", :class => 'btn-success btn-large' %>
   </div>  
-</div>  
+</div> 
+	<div id="loading">
+		<h3><%= image_tag 'loading.gif' %> Your answers have been submitted, please wait...</h3>
+	</div> 
 <% end %>
 </div>
+
+
+
+<div id="loading">
+	<h3><%= image_tag 'loading.gif' %> Your answers have been submitted, please wait...</h3>
+</div>
+
+<style>
+	#loading {
+		display: none;
+	}
+</style>

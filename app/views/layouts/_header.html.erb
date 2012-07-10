@@ -1,9 +1,3 @@
-<script type="text/javascript">
-    $(document).ready(function(){
-      $(".iframe-instructions").colorbox({iframe:true, width:"73%", height:"100%"});
-    });
-</script>
-
 
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
@@ -13,7 +7,7 @@
       <% else %>
         <span class="brand"><%= "Round #{@current_round.number} of #{NUMBER_OF_ROUNDS}" unless @current_round.nil? %></span> 
       <ul class="nav">
-        <li><%= link_to "Instructions", '/instructions_iframe?header=false', :class => 'iframe-instructions' unless current_user.name == 'admin' %></li>  
+        <li><%= link_to "Instructions", '/instructions_iframe?header=false', :onclick => "window.open(this.href,'window','width=1100,height=800') ;return false;" unless current_user.name == 'admin' %></li>  
       </ul>
       <ul class="nav secondary-nav pull-right">
         <li class="divider-vertical"></li>
