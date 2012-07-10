@@ -13,9 +13,11 @@ function validateform() {
 
 <div id="question1">
 <%= form_tag "/questions/submit", :id => 'form' do %>
-	<h3>Question 1</h3>
+	<h3>Question 1 <small>Extra Credit</small></h3>
 	<br>
-	<p><strong>You alone will determine the funding of the projects below.</strong> You have 150 credits to allocate to one of the two projects, each of which needs 150 credits to be completed. Project Red needs 300 credits total, but already has 150 seed credits. Project Blue needs 150 credits total, and has no seed credits. If project Red is funded, you will recieve 150 credits. If project Blue is funded you will recieve 200 credits.</p>
+	<strong>You alone will determine the funding of the projects below.</strong>
+	<br><br>
+	<p>You have 150 credits to allocate to one of the two projects, each of which needs 150 credits to be completed. Project Red needs 300 credits total, but already has 150 seed credits. Project Blue needs 150 credits total, and has no seed credits. If project Red is funded, you will recieve 150 credits. If project Blue is funded you will recieve 200 credits.</p>
 
 	<p><strong><em>Credits earned in this question will go into your credit bank.</strong></em></p>
 	
