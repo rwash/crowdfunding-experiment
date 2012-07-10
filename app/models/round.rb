@@ -103,6 +103,10 @@ class Round < ActiveRecord::Base
 				p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[3].id).first.amount
 			end
 			
+			@user = User.find(p.user_id)
+			@user.payout += p.round_payout
+			
+			@user.save!
 			p.save!
 		end
 		

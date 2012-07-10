@@ -79,10 +79,10 @@ class UsersController < InheritedResources::Base
 	
 		current_user.question_1A = params[:question_1A]
 		current_user.question_1B = params[:question_1B]
-		current_user.question_2A = params[:question_10]
-		current_user.question_2B = params[:question_11]
-		current_user.question_2C = params[:question_12]
-		current_user.question_2D = params[:question_13]
+		current_user.question_2A = params[:question_20]
+		current_user.question_2B = params[:question_21]
+		current_user.question_2C = params[:question_22]
+		current_user.question_2D = params[:question_23]
 		current_user.save!
 		
 		current_experiment.users.each do |u|

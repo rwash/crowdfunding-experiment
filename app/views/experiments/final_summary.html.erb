@@ -7,14 +7,14 @@
 	</tr>
 </thead>
 
-<% @user.preferences.order('updated_at ASC').each_with_index do |p,i| %>
+<% @preferences.each_with_index do |p,i| %>
 	<tr>
-		<td><%= Round.find(p.round_id).number %></td>
-		<td><%= p.round_payout %></td>
+		<td><%= i + 1 %><%#= Round.find(p.round_id).number %></td>
+		<td><%= p.round_payout  %></td>
 	</tr>
 <% end %>
 <tr>
-	<td>Questions</td>
+	<td>Extra Credit</td>
 	<td><%= current_user.questions_payout %></td>
 </tr>
 </table>

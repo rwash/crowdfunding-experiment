@@ -21,6 +21,8 @@ class ExperimentsController < InheritedResources::Base
 	
 	def final_summary
 		@user = current_user
+		@preferences = @user.preferences
+		@preferences.sort! {|a,b| Round.find(a.round_id).number <=> Round.find(b.round_id).number}
 	end
 	
 	def waiting_for_summary

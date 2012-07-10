@@ -136,7 +136,16 @@
 
 <h3>Credits Not Donated: <%= @not_donated %></h3>
 <br>
-<h2>Total Round Payout: <%= @preferences.round_payout %> credits</h2>
+<div class="row">
+<div class="span4">
+<h2>Total Round Payout: <%#= @preferences.round_payout %></h2>
+<h2>Total Credits Banked: <%#= current_user.payout %></h2>
+</div>
+<div class="span4">
+<h2><%= @preferences.round_payout %></h2>
+<h2><%= current_user.payout %></h2>
+</div>
+</div>
 
 <p>&nbsp;</p>
 <%= link_to "Ready for Next Round", round_waiting_path(@next_round), :class => 'btn-success btn-large' unless last_round?(@current_round) %>
