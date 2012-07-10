@@ -51,7 +51,6 @@ $(document).ready(function() {
 </script>
 
 <%= render @preferences if @preferences %>
-<h2>Credits: <span id="credits"></span>​</h2>
 <p>&nbsp;</p>
 <%= form_tag "/contributions/submit" , :id => 'form' do %>
 
@@ -96,6 +95,11 @@ $(document).ready(function() {
   </div>
   
 <%end%>
+<div class="row">
+  <div class="span3 offset8">
+    <h2>&nbsp; &nbsp;Credits: <span id="credits"></span>​</h2>
+  </div>
+</div>
 <p>&nbsp;</p>
 <div class="row submit">
   <div class="span2">
