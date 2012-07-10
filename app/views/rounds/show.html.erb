@@ -47,6 +47,19 @@ $(document).ready(function() {
     $('#contribution_3').keyup(function() {
         $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
     });
+    
+    $('#contribution_0').change(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+    $('#contribution_1').change(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+    $('#contribution_2').change(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
+    $('#contribution_3').change(function() {
+        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
+    });
 }); 
 </script>
 
@@ -90,7 +103,7 @@ $(document).ready(function() {
   </div>
   
   <div class="span5">
-    <%= text_field_tag "amount_#{counter}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{counter}" %><br>
+    <%= number_field_tag "amount_#{counter}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{counter}" %><br>
     <%= hidden_field_tag "project_id_#{counter}", p.id %>
   </div>
   
