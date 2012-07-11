@@ -173,12 +173,14 @@
 		<%= " + #{@preferences.c_payout}" if @current_round.projects[2].funded? %> 
 		<%= " + #{@preferences.d_payout}" if @current_round.projects[3].funded? %>
 		</font>
-		<font color="#B94A48">
-		<%= " + #{@contributions.where(:project_id => @current_round.projects[0]).first.amount}" unless @current_round.projects[0].funded?%>
-		<%= " + #{@contributions.where(:project_id => @current_round.projects[1]).first.amount}" unless @current_round.projects[1].funded?%>
-		<%= " + #{@contributions.where(:project_id => @current_round.projects[2]).first.amount}" unless @current_round.projects[2].funded?%>
-		<%= " + #{@contributions.where(:project_id => @current_round.projects[3]).first.amount}" unless @current_round.projects[3].funded?%>
-		</font> 
+		<% if current_experiment.return_credits %>
+			<font color="#B94A48">
+			<%= " + #{@contributions.where(:project_id => @current_round.projects[0]).first.amount}" unless @current_round.projects[0].funded?%>
+			<%= " + #{@contributions.where(:project_id => @current_round.projects[1]).first.amount}" unless @current_round.projects[1].funded?%>
+			<%= " + #{@contributions.where(:project_id => @current_round.projects[2]).first.amount}" unless @current_round.projects[2].funded?%>
+			<%= " + #{@contributions.where(:project_id => @current_round.projects[3]).first.amount}" unless @current_round.projects[3].funded?%>
+			</font>
+		<% end %>
 	</small></h2>
 	<h2><%= current_user.payout %></h2>
 	</div>
