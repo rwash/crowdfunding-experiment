@@ -24,7 +24,7 @@ function countDown(){
 
 function validateform() {
 			var total = parseInt($('#contribution_0').val()) + parseInt($('#contribution_1').val()) + parseInt($('#contribution_2').val()) + parseInt($('#contribution_3').val());
-			if (total > 150) {
+			if (total > 150 || total < 0 || $('#contribution_0').val() < 0 || $('#contribution_1').val() < 0 || $('#contribution_2').val() < 0 || $('#contribution_3').val() < 0) {
 				$("#notice").html("<h2 class=\"alert alert-error\">Your contributions can not total more than 150 credits.<a class=\"close\" data-dismiss=\"alert\"><h2>x</h2></a></h2>")
 				return false;
 			} else 
