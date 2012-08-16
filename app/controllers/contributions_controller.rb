@@ -14,15 +14,14 @@ class ContributionsController < InheritedResources::Base
 		@round = Round.find(params[:current_round_id])
 		@preferences = Preferences.where(:user_id => current_user.id, :round_id => @round.id).first
 		
-		if params[:expired].nil?
+		#checks to make sure they havnt alread submitted a contributon
+		@prev_contribution = Contribution.where(:user_id => current_user.id, :round_id => @round.id).first
+		if !@prev_contribution.nil?
+			flash[:error] = "You cannot edit your contribution after you have submitted."
+			return redirect_to summary_waiting_path(@round)
+		end
 		
-			#checks to make sure they havnt alread submitted a contributon
-			@prev_contribution = Contribution.where(:user_id => current_user.id, :round_id => @round.id).first
-			if !@prev_contribution.nil?
-				flash[:error] = "You cannot edit your contribution after you have submitted."
-				return redirect_to summary_waiting_path(@round)
-			end
-	
+		if params[:expired].nil?
 			@total = 0
 			@round.projects.size.times do |i|
 				@total = @total + params["amount_#{i}".to_sym].to_i
