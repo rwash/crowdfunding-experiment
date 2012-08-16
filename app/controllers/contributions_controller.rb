@@ -17,7 +17,7 @@ class ContributionsController < InheritedResources::Base
 		#checks to make sure they havnt alread submitted a contributon
 		@prev_contribution = Contribution.where(:user_id => current_user.id, :round_id => @round.id).first
 		if !@prev_contribution.nil?
-			flash[:error] = "You cannot edit your contribution after you have submitted."
+			flash[:error] = "You have already submitted your contributions for this round."
 			return redirect_to summary_waiting_path(@round)
 		end
 		
@@ -31,13 +31,8 @@ class ContributionsController < InheritedResources::Base
 				flash[:error] = "You can not donate more then the allotted amount."
 				return redirect_to @round
 			end
-			
-			#give users back the money they didnt spend/donate
-			#@preferences.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND - @total
-			#@preferences.save!
 							
 		else
-			#@preferences.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND
 			@preferences.timer_expired = true
 			@preferences.save!
 		end
@@ -54,14 +49,10 @@ class ContributionsController < InheritedResources::Base
 				if !Contribution.create(:amount => @amount, :project_id => @project_id, :time_contributed => Time.now, :user_id => current_user.id, :round_id => @round.id)
 					flash[:error] = "There was an error createing one or more of the contributions."
 					return redirect_to root_path
-				end
-				
+				end		
 			end
 		
-		
 		@preferences.ready_save_and_check_summary
-		
 		redirect_to summary_waiting_path(@round)
 	end
-	
 end
