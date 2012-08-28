@@ -9,29 +9,33 @@ $(document).ready(function() {
 <script type="text/javascript">  
 var count =61
 var redirect="/contributions/submit?expired=1&current_round_id=<%=@current_round.id%>"  
-  
+var stop = false
 function countDown(){  
- if (count <=0){
-  document.getElementById("timer").innerHTML = "<h2 class=\"alert alert-error\">This round has ended! Redirecting...</h2>"
-  $(".submit").hide(0);  
-  window.location = redirect;  
- }else{  
-  count--;  
-  document.getElementById("timer").innerHTML = "This round will end in "+count+" seconds."  
-  setTimeout("countDown()", 1000)  
- }  
+	if (stop){return}
+	
+	 if (count <=0){
+	  document.getElementById("timer").innerHTML = "<h2 class=\"alert alert-error\">This round has ended! Redirecting...</h2>"
+	  $(".submit").hide(0);  
+	  window.location = redirect;  
+	 }else{  
+	  count--;  
+	  document.getElementById("timer").innerHTML = "This round will end in "+count+" seconds."  
+	  setTimeout("countDown()", 1000)  
+	 }
 }  
 
 function validateform() {
-			var total = $('#contribution_0').val() + $('#contribution_1').val() + $('#contribution_2').val() + $('#contribution_3').val();
+			// var total = $('#contribution_0').val() + $('#contribution_1').val() + $('#contribution_2').val() + $('#contribution_3').val();
+			var total = parseInt($('#contribution_0').val()) + parseInt($('#contribution_1').val()) + parseInt($('#contribution_2').val()) + parseInt($('#contribution_3').val());
 			if (total > 150) {
 				$("#notice").html("<h2 class=\"alert alert-error\">Your contributions cannont total more than 150 credits.<a class=\"close\" data-dismiss=\"alert\"><h2>x</h2></a></h2>")
 				return false;
 			} else 
+				stop = true;
 			  $(".submit").hide(0);
 			  $("#loading").show(0);
-			  count--;
-			  document.getElementById("timer").innerHTML = "Answers Submitted."
+			  document.getElementById("timer").innerHTML = "<h2 class=\"alert alert-success\">Answers submitted. Please wait.</h2>"
+			  
 			  form.submit();
 	}
 </script>
@@ -85,18 +89,6 @@ $(document).ready(function() {
         }
     });
     
-    $('#contribution_0').change(function() {
-        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
-    });
-    $('#contribution_1').change(function() {
-        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
-    });
-    $('#contribution_2').change(function() {
-        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
-    });
-    $('#contribution_3').change(function() {
-        $('#credits').text(credits - $('#contribution_0').val() - $('#contribution_1').val() - $('#contribution_2').val() - $('#contribution_3').val());
-    });
 }); 
 </script>
 
@@ -140,7 +132,8 @@ $(document).ready(function() {
   </div>
   
   <div class="span5">
-    <%= number_field_tag "amount_#{counter}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{counter}" %><br>
+    <%#= number_field_tag "amount_#{counter}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{counter}" %>
+    <%= text_field_tag "amount_#{counter}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{counter}" %><br>
     <%= hidden_field_tag "project_id_#{counter}", p.id %>
   </div>
   
