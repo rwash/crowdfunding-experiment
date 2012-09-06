@@ -27,8 +27,8 @@ function countDown(){
 function validateform() {
 			// var total = $('#contribution_0').val() + $('#contribution_1').val() + $('#contribution_2').val() + $('#contribution_3').val();
 			var total = parseInt($('#contribution_0').val()) + parseInt($('#contribution_1').val()) + parseInt($('#contribution_2').val()) + parseInt($('#contribution_3').val());
-			if (total > 150) {
-				$("#notice").html("<h2 class=\"alert alert-error\">Your contributions cannont total more than 150 credits.<a class=\"close\" data-dismiss=\"alert\"><h2>x</h2></a></h2>")
+			if (total > 150 || parseInt($('#contribution_0').val()) < 0 || parseInt($('#contribution_1').val()) < 0 || parseInt($('#contribution_2').val()) < 0 || parseInt($('#contribution_3').val()) < 0) {
+				$("#notice").html("<h2 class=\"alert alert-error\">Your contributions cannont total more than 150 credits and must be positive.<a class=\"close\" data-dismiss=\"alert\"><h2>x</h2></a></h2>")
 				return false;
 			} else 
 				stop = true;
