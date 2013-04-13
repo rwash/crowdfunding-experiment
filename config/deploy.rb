@@ -2,7 +2,7 @@ require 'bundler/capistrano'
 require 'rvm/capistrano'
 
 set :application, "crowdfunding-experiment"
-set :repository,  "/projects/crowdfunding-experiment.git"
+set :repository,  "git@github.com:rwash/crowdfunding-experiment.git"
 set :deploy_to, "/projects/crowdfunding-experiment"
 ssh_options[:forward_agent] = true
 set :rvm_type, :system
