@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
 	belongs_to :round
-	has_many :contributions
+	has_many :contributions, :dependent => :destroy
 	
 	after_create :generate_name
 	

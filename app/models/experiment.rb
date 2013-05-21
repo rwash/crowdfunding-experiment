@@ -1,9 +1,9 @@
 class Experiment < ActiveRecord::Base
 
 	#has_many :rounds, :dependent => :destroy
-	has_many :groups
-	has_many :rounds, :through => :groups
+	has_many :groups, :dependent => :destroy
 	has_many :users, :dependent => :destroy
+	has_many :rounds, :through => :groups
 	# has_one :admin
 	
 	after_create :generate_groups

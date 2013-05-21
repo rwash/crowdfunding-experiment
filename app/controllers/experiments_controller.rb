@@ -2,6 +2,7 @@ class ExperimentsController < InheritedResources::Base
 	def create
 		require_admin
 		@experiment = Experiment.new(params[:experiment])
+		@experiment.name = "Experiment #{@experiment.id}"
 		
     if @experiment.save
       redirect_to dashboard_path(@experiment)
