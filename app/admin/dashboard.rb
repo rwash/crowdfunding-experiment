@@ -14,6 +14,11 @@ ActiveAdmin.register_page "Dashboard" do
                   experiment.current_round_number
                 end
               end
+              column "Status" do |experiment|
+                div :class => "admin-center-column" do 
+                  link_to("STATUS", dashboard_path(experiment))
+                end
+              end
             end
           end
         end
@@ -29,6 +34,11 @@ ActiveAdmin.register_page "Dashboard" do
                   experiment.current_round_number
                 end
               end
+              column "Status" do |experiment|
+                div :class => "admin-center-column" do 
+                  link_to("STATUS", dashboard_path(experiment))
+                end
+              end
             end
           end
         end
@@ -42,6 +52,11 @@ ActiveAdmin.register_page "Dashboard" do
               column "Current Round" do |experiment|
                 div :class => "admin-center-column" do 
                   experiment.current_round_number
+                end
+              end
+              column "Status" do |experiment|
+                div :class => "admin-center-column" do 
+                  link_to("STATUS", dashboard_path(experiment))
                 end
               end
             end

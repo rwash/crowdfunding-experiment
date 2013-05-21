@@ -1,7 +1,8 @@
 class Group < ActiveRecord::Base
 	belongs_to :experiment
-	has_many :rounds
+	has_many :rounds, :dependent => :destroy
 	has_many :users
+  has_many :preferences
 	
 	after_create :genereate_rounds
 	

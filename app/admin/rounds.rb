@@ -12,12 +12,11 @@ ActiveAdmin.register Round do
     
   
   # Configuration for Sidebar Filters
-  filter :experiment, :as => :select
-  filter :group, :as => :select
-  filter :number, :as => :select
+  filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
+  # filter :group, :as => :select, :collection => Group.uniq.pluck(:name)  # TODO - DOESN'T SELECT RECORDS
+  filter :number, :label => "Round"
   filter :started, :as => :select
   filter :finished, :as => :select
-  filter :number
   filter :start_time
   filter :end_time
   
@@ -26,7 +25,7 @@ ActiveAdmin.register Round do
   config.sort_order = "id_asc"
   config.per_page = 15
   index do
-    column :experiment do |round|
+    column :experiment, :sortable => :experiment_id do |round|
       link_to "Experiment ##{round.group.experiment_id}", admin_experiment_path(round.group.experiment_id)
     end
     column :group, :sortable => :group_id do |round|
@@ -83,6 +82,32 @@ ActiveAdmin.register Round do
       row :end_time
     end
     active_admin_comments
+  end
+  
+  
+  # Configuration for Rounds CSV Output
+  csv do
+    column "Experiment" do |round|
+      "Experiment ##{round.group.experiment_id}"
+    end
+    column "Round Id" do |round|
+      round.id
+    end
+    column "Round Number" do |round|
+      round.number
+    end
+    column "Group" do |round|
+      round.group.name
+    end
+    column "Custom Output #1" do |round|
+      (round.id*3)
+    end
+    column "Custom Output #2" do |round|
+      (round.id/3.142)
+    end
+    column "Custom Output #3" do |round|
+      "ABC"
+    end
   end
   
 end

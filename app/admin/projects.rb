@@ -18,9 +18,10 @@ ActiveAdmin.register Project do
   
   
   # Configuration for Sidebar Filters
-  filter :round, :as => :select
-  filter :name
-  filter :group, :as => :select
+  filter :round_group_name, :label => "Group", :as => :select, :collection => Group.uniq.pluck(:name)
+  filter :round_number, :label => "Round", :as => :select, :collection => Round.uniq.pluck(:number)
+  filter :admin_name, :label => "Project Type", :as => :select, :collection => Project.order("admin_name ASC").uniq.pluck(:admin_name)
+  filter :name, :label => "Project Name", :as => :select, :collection => Project.order("name ASC").uniq.pluck(:name)
   filter :goal_amount
   filter :start_amount
   filter :funded_amount
@@ -38,7 +39,7 @@ ActiveAdmin.register Project do
     end
     column :round, :sortable => :round_id do |project|
        div :class => "admin-center-column" do 
-          link_to "Round #{project.round_id}", admin_round_path(project.round_id)
+          link_to "Round #{project.round.number}", admin_round_path(project.round_id)
        end
     end
     column "Project Type", :sortable => :admin_name do |project|

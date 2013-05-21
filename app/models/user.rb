@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
 	end
 	
 	belongs_to :experiment
-	has_one :group
-	has_many :preferences, :class_name => 'Preferences'
+	belongs_to :group
+	has_many :preferences, :class_name => 'Preferences', :dependent => :destroy
 	has_many :rounds, :through => :preferences
 	has_many :contributions
 	

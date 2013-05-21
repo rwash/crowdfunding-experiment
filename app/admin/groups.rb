@@ -12,8 +12,8 @@ ActiveAdmin.register Group do
     
   
   # Configuration for Sidebar Filters
-  filter :experiment, :as => :select, :collection => Group.uniq.pluck(:experiment_id)  # CHECK THIS WORKS
-  filter :name, :as => :select, :collection => Group.uniq.pluck(:name)     # CHECK THIS WORKS
+  filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
+  filter :name, :label => "Group Name", :as => :select, :collection => Group.uniq.pluck(:name)
   
   
   # Configuration for Groups Index Page

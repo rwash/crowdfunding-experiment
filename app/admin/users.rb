@@ -6,11 +6,11 @@ ActiveAdmin.register User do
   
   
   # Configuration for Sidebar Filters
-  filter :experiment
+  filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
+  filter :group_name, :label => "Group", :as => :select, :collection => Group.uniq.pluck(:name)
   filter :name
   filter :payout
   filter :questions_payout
-  filter :times_viewed_instructions
 
 
   # Configuration for Users Index Page
@@ -24,7 +24,7 @@ ActiveAdmin.register User do
     end
     column :group, :sortable => :group_id  do |user|
       if user.group_id != nil
-        link_to "Group #{user.group_id}", admin_group_path(user.group_id)
+        link_to "Group #{user.group.name}", admin_group_path(user.group_id)
       end
     end
     column :name, :sortable => :name do |user|

@@ -4,7 +4,13 @@ ActiveAdmin.register Contribution do
   menu :parent => "EXPERIMENTS", :priority => 5
   scope :all, :default => true
 
+
+  # Configuration for Sidebar Filters
+  filter :project_admin_name, :label => "Project Type", :as => :select, :collection => Project.uniq.pluck(:admin_name)
+  filter :project_name, :label => "Project Name", :as => :select, :collection => Project.order("name ASC").uniq.pluck(:name)
+  filter :amount
   
+    
   # Configuration for Contributions Index Page
   config.sort_order = "id_asc"  
   config.per_page = 15
@@ -21,6 +27,9 @@ ActiveAdmin.register Contribution do
     column "Project Type", :sortable => :project_id do |contribution|
       link_to "Type #{contribution.project.admin_name}", admin_project_path(contribution.project_id)
     end
+    column "Project Name", :sortable => :project_id do |contribution|
+      contribution.project.name
+    end
     column :user_id, :sortable => :user_id do |contribution|
       link_to "User #{contribution.user_id}", admin_user_path(contribution.user_id)
     end
@@ -29,7 +38,6 @@ ActiveAdmin.register Contribution do
           contribution.amount
        end
     end
-    column :time_contributed
     default_actions
   end  
 
@@ -48,6 +56,9 @@ ActiveAdmin.register Contribution do
       end
       row "Project Type" do |contribution|
         link_to "Type #{contribution.project.admin_name}", admin_project_path(contribution.project_id)
+      end
+      row "Project Name" do |contribution|
+        contribution.project.name
       end
       row "User" do |contribution|
         link_to "User #{contribution.user_id}", admin_user_path(contribution.user_id)

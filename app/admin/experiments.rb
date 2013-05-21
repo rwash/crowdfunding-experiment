@@ -13,6 +13,9 @@ ActiveAdmin.register Experiment do
   scope :return_credits do |experiment|
     experiment.where(:return_credits => true)
   end
+  scope :dont_return_credits do |experiment|
+    experiment.where(:return_credits => false)
+  end    
     
   
   # Configuration for Sidebar Filters
@@ -21,8 +24,6 @@ ActiveAdmin.register Experiment do
   filter :return_credits, :as => :select
   filter :finsihed_calc, :as => :select
   filter :current_round_number
-  filter :start_time
-  filter :end_time
   
   
   # Configuration for Experiments Index Page

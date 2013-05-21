@@ -1,6 +1,8 @@
 class Preferences < ActiveRecord::Base
-	has_one :round
+  # has_one :round
 	belongs_to :user
+	belongs_to :round
+  has_one :group, :through => :round
 	has_one :number, :through => :round
 	
 	validates :kind_of, :inclusion => 1..6
