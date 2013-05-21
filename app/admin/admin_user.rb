@@ -1,5 +1,7 @@
 ActiveAdmin.register AdminUser do     
 
+  filter :email
+
 
   index do                            
     column :email                     
@@ -8,8 +10,7 @@ ActiveAdmin.register AdminUser do
     column :sign_in_count             
     default_actions                   
   end                                 
-
-  filter :email                       
+                  
 
   form do |f|                         
     f.inputs "Admin Details" do       

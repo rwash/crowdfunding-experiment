@@ -1,21 +1,32 @@
 ActiveAdmin.register User do
-  menu :parent => "EXPERIMENTS", :priority => 7
-
+  actions :index, :show, :edit, :update
+  config.batch_actions = false  
+  menu :parent => "EXPERIMENTS", :priority => 6
+  scope :all, :default => true
+  
+  
   # Configuration for Sidebar Filters
   filter :experiment
   filter :name
   filter :payout
   filter :questions_payout
   filter :times_viewed_instructions
-  filter :created_at
 
 
   # Configuration for Users Index Page
   config.per_page = 15
   config.sort_order = "id_asc"
-
   index do
-    selectable_column
+    column :experiment, :sortable => :experiment_id  do |user|
+      if user.experiment_id != nil
+        link_to "Experiment ##{user.experiment_id}", admin_experiment_path(user.experiment_id)
+      end
+    end
+    column :group, :sortable => :group_id  do |user|
+      if user.group_id != nil
+        link_to "Group #{user.group_id}", admin_group_path(user.group_id)
+      end
+    end
     column :name, :sortable => :name do |user|
        div :class => "admin-center-column" do 
           user.name
@@ -36,10 +47,37 @@ ActiveAdmin.register User do
           user.questions_payout
        end
     end
-    column :created_at
     default_actions
   end
-
+  
+  
+  # Configuration for Users Show Page
+  show do |user|
+    attributes_table do
+      row :experiment do |user|
+        if user.experiment_id != nil
+          link_to "Experiment ##{user.experiment_id}", admin_experiment_path(user.experiment_id)
+        end
+      end
+      row :group do |user|
+        if user.group_id != nil
+          link_to "Group #{user.group_id}", admin_group_path(user.group_id)
+        end
+      end
+      row :name
+      row :payout
+      row :questions_payout
+      row :times_viewed_instructions
+      row :question_1A
+      row :question_1B
+      row :question_2A
+      row :question_2B
+      row :question_2C
+      row :question_2D
+    end
+    active_admin_comments
+  end
+  
 
   # Configuration for Users Edit Page
   form do |f|                         

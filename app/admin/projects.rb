@@ -1,16 +1,18 @@
 ActiveAdmin.register Project do
+  actions :index, :show  
+  config.batch_actions = false  
   menu :parent => "EXPERIMENTS", :priority => 4
   scope :all, :default => true
-  scope :admin_a do |project|
+  scope :type_a do |project|
     project.where(:admin_name => "A")
   end
-  scope :admin_b do |project|
+  scope :type_b do |project|
     project.where(:admin_name => "B")
   end
-  scope :admin_c do |project|
+  scope :type_c do |project|
     project.where(:admin_name => "C")
   end
-  scope :admin_d do |project|
+  scope :type_d do |project|
     project.where(:admin_name => "D")
   end
   
@@ -22,17 +24,29 @@ ActiveAdmin.register Project do
   filter :goal_amount
   filter :start_amount
   filter :funded_amount
-  filter :created_at
   
   
   # Configuration for Projects Index Page
   config.sort_order = "id_asc"
   config.per_page = 15
-
   index do
-    selectable_column
-    column :id
-    column :name, :sortable => :name do |project|
+    column :experiment do |project|
+      link_to "Experiment ##{project.round.group.experiment_id}", admin_experiment_path(project.round.group.experiment_id)
+    end
+    column "Group" do |project|
+      link_to "Group #{project.round.group.name}", admin_group_path(project.round.group_id)
+    end
+    column :round, :sortable => :round_id do |project|
+       div :class => "admin-center-column" do 
+          link_to "Round #{project.round_id}", admin_round_path(project.round_id)
+       end
+    end
+    column "Project Type", :sortable => :admin_name do |project|
+       div :class => "admin-center-column" do 
+          "Type #{project.admin_name}"
+       end
+    end
+    column "Project Name", :sortable => :name do |project|
        div :class => "admin-center-column" do 
           project.name
        end
@@ -52,50 +66,31 @@ ActiveAdmin.register Project do
           project.funded_amount
        end
     end
-    column :admin_name, :sortable => :admin_name do |project|
-       div :class => "admin-center-column" do 
-          project.admin_name
-       end
-    end  
-    column :group, :sortable => :group do |project|
-       div :class => "admin-center-column" do 
-          project.group
-       end
-    end
-    column :created_at
     default_actions
   end
   
   
   # Configuration for Projects Show Page
-  show do |user|
+  show do |project|
     attributes_table do
-      row :id
+      row :experiment do |project|
+        link_to "Experiment ##{project.round.group.experiment_id}", admin_experiment_path(project.round.group.experiment_id)
+      end
+      row :group do |project|
+        link_to "Group #{project.round.group.name}", admin_group_path(project.round.group_id)        
+      end
+      row :round do |project|
+        link_to "Round #{project.round_id}", admin_round_path(project.round_id)
+      end
+      row "Project Type" do |project|
+        "Type #{project.admin_name}"
+      end
       row :name
       row :goal_amount
       row :start_amount
       row :funded_amount
-      row :group
-      row :round
-      row :admin_name
-      row :created_at
-      row :updated_at
     end
     active_admin_comments
-  end
-  
-  
-  # Configuration for Projects Edit Page
-  form do |f|                         
-   f.inputs "New Project" do       
-     f.input :round, :as => :select
-     f.input :name
-     f.input :goal_amount 
-     f.input :start_amount
-     f.input :funded_amount
-     f.input :admin_name 
-   end                               
-   f.actions                         
   end
   
 end

@@ -23,16 +23,16 @@ ActiveAdmin.register Experiment do
   filter :current_round_number
   filter :start_time
   filter :end_time
-  filter :created_at
   
   
   # Configuration for Experiments Index Page
   config.sort_order = "id_asc"  
   config.per_page = 15
-
   index do
     selectable_column
-    column :id
+    column "Experiment" do |experiment|
+      "Experiment ##{experiment.id}"
+    end
     column :started, :sortable => :started do |experiment|
        div :class => "admin-center-column" do 
           experiment.started.yesno
@@ -53,15 +53,16 @@ ActiveAdmin.register Experiment do
           experiment.return_credits.yesno
        end
     end
-    column :created_at
     default_actions
   end
   
   
   # Configuration for Experiments Show Page
-  show do |user|
+  show do |experiment|
     attributes_table do
-      row :id
+      row "Experiment" do |experiment|
+        "Experiment ##{experiment.id}"
+      end
       row :current_round_number
       row :started do |experiment|
         experiment.started.yesno
@@ -77,8 +78,6 @@ ActiveAdmin.register Experiment do
       end      
       row :start_time
       row :end_time
-      row :created_at
-      row :updated_at
     end
     active_admin_comments
   end
@@ -87,7 +86,7 @@ ActiveAdmin.register Experiment do
   # Configuration for Experiments Edit Page
   form do |f|                         
    f.inputs "New Experiment" do       
-     f.input :return_credits, :as => :select
+     f.input :return_credits, :as => :select, :include_blank => false
    end                               
    f.actions                         
   end  
