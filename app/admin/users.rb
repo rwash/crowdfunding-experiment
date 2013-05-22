@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   actions :index, :show, :edit, :update
   config.batch_actions = false  
-  menu :parent => "EXPERIMENTS", :priority => 6
+  menu :parent => "USERS", :priority => 1
   scope :all, :default => true
   
   

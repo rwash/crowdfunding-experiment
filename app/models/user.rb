@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 	has_many :preferences, :class_name => 'Preferences', :dependent => :destroy
 	has_many :rounds, :through => :preferences
 	has_many :contributions
+	has_one :donor, :dependent => :destroy
+	has_one :creator, :dependent => :destroy
 	
 	after_create :generate_name_and_password
 	

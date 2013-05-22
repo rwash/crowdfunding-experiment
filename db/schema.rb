@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130521111327) do
+ActiveRecord::Schema.define(:version => 20130522061937) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -54,6 +54,32 @@ ActiveRecord::Schema.define(:version => 20130521111327) do
     t.integer  "round_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+  end
+
+  create_table "creator_preferences", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "round_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "creators", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "donor_preferences", :force => true do |t|
+    t.integer  "donor_id"
+    t.integer  "round_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "donors", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "experiments", :force => true do |t|
@@ -136,6 +162,9 @@ ActiveRecord::Schema.define(:version => 20130521111327) do
     t.integer  "question_2D"
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
+    t.string   "type"
+    t.integer  "creator_id"
+    t.integer  "donor_id"
   end
 
 end

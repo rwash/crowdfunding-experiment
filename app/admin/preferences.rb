@@ -1,7 +1,7 @@
 ActiveAdmin.register Preferences do
   actions :index, :show
   config.batch_actions = false  
-  menu :parent => "EXPERIMENTS", :priority => 7
+  menu :parent => "PREFERENCES", :priority => 1
   scope :all, :default => true
   scope :flag do |preference|
     preference.where(:flag => true)

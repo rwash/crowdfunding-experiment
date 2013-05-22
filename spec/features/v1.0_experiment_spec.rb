@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "GENERATING A NEW EXPERIMENT:" do
+describe "v1.0 GENERATING A NEW EXPERIMENT:" do
 
   before(:all) do
     @experiment = FactoryGirl.create(:experiment)
@@ -11,21 +11,21 @@ describe "GENERATING A NEW EXPERIMENT:" do
   end
 
   context "When Experiment Created:" do
-    it "Should create (1) Experiment record" do
+    it "Should create (1) Experiment record", :slow => true do
       Experiment.find(:all).uniq.count.should eq(1)
     end
   
-    it "Should create (12) User records & correct associations" do
+    it "Should create (12) User records & correct associations", :slow => true do
       User.find(:all).uniq.count.should eq(12)
       User.where(:experiment_id == 1).count.should eq(12)  
     end
 
-    it "Should create (2) Group records & correct associations" do
+    it "Should create (2) Group records & correct associations", :slow => true do
       Group.find(:all).uniq.count.should eq(2)
       Group.where(:experiment_id == 1).count.should eq(2)  
     end
 
-    it "Should create (36) Round records & correct associationss" do
+    it "Should create (36) Round records & correct associationss", :slow => true do
       Round.find(:all).uniq.count.should eq(36)
       @group_ids = []
       Round.find(:all).each do |round|
@@ -34,7 +34,7 @@ describe "GENERATING A NEW EXPERIMENT:" do
       @group_ids.uniq.count.should eq(2)
     end
 
-    it "Should create (144) Project records & correct associations" do
+    it "Should create (144) Project records & correct associations", :slow => true do
       Project.find(:all).uniq.count.should eq(144)      
       @round_id = []
       Project.find(:all).each do |project|
@@ -43,7 +43,7 @@ describe "GENERATING A NEW EXPERIMENT:" do
       @round_id.uniq.count.should eq(36)
     end
 
-    it "Should create (216) Preferences records & correct associations" do
+    it "Should create (216) Preferences records & correct associations", :slow => true do
       Preferences.find(:all).uniq.count.should eq(216)
       @round_id = []
       @user_id = []
