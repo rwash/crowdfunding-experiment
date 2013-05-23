@@ -15,6 +15,21 @@ gem 'therubyracer'
 gem 'authlogic'
 gem 'activeadmin'               # For Administration Interfaces
 
+group :test, :development do
+  gem "rspec-rails"
+  gem "factory_girl_rails"
+  gem "capybara"
+  gem "launchy"
+  gem "growl"
+end
+
+group :test do
+  gem "rb-fsevent"
+  gem "guard-rspec"
+  gem "guard-livereload"
+  gem "spork", "0.9.2"
+  gem "guard-spork"
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -1,14 +1,21 @@
 ActiveAdmin.register User do
   actions :index, :show, :edit, :update
   config.batch_actions = false  
-  menu :parent => "EXPERIMENTS", :priority => 6
+  menu :parent => "USERS", :priority => 1
   scope :all, :default => true
+  scope :creators do |user|
+    user.where(:user_type => "Creator")
+  end
+  scope :donors do |user|
+    user.where(:user_type => "Donor")
+  end
   
   
   # Configuration for Sidebar Filters
   filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
   filter :group_name, :label => "Group", :as => :select, :collection => Group.uniq.pluck(:name)
   filter :name
+  filter :type
   filter :payout
   filter :questions_payout
 
@@ -37,6 +44,11 @@ ActiveAdmin.register User do
           user.password
        end
     end
+    column :user_type, :sortable => :user_type do |user|
+       div :class => "admin-center-column" do 
+          user.user_type
+       end
+    end
     column :payout, :sortable => :payout do |user|
        div :class => "admin-center-column" do 
           user.payout
@@ -61,19 +73,14 @@ ActiveAdmin.register User do
       end
       row :group do |user|
         if user.group_id != nil
-          link_to "Group #{user.group_id}", admin_group_path(user.group_id)
+          link_to "Group #{user.group.name}", admin_group_path(user.group_id)
         end
       end
       row :name
+      row :user_type
       row :payout
       row :questions_payout
       row :times_viewed_instructions
-      row :question_1A
-      row :question_1B
-      row :question_2A
-      row :question_2B
-      row :question_2C
-      row :question_2D
     end
     active_admin_comments
   end
@@ -85,6 +92,7 @@ ActiveAdmin.register User do
      f.input :experiment, :as => :select
      f.input :name
      f.input :password 
+     f.input :user_type
    end                               
    f.actions                         
   end
