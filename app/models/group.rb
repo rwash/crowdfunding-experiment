@@ -4,14 +4,15 @@ class Group < ActiveRecord::Base
 	has_many :users
   has_many :preferences
 	
-	after_create :genereate_rounds
+	after_create :generate_rounds
 	
-	def genereate_rounds
+	def generate_rounds
 		NUMBER_OF_ROUNDS.times do
 			self.rounds << Round.create
 		end
 		self.save!
 	end
+	
 	
 	def generate_prefs
 		self.rounds.each_with_index do |r,i|

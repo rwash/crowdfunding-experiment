@@ -8,23 +8,9 @@ class Experiment < ActiveRecord::Base
 	
 	after_create :generate_groups
 	after_create :generate_users
-	after_create :set_current_round_and_generate_prefs
-	after_create :mgaic_preferences
+  after_create :set_current_round_and_generate_prefs
+  # after_create :mgaic_preferences                   <REMOVE CL>
 	
-	def generate_users
-		NUMBER_OF_USERS_PER_GROUP.times do
-			@user1 = User.create(:name => "temp")
-			self.users << @user1
-			#self.groups.first.users << @user1
-			#self.groups.first.save!
-			
-			@user2 = User.create(:name => "temp")
-			self.users << @user2
-			#self.groups.last.users << @user2
-			#self.groups.last.save!
-		end
-		self.save!
-	end
 	
 	def generate_groups
 		reseed_names
@@ -33,20 +19,39 @@ class Experiment < ActiveRecord::Base
 		self.groups << Group.create(:name => 'B')
 		self.save!
 	end
+
+
+	def generate_users
+    @group_ids = Group.all(:select => :id).collect(&:id)
+    NUMBER_OF_GROUPS.times do |i|
+	    @rand_array = (0..(NUMBER_OF_USERS_PER_GROUP-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_OF_CREATORS_PER_GROUP-1)]
+  		NUMBER_OF_USERS_PER_GROUP.times do |j|
+  		  if @rand_array.include?(j)
+  			  self.users << User.create(:name => "temp", :user_type => "Creator", :group_id => @group_ids[i])
+  			else
+  			  self.users << User.create(:name => "temp", :user_type => "Donor", :group_id => @group_ids[i])
+  			end
+  		end
+	  end
+		self.save!
+	end
+	
 	
 	def set_current_round_and_generate_prefs
-		self.groups.each do |g|
-			g.generate_prefs
-		end
-		
+    self.groups.each do |g|               # <REMOVE CL>  This is no longer required.  Also remove method in Group Model.
+      g.generate_prefs                    # <REMOVE CL>
+    end                                   # <REMOVE CL>
+    
 		self.current_round_number = 1
 		self.save!
 	end
+	
 	
 	def start_experiment
 		self.started = true
 		self.save!
 	end
+	
 	
 	def experiment_over
 		self.users.each do |user|
@@ -62,6 +67,7 @@ class Experiment < ActiveRecord::Base
 		self.save!
 	end
 	
+	
 	def reseed_names
 			require 'csv'
 			$project_names = []
@@ -74,7 +80,8 @@ class Experiment < ActiveRecord::Base
 			end
 	end
 	
-	def mgaic_preferences
+	
+	def mgaic_preferences                     # <REMOVE CL> Replace with new Preference Allocation
 		self.users.each_with_index do |u, i|
 			NUMBER_OF_ROUNDS.times do |r|
 				if i < 6 #first 6 people

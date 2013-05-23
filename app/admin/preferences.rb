@@ -1,7 +1,7 @@
 ActiveAdmin.register Preferences do
   actions :index, :show
   config.batch_actions = false  
-  menu :parent => "EXPERIMENTS", :priority => 7
+  menu :parent => "[TO BE REMOVED]", :priority => 1
   scope :all, :default => true
   scope :flag do |preference|
     preference.where(:flag => true)
@@ -37,21 +37,21 @@ ActiveAdmin.register Preferences do
   config.sort_order = "user_id_asc"
   config.per_page = 15
   index do
-    column :user_id, :sortable => :user_id do |preference|
-       div :class => "admin-center-column" do 
-          link_to "#{preference.user.name}", admin_user_path(preference.user_id)
-       end
-    end
-    column "Group" do |preference|
-       div :class => "admin-center-column" do 
-          link_to "Group #{preference.group.name}", admin_group_path(preference.user.group_id)
-       end
-    end
-    column :round, :sortable => :round_id do |preference|
-       div :class => "admin-center-column" do 
-          link_to "Round #{preference.round.number}", admin_round_path(preference.round_id)
-       end
-    end
+    # column :user_id, :sortable => :user_id do |preference|
+    #    div :class => "admin-center-column" do 
+    #       link_to "#{preference.user.name}", admin_user_path(preference.user_id)
+    #    end
+    # end
+    # column "Group" do |preference|
+    #    div :class => "admin-center-column" do 
+    #       link_to "Group #{preference.group.name}", admin_group_path(preference.user.group_id)
+    #    end
+    # end
+    # column :round, :sortable => :round_id do |preference|
+    #    div :class => "admin-center-column" do 
+    #       link_to "Round #{preference.round.number}", admin_round_path(preference.round_id)
+    #    end
+    # end
     column :flag, :sortable => :flag do |preference|
        div :class => "admin-center-column" do 
           preference.flag.yesno
