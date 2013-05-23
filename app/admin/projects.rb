@@ -39,7 +39,7 @@ ActiveAdmin.register Project do
     end
     column :round, :sortable => :round_id do |project|
        div :class => "admin-center-column" do 
-          link_to "Round #{project.round.number}", admin_round_path(project.round_id)
+          link_to "Round #{project.round.name}", admin_round_path(project.round_id)
        end
     end
     column "Project Type", :sortable => :admin_name do |project|

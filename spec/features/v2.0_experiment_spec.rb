@@ -17,7 +17,13 @@ describe "v2.0 GENERATING A NEW EXPERIMENT:" do
 
     it "Should create (2) Group records & correct associations" do
       Group.find(:all).uniq.count.should eq(2)
-      Group.where(:experiment_id == 1).count.should eq(2)  
+      Group.where(:experiment_id == 1).count.should eq(2)
+      @group_names = []
+      Group.find(:all).each do |group|
+        @group_names << group.name
+      end
+      @uniq_group_names = @group_names.uniq
+      @uniq_group_names.count.should eq(2)
     end
 
     it "Should create (36) Round records & correct associationss" do
@@ -40,24 +46,32 @@ describe "v2.0 GENERATING A NEW EXPERIMENT:" do
 
     it "Should create (12) User records & correct associations" do
       User.find(:all).uniq.count.should eq(12)
-      User.where(:experiment_id == 1).count.should eq(12)  
-    end
-
-    it "Should create (4) Creator records & correct associations" do
-      Creator.find(:all).uniq.count.should eq(4)
-    end
-
-    it "Should create (8) Donor records & correct associations" do
-      Donor.find(:all).uniq.count.should eq(8)
+      User.where(:experiment_id == 1).count.should eq(12)
+      User.where(:user_type => "Creator").count.should eq(4)
+      User.where(:user_type => "Donor").count.should eq(8)
     end
 
     it "Should create (72) Creator_Preferences records & correct associations" do
-      CreatorPreference.find(:all).uniq.count.should eq(72)      
-    end
-    
-    it "Should create (144) Donor_Preferences records & correct associations" do
-      DonorPreference.find(:all).uniq.count.should eq(144)      
+      CreatorPreference.find(:all).uniq.count.should eq(72)
+    #   @round_id = []
+    #   CreatorPreference.find(:all).each do |creator_preference|
+    #     @round_id << creator_preference.round_id
+    #   end
+    #   @round_id.uniq.count.should eq(18)
     end
 
+    it "Should create (144) Donor_Preferences records & correct associations" do
+      DonorPreference.find(:all).uniq.count.should eq(144)
+      # @group_ids = []
+      # Donor.find(:all).each do |donor|
+      #   @group_ids << donor.user.group_id
+      # end
+      # @group_ids.uniq.count.should eq(2)
+    end
+    
+    it "Should not create any Preferences records" do
+      Preferences.find(:all).count.should eq(0)
+    end
+    
   end
 end

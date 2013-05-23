@@ -3,9 +3,12 @@ class Round < ActiveRecord::Base
 	belongs_to :group
 	has_one :experiment, :through => :group
 	has_many :projects, :dependent => :destroy
-	has_many :prefs, :class_name => 'Preferences'
+	has_many :prefs, :class_name => 'Preferences'       # <REMOVE CL>  Once new preferences implemented
 	has_many :users, :through => :prefs
 	has_many :contributions
+	
+	has_many :creator_preferences
+	has_many :donor_preferences
 	
 	after_create :generate_projects
 	
