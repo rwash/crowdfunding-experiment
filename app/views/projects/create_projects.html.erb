@@ -1,0 +1,6 @@
+<h4><%= @user.name %></h4>
+<h4>
+	<% @current_round.projects.each do |project| %>
+		<h4><%= "Project #{project.id}: " %><%= project.name %> - Value: <%= project.value %></h4>
+	<% end %>
+</h4>

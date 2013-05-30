@@ -7,5 +7,5 @@ FactoryGirl.define do
     finsihed_calc false
     current_round_number 0
   end
-  
+
 end

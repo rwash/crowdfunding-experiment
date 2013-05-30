@@ -9,8 +9,19 @@ class Round < ActiveRecord::Base
 	
 	has_many :creator_preferences
 	has_many :donor_preferences
+
 	
-	after_create :generate_projects
+	def check_if_round_ready_to_start
+    self.creator_preferences.each do |creator_preference|
+      return false if !creator_preference.is_ready
+    end
+    self.donor_preferences.each do |donor_preference|
+      return false if !donor_preference.is_ready
+    end
+    self.part_a_started = true
+    self.save!
+  end
+  
 	
 	def check_if_all_done
 		self.prefs.each do |p|
@@ -21,39 +32,13 @@ class Round < ActiveRecord::Base
 		
 		self.round_over
 	end
-		
-	def generate_projects
-		@project = Project.new
-		@project.admin_name = 'A'
-		@project.start_amount = PROJECT_START_AMOUNTS[0]
-		@project.save!
-		self.projects << @project
 
-		@project = Project.new
-		@project.admin_name = 'B'
-		@project.start_amount = PROJECT_START_AMOUNTS[1]
-		@project.save!
-		self.projects << @project
-		
-		@project = Project.new
-		@project.admin_name = 'C'
-		@project.start_amount = PROJECT_START_AMOUNTS[2]
-		@project.save!
-		self.projects << @project
-		
-		@project = Project.new
-		@project.admin_name = 'D'
-		@project.start_amount = PROJECT_START_AMOUNTS[3]
-		@project.save!
-		self.projects << @project
-		
-		self.save!
-	end
 	
 	def round_started
 		self.start_time = DateTime.now
 		self.save!
 	end
+	
 	
 	def round_over
 		self.end_time = DateTime.now
@@ -116,5 +101,6 @@ class Round < ActiveRecord::Base
 		self.finished = true
 		self.save!	
 	end
+	
 	
 end

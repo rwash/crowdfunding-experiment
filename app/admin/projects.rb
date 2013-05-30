@@ -1,7 +1,7 @@
 ActiveAdmin.register Project do
-  actions :index, :show  
-  config.batch_actions = false  
-  menu :parent => "EXPERIMENTS", :priority => 4
+  # actions :index, :show  
+  # config.batch_actions = false  
+  menu :parent => "USERS", :priority => 3
   scope :all, :default => true
   scope :type_a do |project|
     project.where(:admin_name => "A")
@@ -31,15 +31,17 @@ ActiveAdmin.register Project do
   config.sort_order = "id_asc"
   config.per_page = 15
   index do
+    selectable_column
+    column :id
     column :experiment do |project|
       link_to "Experiment ##{project.round.group.experiment_id}", admin_experiment_path(project.round.group.experiment_id)
     end
     column "Group" do |project|
       link_to "Group #{project.round.group.name}", admin_group_path(project.round.group_id)
     end
-    column :round, :sortable => :round_id do |project|
+    column :round_id, :sortable => :round_id do |project|
        div :class => "admin-center-column" do 
-          link_to "Round #{project.round.name}", admin_round_path(project.round_id)
+          link_to "Round #{project.round.number}", admin_round_path(project.round)
        end
     end
     column "Project Type", :sortable => :admin_name do |project|
@@ -52,6 +54,11 @@ ActiveAdmin.register Project do
           project.name
        end
     end
+    column :value, :sortable => :value do |project|
+       div :class => "admin-center-column" do 
+          project.value
+       end
+    end    
     column :goal_amount, :sortable => :goal_amount do |project|
        div :class => "admin-center-column" do 
           project.goal_amount

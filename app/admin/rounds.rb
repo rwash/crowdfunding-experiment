@@ -1,13 +1,19 @@
 ActiveAdmin.register Round do
-  actions :index, :show
+  # actions :index, :show
   config.batch_actions = false  
   menu :parent => "EXPERIMENTS", :priority => 3
   scope :all, :default => true
-  scope :started do |round|
-    round.where(:started => true)
+  scope :part_a_started do |round|
+    round.where(:part_a_started => true)
   end
-  scope :finished do |round|
-    round.where(:finished => true)
+  scope :part_a_finished do |round|
+    round.where(:part_a_finished => true)
+  end
+  scope :part_b_started do |round|
+    round.where(:part_b_started => true)
+  end
+  scope :part_b_finished do |round|
+    round.where(:part_b_finished => true)
   end
     
   
@@ -15,8 +21,10 @@ ActiveAdmin.register Round do
   filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
   # filter :group, :as => :select, :collection => Group.uniq.pluck(:name)  # TODO - DOESN'T SELECT RECORDS
   filter :number, :label => "Round"
-  filter :started, :as => :select
-  filter :finished, :as => :select
+  filter :part_a_started, :as => :select
+  filter :part_a_finished, :as => :select
+  filter :part_b_started, :as => :select
+  filter :part_b_finished, :as => :select
   filter :start_time
   filter :end_time
   
@@ -36,14 +44,24 @@ ActiveAdmin.register Round do
           round.number
        end
     end
-    column :started, :sortable => :started do |round|
+    column :part_a_started, :sortable => :part_a_started do |round|
        div :class => "admin-center-column" do 
-          round.started.yesno
+          round.part_a_started.yesno
        end
     end
-    column :finished, :sortable => :finished do |round|
+    column :part_a_finished, :sortable => :part_a_finished do |round|
        div :class => "admin-center-column" do 
-          round.finished.yesno
+          round.part_a_finished.yesno
+       end
+    end
+    column :part_b_started, :sortable => :part_b_started do |round|
+       div :class => "admin-center-column" do 
+          round.part_b_started.yesno
+       end
+    end
+    column :part_b_finished, :sortable => :part_b_finished do |round|
+       div :class => "admin-center-column" do 
+          round.part_b_finished.yesno
        end
     end
     column :start_time, :sortable => :start_time do |round|
@@ -72,11 +90,17 @@ ActiveAdmin.register Round do
       row "Round" do |round|
         "Round #{round.number}"
       end
-      row :started do |round|
-        round.started.yesno
+      row :part_a_started do |round|
+        round.part_a_started.yesno
       end
-      row :finished do |round|
-        round.finished.yesno
+      row :part_a_finished do |round|
+        round.part_a_finished.yesno
+      end
+      row :part_b_started do |round|
+        round.part_b_started.yesno
+      end
+      row :part_b_finished do |round|
+        round.part_b_finished.yesno
       end
       row :start_time
       row :end_time
@@ -85,7 +109,19 @@ ActiveAdmin.register Round do
   end
   
   
-  # Configuration for Rounds CSV Output
+  # Configuration for Rounds Edit Page        <TODO CL> Remove this and disable Edit when done Troubleshooting
+  form do |f|                         
+   f.inputs "New Round" do       
+     f.input :part_a_started, :as => :select, :include_blank => false
+     f.input :part_a_finished, :as => :select, :include_blank => false
+     f.input :part_b_started, :as => :select, :include_blank => false
+     f.input :part_b_finished, :as => :select, :include_blank => false
+   end                               
+   f.actions                         
+  end
+  
+  
+  # Configuration for Rounds CSV Output  <TODO CL> Remove if Implement This
   csv do
     column "Experiment" do |round|
       "Experiment ##{round.group.experiment_id}"
