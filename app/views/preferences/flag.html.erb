@@ -1,9 +1,0 @@
-<p>&nbsp;</p>
-<%= form_tag "/preferences/submit-flag"  do %>
-	<%= text_area_tag "note", nil, :class => 'span7', :rows => 6 %>
-	<%= hidden_field_tag "id", @preferences.id %>
-	<br>
-	<%= submit_tag "Submit" , :class => 'btn-success btn-large' %>
-<% end %>
-
-<h3 class="pull-right"><a href="" OnClick="window.close()">close window</a></h3>

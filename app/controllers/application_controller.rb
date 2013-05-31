@@ -37,9 +37,17 @@ class ApplicationController < ActionController::Base
     	@group = Group.find(current_user.group_id) unless current_user.name == 'admin'
     end
     
-    def last_round?(round)
-	    	round == round.group.rounds.last
-		end
+    def current_round
+      @user = current_user
+      @rounds_temp = []
+      Round.where(:group_id => @user.group_id).each do |round|
+        if !round.part_b_finished
+          @rounds_temp << round
+        end
+      end
+      @rounds_temp.sort_by{ |i| i[:number] }
+      @current_round = @rounds_temp.first      
+    end
     
     def require_admin
       if current_user.nil? || current_user.name != 'admin'

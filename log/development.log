@@ -1,0 +1,142 @@
+  [1m[36m (126.0ms)[0m  [1mSELECT DISTINCT admin_name FROM `projects` [0m
+  [1m[35m (3.8ms)[0m  SELECT DISTINCT name FROM `projects` ORDER BY name ASC
+  [1m[36m (0.4ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (2.8ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (2.9ms)[0m  [1mSELECT DISTINCT name FROM `groups` [0m
+  [1m[35m (3.7ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (24.0ms)[0m  [1mSELECT DISTINCT number FROM `rounds` [0m
+  [1m[35m (3.8ms)[0m  SELECT DISTINCT admin_name FROM `projects` ORDER BY admin_name ASC
+  [1m[36m (2.7ms)[0m  [1mSELECT DISTINCT name FROM `projects` ORDER BY name ASC[0m
+  [1m[35m (0.4ms)[0m  SELECT DISTINCT id FROM `experiments` 
+  [1m[36m (0.4ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (2.8ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (3.0ms)[0m  [1mSELECT DISTINCT admin_name FROM `projects` [0m
+  [1m[35m (33.4ms)[0m  SELECT DISTINCT name FROM `projects` ORDER BY name ASC
+  [1m[36m (0.5ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (2.8ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (2.6ms)[0m  [1mSELECT DISTINCT name FROM `groups` [0m
+  [1m[35m (2.7ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (0.6ms)[0m  [1mSELECT DISTINCT number FROM `rounds` [0m
+  [1m[35m (2.8ms)[0m  SELECT DISTINCT admin_name FROM `projects` ORDER BY admin_name ASC
+  [1m[36m (2.4ms)[0m  [1mSELECT DISTINCT name FROM `projects` ORDER BY name ASC[0m
+  [1m[35m (0.4ms)[0m  SELECT DISTINCT id FROM `experiments` 
+  [1m[36m (0.5ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (2.6ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (228.1ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+Migrating to CreateRounds (20120614153241)
+Migrating to CreateUsers (20120614171438)
+Migrating to CreateExperiments (20120616142711)
+Migrating to CreateProjects (20120616143741)
+Migrating to CreateContributions (20120616144659)
+Migrating to CreatePreferences (20120616144948)
+Migrating to CreateGroups (20120626171813)
+Migrating to DeviseCreateAdminUsers (20130521111321)
+Migrating to CreateAdminNotes (20130521111326)
+Migrating to MoveAdminNotesToComments (20130521111327)
+Migrating to AddColumnsToUser (20130522060848)
+Migrating to CreateCreators (20130522061208)
+Migrating to CreateDonors (20130522061245)
+Migrating to CreateCreatorPreferences (20130522061900)
+Migrating to CreateDonorPreferences (20130522061937)
+Migrating to ChangeColumnInUsers (20130523030722)
+Migrating to DropColumnsFromUsers (20130523110346)
+Migrating to UpdateColumnsCreatorAndDonorPreferences (20130523110603)
+Migrating to DropCreatorsAndDonorsTables (20130523110822)
+Migrating to ChangeGroupIdTypeInRounds (20130523114146)
+Migrating to AddColumnToCreatorPreferenceAndDonorPreference (20130528064838)
+Migrating to RenameColumnInCreatorAndDonorPreferences (20130529053912)
+Migrating to AddColumnsToRounds (20130530045345)
+Migrating to AddColumnsToCreatorAndDonorPreferences (20130530061420)
+Migrating to AddColumnToProjects (20130530085222)
+Migrating to AddRoundCompleteToRounds (20130531065124)
+  [1m[35m (841.6ms)[0m  ALTER TABLE `rounds` ADD `round_complete` tinyint(1) DEFAULT 0
+  [1m[36m (398.3ms)[0m  [1mALTER TABLE `rounds` ADD `summary_complete` tinyint(1) DEFAULT 0[0m
+  [1m[35m (26.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20130531065124')
+  [1m[36m (0.3ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+  [1m[36m (2.8ms)[0m  [1mSELECT DISTINCT admin_name FROM `projects` [0m
+  [1m[35m (22.9ms)[0m  SELECT DISTINCT name FROM `projects` ORDER BY name ASC
+  [1m[36m (0.4ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (2.9ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (2.7ms)[0m  [1mSELECT DISTINCT name FROM `groups` [0m
+  [1m[35m (2.9ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (0.5ms)[0m  [1mSELECT DISTINCT number FROM `rounds` [0m
+  [1m[35m (2.6ms)[0m  SELECT DISTINCT admin_name FROM `projects` ORDER BY admin_name ASC
+  [1m[36m (2.4ms)[0m  [1mSELECT DISTINCT name FROM `projects` ORDER BY name ASC[0m
+  [1m[35m (0.4ms)[0m  SELECT DISTINCT id FROM `experiments` 
+  [1m[36m (0.5ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (2.8ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (0.3ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
+  [1m[35m (0.6ms)[0m  SELECT `schema_migrations`.`version` FROM `schema_migrations` 
+Migrating to AddRoundCompleteToRounds (20130531065124)
+  [1m[36m (179.6ms)[0m  [1mALTER TABLE `rounds` DROP `round_complete`[0m
+  [1m[35m (196.4ms)[0m  ALTER TABLE `rounds` DROP `summary_complete`
+  [1m[36m (36.1ms)[0m  [1mDELETE FROM `schema_migrations` WHERE `schema_migrations`.`version` = '20130531065124'[0m
+  [1m[35m (0.3ms)[0m  SELECT `schema_migrations`.`version` FROM `schema_migrations` 
+  [1m[36m (2.8ms)[0m  [1mSELECT DISTINCT admin_name FROM `projects` [0m
+  [1m[35m (3.1ms)[0m  SELECT DISTINCT name FROM `projects` ORDER BY name ASC
+  [1m[36m (0.4ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (2.5ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (2.7ms)[0m  [1mSELECT DISTINCT name FROM `groups` [0m
+  [1m[35m (2.6ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (0.6ms)[0m  [1mSELECT DISTINCT number FROM `rounds` [0m
+  [1m[35m (2.9ms)[0m  SELECT DISTINCT admin_name FROM `projects` ORDER BY admin_name ASC
+  [1m[36m (2.2ms)[0m  [1mSELECT DISTINCT name FROM `projects` ORDER BY name ASC[0m
+  [1m[35m (0.4ms)[0m  SELECT DISTINCT id FROM `experiments` 
+  [1m[36m (0.5ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (2.9ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (4.1ms)[0m  [1mSELECT DISTINCT admin_name FROM `projects` [0m
+  [1m[35m (28.0ms)[0m  SELECT DISTINCT name FROM `projects` ORDER BY name ASC
+  [1m[36m (0.5ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (3.5ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (3.8ms)[0m  [1mSELECT DISTINCT name FROM `groups` [0m
+  [1m[35m (0.6ms)[0m  SELECT DISTINCT number FROM `rounds` 
+  [1m[36m (2.9ms)[0m  [1mSELECT DISTINCT admin_name FROM `projects` ORDER BY admin_name ASC[0m
+  [1m[35m (2.6ms)[0m  SELECT DISTINCT name FROM `projects` ORDER BY name ASC
+  [1m[36m (0.4ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (0.4ms)[0m  SELECT DISTINCT id FROM `experiments` 
+  [1m[36m (2.7ms)[0m  [1mSELECT DISTINCT name FROM `groups` [0m
+  [1m[36m (3.1ms)[0m  [1mSELECT DISTINCT admin_name FROM `projects` [0m
+  [1m[35m (4.2ms)[0m  SELECT DISTINCT name FROM `projects` ORDER BY name ASC
+  [1m[36m (0.5ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (2.9ms)[0m  SELECT DISTINCT name FROM `groups` 
+  [1m[36m (4.1ms)[0m  [1mSELECT DISTINCT name FROM `groups` [0m
+  [1m[35m (0.5ms)[0m  SELECT DISTINCT number FROM `rounds` 
+  [1m[36m (2.7ms)[0m  [1mSELECT DISTINCT admin_name FROM `projects` ORDER BY admin_name ASC[0m
+  [1m[35m (2.4ms)[0m  SELECT DISTINCT name FROM `projects` ORDER BY name ASC
+  [1m[36m (0.5ms)[0m  [1mSELECT DISTINCT id FROM `experiments` [0m
+  [1m[35m (0.5ms)[0m  SELECT DISTINCT id FROM `experiments` 
+  [1m[36m (2.7ms)[0m  [1mSELECT DISTINCT name FROM `groups` [0m
+  [1m[35m (0.4ms)[0m  SELECT `schema_migrations`.`version` FROM `schema_migrations` 
+Migrating to CreateRounds (20120614153241)
+Migrating to CreateUsers (20120614171438)
+Migrating to CreateExperiments (20120616142711)
+Migrating to CreateProjects (20120616143741)
+Migrating to CreateContributions (20120616144659)
+Migrating to CreatePreferences (20120616144948)
+Migrating to CreateGroups (20120626171813)
+Migrating to DeviseCreateAdminUsers (20130521111321)
+Migrating to CreateAdminNotes (20130521111326)
+Migrating to MoveAdminNotesToComments (20130521111327)
+Migrating to AddColumnsToUser (20130522060848)
+Migrating to CreateCreators (20130522061208)
+Migrating to CreateDonors (20130522061245)
+Migrating to CreateCreatorPreferences (20130522061900)
+Migrating to CreateDonorPreferences (20130522061937)
+Migrating to ChangeColumnInUsers (20130523030722)
+Migrating to DropColumnsFromUsers (20130523110346)
+Migrating to UpdateColumnsCreatorAndDonorPreferences (20130523110603)
+Migrating to DropCreatorsAndDonorsTables (20130523110822)
+Migrating to ChangeGroupIdTypeInRounds (20130523114146)
+Migrating to AddColumnToCreatorPreferenceAndDonorPreference (20130528064838)
+Migrating to RenameColumnInCreatorAndDonorPreferences (20130529053912)
+Migrating to AddColumnsToRounds (20130530045345)
+Migrating to AddColumnsToCreatorAndDonorPreferences (20130530061420)
+Migrating to AddColumnToProjects (20130530085222)
+Migrating to AddRoundCompleteToRounds (20130531065124)
+  [1m[36m (215.5ms)[0m  [1mALTER TABLE `rounds` ADD `round_complete` tinyint(1) DEFAULT 0[0m
+  [1m[35m (265.9ms)[0m  ALTER TABLE `rounds` ADD `summary_complete` tinyint(1) DEFAULT 0
+  [1m[36m (1.5ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20130531065124')[0m
+Migrating to DropPreferences (20130531093407)
+  [1m[35m (136.7ms)[0m  DROP TABLE `preferences`
+  [1m[36m (10.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20130531093407')[0m
+  [1m[35m (0.2ms)[0m  SELECT `schema_migrations`.`version` FROM `schema_migrations` 

@@ -14,6 +14,7 @@ class ProjectsController < InheritedResources::Base
       end
       @preference.finished_round = true
       @preference.save!
+      redirect_to summary_waiting_path(@current_round)
     else
       flash[:alert] = "You have finished your turn for this round!"
       redirect_to summary_waiting_path(@current_round)

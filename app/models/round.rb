@@ -3,12 +3,19 @@ class Round < ActiveRecord::Base
 	belongs_to :group
 	has_one :experiment, :through => :group
 	has_many :projects, :dependent => :destroy
-	has_many :prefs, :class_name => 'Preferences'       # <REMOVE CL>  Once new preferences implemented
 	has_many :users, :through => :prefs
 	has_many :contributions
 	
 	has_many :creator_preferences
 	has_many :donor_preferences
+
+
+  def check_if_part_a_finished
+    if self.part_a_finished && self.part_b_started != true
+      self.part_b_started = true
+      self.save!
+    end
+  end
 
 	
 	def check_if_round_ready_to_start
@@ -19,9 +26,28 @@ class Round < ActiveRecord::Base
       return false if !donor_preference.is_ready
     end
     self.part_a_started = true
+    self.start_time = DateTime.now
     self.save!
   end
   
+  
+  def check_if_round_complete
+    self.creator_preferences.each do |creator_preference|
+      return false if !creator_preference.finished_round
+    end
+    self.donor_preferences.each do |donor_preference|
+      return false if !donor_preference.finished_round
+    end
+    self.part_b_finished = true
+    self.end_time = DateTime.now
+    self.save!
+  end
+  
+
+  def last_round?
+    return true if self.number == NUMBER_OF_ROUNDS
+  end
+
 	
 	def check_if_all_done
 		self.prefs.each do |p|

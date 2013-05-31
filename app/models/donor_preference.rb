@@ -8,8 +8,10 @@ class DonorPreference < ActiveRecord::Base
 		self.save!
   end
   
-  def check_if_finished_round
-    redirect_to summary_waiting_path(@current_round) if self.finished_round
+  
+  def finish_round
+    self.finished_round = true
+    self.save!
   end
 
 end

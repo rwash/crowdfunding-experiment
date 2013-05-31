@@ -1,15 +1,17 @@
 class UsersController < InheritedResources::Base
 	def instructions
 		@user = current_user
-		
+		@user.times_viewed_instructions = current_user.times_viewed_instructions + 1
+		@user.save!
+
 		if !current_experiment.started
 			current_experiment.start_time = DateTime.now
 			current_experiment.save!
 		end
 		
-		@user.times_viewed_instructions = current_user.times_viewed_instructions + 1
-		@user.save!
-		
+    @first_round = Round.where(:group_id => @user.group_id, :number => 1).first
+    @current_round = current_round
+
     # @current_round = current_experiment.rounds.where(:number => current_experiment.current_round_number, :group_id => @user.group_id).first
     # 
     # @temp_rounds = current_experiment.rounds.where(:number => 1)
@@ -21,21 +23,21 @@ class UsersController < InheritedResources::Base
     #     @first_round = @temp_rounds.first
     #   end
     # end
-    @first_round = Round.first      # <TODO CL> This needs to set the current round properly.  Previous code does not select a valid
-                                    # round which has correct user assoicated with it.
 	end
+	
 	
 	def instructions_iframe
 		current_user.times_viewed_instructions = current_user.times_viewed_instructions + 1
 		current_user.save!
 	end
 	
+	
 	def questions
-		
 		@user = current_user
 		@projects = []
 		4.times {|i| @projects << Project.create(:start_amount => PROJECT_START_AMOUNTS[i]) }
 	end
+	
 	
 	def submit
 		if params[:question_1A][0] == '' || params[:question_1B][0] == ''
