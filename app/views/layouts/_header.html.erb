@@ -1,26 +1,18 @@
-
 <div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <% if current_user.nil? %>
-        <span class="brand">Crowdfunding Experiment</span>
-      <% else %>
-        <span class="brand"><%= "Round #{@current_round.number} of #{NUMBER_OF_ROUNDS}" unless @current_round.nil? %></span> 
-      <ul class="nav">
-        <li><%= link_to "Instructions", '/instructions_iframe?header=false', :onclick => "window.open(this.href,'window','width=1100,height=800') ;return false;" unless current_user.name == 'admin' %></li>  
-      </ul>
-      <ul class="nav secondary-nav pull-right">
-        <li class="divider-vertical"></li>
-        <!--
-        <li><a href="#">Prefs Type: <%#= @preferences.kind_of if @preferences %></a></li>
-        <li><a href="#">Current Group: <%#= current_group.name unless current_group.nil? %></a></li>
-        -->
-        <li><a href="#">CURRENT USER: <%= current_user.name unless current_user.nil? %></a></li>
-        <!--
-        <li><%#= link_to "LOG OUT", user_sessions_path, :method => :delete unless current_user.nil?%></li>
-        -->
-      </ul>
-      <% end %>
-    </div>
-  </div>
+  	<div class="navbar-inner">
+    	<div class="container">
+      	<% if current_user.nil? %>
+        		<span class="brand">Crowdfunding Experiment</span>
+      	<% else %>
+        		<span class="brand"><%= "Round #{@current_round.number} of #{NUMBER_OF_ROUNDS}" unless @current_round.nil? %></span> 
+      		<ul class="nav">
+        			<li><%= link_to "Instructions", '/instructions_iframe?header=false', :onclick => "window.open(this.href,'window','width=1100,height=800') ;return false;" unless current_user.name == 'admin' %></li>  
+      		</ul>
+      		<ul class="nav secondary-nav pull-right">
+        			<li class="divider-vertical"></li>
+        			<li><a href="#">CURRENT USER: <%= current_user.name unless current_user.nil? %></a></li>
+      		</ul>
+      	<% end %>
+    	</div>
+  	</div>
 </div>

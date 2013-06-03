@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130523114146) do
+ActiveRecord::Schema.define(:version => 20130531093407) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -59,15 +59,19 @@ ActiveRecord::Schema.define(:version => 20130523114146) do
   create_table "creator_preferences", :force => true do |t|
     t.integer  "user_id"
     t.integer  "round_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_ready",       :default => false
+    t.boolean  "finished_round", :default => false
   end
 
   create_table "donor_preferences", :force => true do |t|
     t.integer  "user_id"
     t.integer  "round_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_ready",       :default => false
+    t.boolean  "finished_round", :default => false
   end
 
   create_table "experiments", :force => true do |t|
@@ -89,26 +93,6 @@ ActiveRecord::Schema.define(:version => 20130523114146) do
     t.datetime "updated_at",    :null => false
   end
 
-  create_table "preferences", :force => true do |t|
-    t.string   "group"
-    t.boolean  "flag",               :default => false
-    t.string   "flag_note",          :default => ""
-    t.boolean  "finished_and_ready", :default => false
-    t.boolean  "ready_to_start",     :default => false
-    t.boolean  "contributed",        :default => false
-    t.boolean  "timer_expired",      :default => false
-    t.integer  "round_payout",       :default => 0
-    t.integer  "user_id"
-    t.integer  "round_id"
-    t.integer  "kind_of"
-    t.integer  "a_payout",           :default => 0
-    t.integer  "b_payout",           :default => 0
-    t.integer  "c_payout",           :default => 0
-    t.integer  "d_payout",           :default => 0
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-  end
-
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.integer  "goal_amount"
@@ -119,17 +103,22 @@ ActiveRecord::Schema.define(:version => 20130523114146) do
     t.string   "admin_name"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "value"
   end
 
   create_table "rounds", :force => true do |t|
     t.integer  "group_id"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.boolean  "finished",   :default => false
-    t.boolean  "started",    :default => false
+    t.boolean  "part_a_finished",  :default => false
+    t.boolean  "part_a_started",   :default => false
     t.integer  "number"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.boolean  "part_b_started",   :default => false
+    t.boolean  "part_b_finished",  :default => false
+    t.boolean  "round_complete",   :default => false
+    t.boolean  "summary_complete", :default => false
   end
 
   create_table "users", :force => true do |t|

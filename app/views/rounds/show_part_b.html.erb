@@ -1,0 +1,118 @@
+<script type="text/javascript">
+$(document).ready(function() {
+    $.Placeholder.init();
+});
+</script>
+
+<script type="text/javascript">  
+var count =61
+var redirect="/contributions/submit?expired=1&current_round_id=<%=@current_round.id%>"  
+var stop = false
+function countDown(){  
+	if (stop){return}
+
+	 if (count <=0){
+	  document.getElementById("timer").innerHTML = "<h2 class=\"alert alert-error\">This round has ended! Redirecting...</h2>"
+	  $(".submit").hide(0);  
+	  window.location = redirect;  
+	 }else{  
+	  count--;  
+	  document.getElementById("timer").innerHTML = "This round will end in "+count+" seconds."  
+	  setTimeout("countDown()", 1000)  
+	 }
+}  
+
+function validateform() {
+			// var total = $('#contribution_0').val() + $('#contribution_1').val() + $('#contribution_2').val() + $('#contribution_3').val();
+			var total = parseInt($('#contribution_0').val()) + parseInt($('#contribution_1').val()) + parseInt($('#contribution_2').val()) + parseInt($('#contribution_3').val());
+			if (total > 150 || parseInt($('#contribution_0').val()) < 0 || parseInt($('#contribution_1').val()) < 0 || parseInt($('#contribution_2').val()) < 0 || parseInt($('#contribution_3').val()) < 0) {
+				$("#notice").html("<h2 class=\"alert alert-error\">Your contributions cannot total more than 150 credits and must be positive.<a class=\"close\" data-dismiss=\"alert\"><h2>x</h2></a></h2>")
+				return false;
+			} else 
+				stop = true;
+			  $(".submit").hide(0);
+			  $("#loading").show(0);
+			  document.getElementById("timer").innerHTML = "<h2 class=\"alert alert-success\">Answers submitted. Please wait.</h2>"
+		  
+			  form.submit();
+	}
+</script>
+
+<script type='text/javascript'>
+$(document).ready(function() {
+    var credits = 150
+    $('#credits').text(credits)
+	 <% number_of_projects = @current_round.projects.count %>
+
+	<% @current_round.projects.each_with_index do |project, i| %>
+    	<%= "$('#contribution_#{i}').keyup(function()" %> {
+    		var remaining_credits = (credits<% number_of_projects.times do |i| %> - <%= "$('#contribution_#{i}').val()" %><% end %>)
+       	$('#credits').text(remaining_credits);
+	       if(remaining_credits < 0)
+	       {
+		        $('#credits').css("color", "red");
+	       }
+	       else
+	       {
+		        $('#credits').css("color", "black");
+	       }
+   	});		
+	<% end %>
+
+}); 
+</script>
+
+
+
+<div id="container">	
+	<div class="row">
+   	<div class="span12">
+			<h2><%= "Part B - Project #{@user.user_type}" %></h2>
+			<p id="notice"><%= notice %></p>
+
+			<%= form_tag(contributions_submit_path) do %>
+
+				<table class="table">
+					<thead>
+						<tr>
+							<td><h3>Project Name</h3></td>
+							<td><h3>Funding Status</h3></td>
+							<td><h3></h3></td>
+							<td><h3>Contributions</h3></td>															
+						</tr>
+					</thead>
+					<tbody>
+					<% @current_round.projects.each_with_index do |project, counter| %>
+						<tr>
+							<td><%= project.name %></td>
+							<td>
+								<div class="progress">
+					      		<div class="bar" style="width: <%= (project.start_amount.to_f / project.goal_amount) * 100 %>%;"></div>
+					    		</div>
+							</td>
+							<td><%= project.start_amount %> / <%= project.goal_amount %></td>
+							<td>
+								<%= text_field_tag "amount_#{counter}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{counter}" %><br>
+					    		<%= hidden_field_tag "project_id_#{counter}", project.id %>
+							</td>
+						</tr>						
+					<% end %>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><h3>Credits: <span id="credits"></span></h3></td>		
+						</tr>
+					</tbody>				
+				</table>
+				
+		    	<%= hidden_field_tag "current_round_id", @current_round.id %>
+ 
+				<div class="form-actions">
+			    	<%= submit_tag :submit, :value => "Submit", :class => 'btn btn-large btn-success pull-right' %>
+			  	</div>
+
+			<% end %>
+		</div>
+	</div>
+</div>

@@ -53,6 +53,14 @@ class Experiment < ActiveRecord::Base
 	end
 	
 	
+	def set_current_round(round)
+	  if self.current_round_number != round.number
+  	  self.current_round_number = round.number
+  	  self.save!
+  	end
+	end
+	
+	
 	def experiment_over
 		self.users.each do |user|
 			user.payout = 0

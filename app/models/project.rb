@@ -4,6 +4,16 @@ class Project < ActiveRecord::Base
 	
 	after_create :generate_name
 	
+
+  def create_contribution(user, current_round, amount_contributed)
+    @user = user
+    @current_round = current_round
+    @amount_contributed = amount_contributed
+    self.contributions << Contribution.new(:user_id => @user.id, :round_id => @current_round.id, :amount => @amount_contributed)
+    self.save!
+  end
+
+
 	def initialize(attributes = nil, options = {})
 		super
 		self.goal_amount = 400

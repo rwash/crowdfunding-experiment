@@ -1,0 +1,25 @@
+<h2><%= "Part A - Project #{@user.user_type} - Step 2" %></h2>
+<br>
+<p>Please choose the value of each of the projects:</p>
+
+<%= form_tag(create_projects_path) do %>
+
+	<% (1..@number_of_projects).each do |i| %>
+		
+		<h4><%= "Project ##{i}" %></h4>
+		<label class="radio inline">
+			<input type="radio" name=<%= "project#{i}Value" %> id="projectValue1" value="Low" checked>
+			Low Value
+		</label>
+		<label class="radio inline">
+			<input type="radio" name=<%= "project#{i}Value" %> id="projectValue2" value="High">
+			High Value
+		</label>
+				
+	<% end %>
+	
+	<div class="form-actions">
+    	<%= submit_tag :submit, :value => "Submit", :class => 'btn btn-large btn-success pull-right' %>
+  	</div>
+
+<% end %>
