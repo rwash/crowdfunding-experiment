@@ -52,7 +52,11 @@ CrowdfundingExperiment::Application.routes.draw do
 
 
   # Routes for ACTIVE_ADMIN
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+  begin
+    devise_for :admin_users, ActiveAdmin::Devise.config
+    ActiveAdmin.routes(self)
+  rescue Exception => e
+    puts "ActiveAdmin: #{e.class}: #{e}"
+  end
 
 end

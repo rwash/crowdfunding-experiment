@@ -32,7 +32,6 @@ ActiveAdmin.register Project do
   config.per_page = 15
   index do
     selectable_column
-    column :id
     column :experiment do |project|
       link_to "Experiment ##{project.round.group.experiment_id}", admin_experiment_path(project.round.group.experiment_id)
     end

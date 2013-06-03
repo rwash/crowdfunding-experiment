@@ -20,13 +20,12 @@ class ContributionsController < InheritedResources::Base
 
     # @total_amount_contributed = 0
     # @current_round.projects.each_with_index do |project, i|
-    #   @amount_contributed = params["amount_#{i}".to_sym].to_i
-    #   @total_amount_contributed += @amount_contributed
+    #   @total_amount_contributed =+ params["amount_#{i}".to_sym].to_i
     # end
     # if @total_amount_contributed > AMOUNT_USER_CAN_DONATE_PER_ROUND
     #   redirect_to round_show_part_b_path(@current_round), alert: "You cannot contribute that much!"
     # end
-
+    
     @current_round.projects.each_with_index do |project, i|
       @project_id = params["project_id_#{i}".to_sym].to_i
       @project = Project.find(@project_id)

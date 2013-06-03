@@ -74,9 +74,6 @@ class RoundsController < InheritedResources::Base
   	else @user.user_type == "Creator"   # <TODO CL> Can remove, no "Creator" Users should be able to get to this point!
   	  redirect_to summary_waiting_path(@current_round)
     end
-    
-    # If User has finished the Round, redirect to Summary_Waiting
-  # This should go into the Contibutions_Controller, along with assigning the relevant contributions
 	end
 	
 	
