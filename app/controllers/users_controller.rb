@@ -1,39 +1,43 @@
 class UsersController < InheritedResources::Base
 	def instructions
 		@user = current_user
-		
+		@user.times_viewed_instructions = current_user.times_viewed_instructions + 1
+		@user.save!
+
 		if !current_experiment.started
 			current_experiment.start_time = DateTime.now
 			current_experiment.save!
 		end
 		
-		@user.times_viewed_instructions = current_user.times_viewed_instructions + 1
-		@user.save!
-		
-		@current_round = current_experiment.rounds.where(:number => current_experiment.current_round_number, :group_id => @user.group_id).first
-		
-		@temp_rounds = current_experiment.rounds.where(:number => 1)
-		@first_round = nil
-		unless @temp_rounds.nil?
-			if @user.preferences.where(:round_id => @temp_rounds.first.id).first.nil?
-				@first_round = @temp_rounds.last
-			else
-				@first_round = @temp_rounds.first
-			end
-		end
+    @first_round = Round.where(:group_id => @user.group_id, :number => 1).first
+    @current_round = current_round
+
+    # @current_round = current_experiment.rounds.where(:number => current_experiment.current_round_number, :group_id => @user.group_id).first
+    # 
+    # @temp_rounds = current_experiment.rounds.where(:number => 1)
+    # @first_round = nil
+    # unless @temp_rounds.nil?
+    #   if @user.preferences.where(:round_id => @temp_rounds.first.id).first.nil?
+    #     @first_round = @temp_rounds.last
+    #   else
+    #     @first_round = @temp_rounds.first
+    #   end
+    # end
 	end
+	
 	
 	def instructions_iframe
 		current_user.times_viewed_instructions = current_user.times_viewed_instructions + 1
 		current_user.save!
 	end
 	
+	
 	def questions
-		
 		@user = current_user
 		@projects = []
 		4.times {|i| @projects << Project.create(:start_amount => PROJECT_START_AMOUNTS[i]) }
 	end
+	
 	
 	def submit
 		if params[:question_1A][0] == '' || params[:question_1B][0] == ''

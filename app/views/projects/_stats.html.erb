@@ -1,27 +1,39 @@
+<br>
 <div class="row">
-  <div class="span2">
-  	<% if admin == true %>
-  		<%= project.admin_name %>
-  	<% else %>
-    	<%= project.name %>
-    <% end %>
-  </div>
+  	<div class="span2"><h3>Project Name</h3></div>
+   <div class="span4"><h3>Funding Status</h3></div>
+  	<div class="span6"><br></div>
+</div>
+<br>
+
+<% @current_round.projects.each do |project| %>
+
+	<div class="row">
+	 	<div class="span2">
+	  		<% if admin == true %>
+	  			<%= project.admin_name %>
+	  		<% else %>
+	    		<%= project.name %>
+	    	<% end %>
+	  	</div>
   
-  <div class="span4">
-    <div class="progress">
-      <div class="bar" style="width: <%= (project.funded_amount.to_f / project.goal_amount) * 100 %>%;"></div>
-    </div>
-  </div>
+	 	<div class="span4">
+	    	<div class="progress">
+	      	<div class="bar" style="width: <%= (project.funded_amount.to_f / project.goal_amount) * 100 %>%;"></div>
+	    	</div>
+	  	</div>
   
-  <div class="span1">
-    <%= project.funded_amount %> / <%= project.goal_amount %>
-  </div>
+	  	<div class="span1">
+	    	<%= project.funded_amount %> / <%= project.goal_amount %>
+	  	</div>
   
-  <div class="span2">
-  	<% if project.goal_amount <= project.funded_amount %>
-    	<span class="badge badge-success"><%= "Funded!"%></span>
-    <% else %>
-    	<span class="badge badge-important"><%= "Not Funded :(" %></span>
-    <% end %>
-  </div>
-</div>  
+	  	<div class="span2">
+	  		<% if project.goal_amount <= project.funded_amount %>
+	    		<span class="badge badge-success"><%= "Funded!"%></span>
+	    	<% else %>
+	    		<span class="badge badge-important"><%= "Not Funded :(" %></span>
+	    	<% end %>
+	  	</div>
+		</div>  
+
+<% end %>

@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>CrowdfundingExperiment</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+  		<title>Crowdfunding Experiment</title>
+  		<%= stylesheet_link_tag    "application", :media => "all" %>
+  		<%= javascript_include_tag "application" %>
+  		<%= csrf_meta_tags %>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<body oncontextmenu="return false;">
+	</head>
 
-<%= render :partial => "layouts/header" unless params[:header] %> 
+	<body>
+		<%= render :partial => "layouts/header" unless params[:header] %> 
 
-<div class="container">
-
-	<% if flash[:alert] %>
-	<div id="flash">
-		<div class="alert alert-info" ><a class="close" data-dismiss="alert">x</a><%= flash[:alert]%></div>
-	</div>
-	<% end %>
-	<% if flash[:notice] %>
-	<div id="flash">
-		<div class="alert alert-success"><a class="close" data-dismiss="alert">x</a><%= flash[:notice] %></div>
-	</div>
-	<% end %>
-	<% if flash[:error] %>
-	<div id="flash">
-		<div class="alert alert-error"><a class="close" data-dismiss="alert">x</a><%= flash[:error] %></div>
-	</div>
-	<% end %>
-
-
-<%= yield %>
-<br>
-</div>
-</div>
-
-</body>
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<div class="notifications">
+						<% flash.each do |name, msg| %>
+							<div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								<%= msg %>
+							</div>
+						<% end %>
+					</div>
+					<%= yield %>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

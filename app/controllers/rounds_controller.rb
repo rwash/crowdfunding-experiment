@@ -1,70 +1,106 @@
 class RoundsController < InheritedResources::Base
-	def summary
+
+	def waiting_for_round
+	  @experiment = current_experiment
+		@current_round = Round.find(params[:id])
+    @user = current_user
+    unless @user.group_id == @current_round.group_id
+      @user.group_id = @current_round.group_id
+      @user.save!
+    end
+    
+		if @user.user_type == "Creator"
+		  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
+		elsif @user.user_type == "Donor"
+      @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first
+		end
+		
+    @preference.set_ready_to_start unless @preference.is_ready
+    @current_round.check_if_round_ready_to_start
+    
+    if @current_round.part_a_started
+      @experiment.start_experiment unless @experiment.started
+      @experiment.set_current_round(@current_round)
+      redirect_to round_show_part_a_path(@current_round)
+    end
+	end
+	
+
+	def show_part_a
 		@current_round = Round.find(params[:id])
 		@user = current_user
-		@preferences = Preferences.where(:user_id => @user.id, :round_id => @current_round.id).first
-		@contributions = Contribution.where(:user_id => current_user.id, :round_id => @current_round.id)
+		check_round(@current_round, @user)
 		
-		@not_donated = AMOUNT_USER_CAN_DONATE_PER_ROUND
-		@contributions.each do |c|
-			@not_donated = @not_donated - c.amount
-		end
-		
-		@temp_rounds = current_experiment.rounds.where(:number => @current_round.number + 1)
-		@next_round = nil
-		unless @temp_rounds.first.nil?
-			if @user.preferences.where(:round_id => @temp_rounds.first.id).first.nil?
-				@next_round = @temp_rounds.last
-			else
-				@next_round = @temp_rounds.first
-			end
-		end
-	
-		@projects = Project.where(:round_id => @current_round.id)
+		if @current_round.part_b_started
+      redirect_to waiting_for_part_b_path(@current_round)		  
+		elsif @user.user_type == "Creator"
+		  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
+      redirect_to summary_waiting_path(@current_round) if @preference.finished_round
+    elsif @user.user_type == "Donor"
+      redirect_to waiting_for_part_b_path(@current_round)
+    end
 	end
 	
-	def show
-		@current_round =  Round.find(params[:id])
-		check_round(@current_round)
+	
+	def show_part_a_2
+		@current_round = Round.find(params[:id])
 		@user = current_user
-		@preferences = Preferences.where(:user_id => @user.id, :round_id => @current_round.id).first unless @user.name == 'admin'
-		@projects = Project.where(:round_id => @current_round.id).order('id ASC')
+    @number_of_projects = params[:numberOfProjects].to_i
+    if @number_of_projects == 0
+      redirect_to summary_waiting_path(@current_round)
+    end
 	end
+	
+	
+	def waiting_for_part_b
+		@current_round = Round.find(params[:id])
+    @current_round.check_if_part_a_finished
+	  if @current_round.part_b_started
+	    redirect_to round_show_part_b_path(@current_round)
+	  end
+	end
+	
+	
+	def show_part_b
+	  @current_round = Round.find(params[:id])
+		@user = current_user
+
+    if @current_round.part_b_finished
+      redirect_to summary_waiting_path(@current_round)    
+    elsif @user.user_type == "Donor"
+      @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first
+  		@projects = Project.where(:round_id => @current_round.id)
+      redirect_to summary_waiting_path(@current_round) if @preference.finished_round
+  	else @user.user_type == "Creator"   # <TODO CL> Can remove, no "Creator" Users should be able to get to this point!
+  	  redirect_to summary_waiting_path(@current_round)
+    end
+	end
+	
 	
 	def waiting_for_summary
 		@current_round = Round.find(params[:id])
-		
-		if !@current_round.finished && current_user.id == @current_round.users.first.id
-			@current_round.check_if_all_done
-		end
-		
-		if current_experiment.rounds.where(:number => @current_round.number).first.finished && current_experiment.rounds.where(:number => @current_round.number).last.finished # TODO this line is really bad	
-		
-			if last_round?(@current_round)
-				current_experiment.experiment_over if current_user == current_experiment.users.first # a cheap way to make sure it only happens once
-			end
-			
-			redirect_to round_summary_path(@current_round)
-		end
+    @current_round.check_if_round_complete
+    if @current_round.part_b_finished
+      redirect_to round_summary_path(@current_round)
+    end
 	end
 	
-	def waiting_for_round
+	
+	def summary
 		@current_round = Round.find(params[:id])
-		unless current_user.group_id == @current_round.group_id
-			current_user.group_id = @current_round.group_id
-			current_user.save!
+		@user = current_user
+		@current_experiment = current_experiment
+		@projects = @current_round.projects
+		
+		@contributions = []
+		@projects.each do |project|
+		  project.contributions.each do |contribution|
+		    @contributions << contribution
+		  end
 		end
 		
-		@pref = Preferences.where(:user_id => current_user.id, :round_id => @current_round.id).first if @pref.nil?
-		@pref.ready_save_and_check_round unless @pref.ready_to_start
-		
-		if current_experiment.rounds.where(:number => @current_round.number).first.started && current_experiment.rounds.where(:number => @current_round.number).last.started # TODO this line is really bad
-			current_experiment.start_experiment unless current_experiment.started
-			current_experiment.current_round_number = @current_round.number
-			current_experiment.save!
-					
-			@current_round.round_started
-			redirect_to round_path(@current_round)
-		end
+		@next_round_number = @current_round.number + 1
+		@next_round = @current_experiment.rounds.where(:group_id => @current_round.group_id, :number => @next_round_number).first
 	end
+	
 end
