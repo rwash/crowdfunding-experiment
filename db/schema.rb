@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130531093407) do
+ActiveRecord::Schema.define(:version => 20130605061403) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20130531093407) do
     t.boolean  "return_credits",       :default => false
     t.boolean  "started",              :default => false
     t.boolean  "finished",             :default => false
-    t.boolean  "finsihed_calc",        :default => false
+    t.boolean  "finished_calc",        :default => false
     t.integer  "current_round_number", :default => 0
     t.datetime "start_time"
     t.datetime "end_time"

@@ -1,5 +1,3 @@
-@user = User.create(:name => 'admin', :password => 'password')
-
 # pilot tests
 puts 'pilot'
 2.times do |i|

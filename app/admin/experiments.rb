@@ -6,23 +6,14 @@ ActiveAdmin.register Experiment do
   end
   scope :finished do |experiment|
     experiment.where(:finished => true)
-  end
-  scope :finsihed_calc do |experiment|
-    experiment.where(:finsihed_calc => true)
-  end  
-  scope :return_credits do |experiment|
-    experiment.where(:return_credits => true)
-  end
-  scope :dont_return_credits do |experiment|
-    experiment.where(:return_credits => false)
-  end    
+  end   
     
   
   # Configuration for Sidebar Filters
   filter :started, :as => :select
   filter :finished, :as => :select
   filter :return_credits, :as => :select
-  filter :finsihed_calc, :as => :select
+  filter :finished_calc, :as => :select
   filter :current_round_number
   
   
@@ -44,9 +35,9 @@ ActiveAdmin.register Experiment do
           experiment.finished.yesno
        end
     end     
-    column :finsihed_calc, :sortable => :finsihed_calc do |experiment|
+    column :finished_calc, :sortable => :finished_calc do |experiment|
        div :class => "admin-center-column" do 
-          experiment.finsihed_calc.yesno
+          experiment.finished_calc.yesno
        end
     end    
     column :return_credits, :sortable => :name do |experiment|
@@ -71,8 +62,8 @@ ActiveAdmin.register Experiment do
       row :finished do |experiment|
         experiment.finished.yesno
       end
-      row :finsihed_calc do |experiment|
-        experiment.finsihed_calc.yesno
+      row :finished_calc do |experiment|
+        experiment.finished_calc.yesno
       end      
       row :return_credits do |experiment|
         experiment.return_credits.yesno

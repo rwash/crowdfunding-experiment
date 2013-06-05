@@ -17,12 +17,7 @@ class RoundsController < InheritedResources::Base
 		
     @preference.set_ready_to_start unless @preference.is_ready
     @current_round.check_if_round_ready_to_start
-    
-    if @current_round.part_a_started
-      @experiment.start_experiment unless @experiment.started
-      @experiment.set_current_round(@current_round)
-      redirect_to round_show_part_a_path(@current_round)
-    end
+    redirect_to round_show_part_a_path(@current_round) if @current_round.part_a_started
 	end
 	
 
@@ -45,8 +40,11 @@ class RoundsController < InheritedResources::Base
 	def show_part_a_2
 		@current_round = Round.find(params[:id])
 		@user = current_user
+	  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
     @number_of_projects = params[:numberOfProjects].to_i
     if @number_of_projects == 0
+      @preference.set_finished_round
+      @current_round.check_if_part_a_finished
       redirect_to summary_waiting_path(@current_round)
     end
 	end
@@ -54,7 +52,6 @@ class RoundsController < InheritedResources::Base
 	
 	def waiting_for_part_b
 		@current_round = Round.find(params[:id])
-    @current_round.check_if_part_a_finished
 	  if @current_round.part_b_started
 	    redirect_to round_show_part_b_path(@current_round)
 	  end

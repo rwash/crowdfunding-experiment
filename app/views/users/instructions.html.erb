@@ -11,8 +11,8 @@
 <br>
 <br>
 
-<% if @first_round == @current_round %>
-	<%= link_to "Start the First Round", round_waiting_path(@first_round), :class => 'btn-success btn-large' %>
+<% if @current_round.number == 1 %>
+	<%= link_to "Start the First Round", new_round_path, :class => 'btn-success btn-large' %>
 <% else %>	
 	<%= link_to "Back to the Experiment", round_waiting_path(@current_round), :class => 'btn-success btn-large' %>
 <% end %>

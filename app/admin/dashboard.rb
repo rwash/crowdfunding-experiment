@@ -15,11 +15,8 @@ ActiveAdmin.register_page "Dashboard" do
                 end
               end
               column "Status" do |experiment|
-                div :class => "admin-center-column" do 
-                  link_to("STATUS", dashboard_path(experiment))
-                end
               end
-            end
+            end 
           end
         end
       end
@@ -35,9 +32,6 @@ ActiveAdmin.register_page "Dashboard" do
                 end
               end
               column "Status" do |experiment|
-                div :class => "admin-center-column" do 
-                  link_to("STATUS", dashboard_path(experiment))
-                end
               end
             end
           end
@@ -55,9 +49,6 @@ ActiveAdmin.register_page "Dashboard" do
                 end
               end
               column "Status" do |experiment|
-                div :class => "admin-center-column" do 
-                  link_to("STATUS", dashboard_path(experiment))
-                end
               end
             end
           end

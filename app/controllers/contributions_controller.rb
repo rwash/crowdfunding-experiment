@@ -1,24 +1,14 @@
 class ContributionsController < InheritedResources::Base
-  
-  # def create
-  #   @contribution = Contribution.create(params[:contribution])
-  #     if @contribution.save
-  #     flash[:notice] = "Contribution Successfull"
-  #   else
-  #     flash[:error] = "FAILED to Contribute"
-  #   end
-  #   redirect_to new_contribution_path
-  # end
-	
 
   def submit
     @current_round = Round.find(params[:current_round_id])
     @user = current_user
-    @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first
+    @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round).first
     
     redirect_to summary_waiting_path(@current_round) if @preference.finished_round
 
-    # @total_amount_contributed = 0
+    # <TODO CL> Add input validation here to limit contribution amount
+    # @total_amount_contributed = 0  
     # @current_round.projects.each_with_index do |project, i|
     #   @total_amount_contributed =+ params["amount_#{i}".to_sym].to_i
     # end
@@ -35,8 +25,19 @@ class ContributionsController < InheritedResources::Base
       end
     end
     
-    @preference.finish_round
+    @preference.set_finished_round
     redirect_to summary_waiting_path(@current_round)
   end
+
+  
+  # def create  <TODO CL> Keep or Remove?
+  #   @contribution = Contribution.create(params[:contribution])
+  #     if @contribution.save
+  #     flash[:notice] = "Contribution Successfull"
+  #   else
+  #     flash[:error] = "FAILED to Contribute"
+  #   end
+  #   redirect_to new_contribution_path
+  # end
 	
 end

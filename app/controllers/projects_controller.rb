@@ -12,8 +12,9 @@ class ProjectsController < InheritedResources::Base
       if params[:project2Value]
         @current_round.projects << Project.new(:round => @current_round, :value => params[:project2Value])
       end
-      @preference.finished_round = true
-      @preference.save!
+
+      @preference.set_finished_round
+      @current_round.check_if_part_a_finished
       redirect_to summary_waiting_path(@current_round)
     else
       flash[:alert] = "You have finished your turn for this round!"

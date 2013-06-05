@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  actions :index, :show, :edit, :update
+  actions :index, :show
   config.batch_actions = false  
   menu :parent => "USERS", :priority => 1
   scope :all, :default => true
@@ -83,18 +83,6 @@ ActiveAdmin.register User do
       row :times_viewed_instructions
     end
     active_admin_comments
-  end
-  
-
-  # Configuration for Users Edit Page
-  form do |f|                         
-   f.inputs "New User" do       
-     f.input :experiment, :as => :select
-     f.input :name
-     f.input :password 
-     f.input :user_type
-   end                               
-   f.actions                         
   end
   
 end

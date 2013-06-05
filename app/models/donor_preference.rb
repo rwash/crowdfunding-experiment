@@ -9,7 +9,7 @@ class DonorPreference < ActiveRecord::Base
   end
   
   
-  def finish_round
+  def set_finished_round
     self.finished_round = true
     self.save!
   end

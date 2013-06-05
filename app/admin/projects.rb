@@ -1,6 +1,6 @@
 ActiveAdmin.register Project do
-  # actions :index, :show  
-  # config.batch_actions = false  
+  actions :index, :show  
+  config.batch_actions = false  
   menu :parent => "USERS", :priority => 3
   scope :all, :default => true
   scope :type_a do |project|

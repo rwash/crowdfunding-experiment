@@ -8,4 +8,10 @@ class CreatorPreference < ActiveRecord::Base
 		self.save!
   end  
   
+  
+  def set_finished_round
+    self.finished_round = true
+    self.save!
+  end
+  
 end

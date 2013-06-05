@@ -6,13 +6,10 @@ CrowdfundingExperiment::Application.routes.draw do
   resources :users, :only => [:create]  
   resource :user_sessions, :only => [:create, :destroy]
   post "/rounds/:id/create_projects" => "projects#create_projects", :as => :create_projects
-  # resources :projects, :only => [:create]   # <TODO CL> Remove, if not required??
     
   
   # Routes for EXPERIMENTS
-  resources :experiments, :only => [:new, :create, :index]
-  match "/experiments/:id/admin" => "experiments#dashboard", :as => :dashboard
-  match "/experiments/:id/users" => "experiments#users", :as => :experiment_users
+  match 'new_round' => 'experiments#new_round'
   match "/experiments/:id/summary" => "experiments#summary", :as => :experiment_summary
   match "/experiments/:id/final-summary/waiting" => "experiments#waiting_for_summary", :as => :experiment_summary_waiting
   match "/experiments/:id/final-summary" => "experiments#final_summary", :as => :final_experiment_summary  
@@ -32,11 +29,6 @@ CrowdfundingExperiment::Application.routes.draw do
   # Routes for CONTRIBUTIONS
   resources :contributions, :only => [:create]
 	match "/contributions/submit" => "contributions#submit"  
-  
-    	
-  # Routes for QUESTIONS
-	match "/questions" => "users#questions", :as => :questions
-	match "/questions/submit" => "users#submit"  
     
   
   # Routes for INSTRUCTIONS

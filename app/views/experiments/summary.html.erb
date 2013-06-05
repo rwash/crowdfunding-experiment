@@ -19,7 +19,7 @@
 	</tbody>
 </table>
 
-<h3><%= @user.payout unless @user.payout.nil?%><%= "0" if @user.payout.nil? %> credits or <%= to_dollars(@user.payout) %> dollars.</h3>
+<h3><%= @user.payout unless @user.payout.nil?%><%= "0" if @user.payout.nil? %> credits or <%= convert_credits_to_dollars(@user.payout) %> dollars.</h3>
 
 <br>
 <div class="pull-right">
@@ -27,5 +27,5 @@
 </div>
 
 <div class="form-actions">
-	<p><%= link_to "Continue onto Questions", questions_path, :class => 'btn-success btn-large pull-right' %></p>
+	<p><%= link_to "Continue onto Questions", root_path, :class => 'btn-success btn-large pull-right' %></p>
 </div>

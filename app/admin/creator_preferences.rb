@@ -1,7 +1,7 @@
 ActiveAdmin.register CreatorPreference do
   menu :parent => "USERS", :priority => 2
-  # actions :index, :show  
-  # config.batch_actions = false  
+  # actions :index, :show  <TODO CL> Enable when finished.
+  config.batch_actions = false  
   scope :all, :default => true
   
   
@@ -68,6 +68,7 @@ ActiveAdmin.register CreatorPreference do
     end
     active_admin_comments
   end
+  
   
   # Configuration for Creator_Preferences Batch Actions
   ActiveAdmin.register CreatorPreference do

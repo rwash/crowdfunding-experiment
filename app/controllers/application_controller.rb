@@ -3,8 +3,12 @@
 
 class ApplicationController < ActionController::Base
   helper :all
-  helper_method :current_user_session, :current_user, :current_experiment, :current_group, :last_round
-  # filter_parameter_logging :password, :password_confirmation
+  helper_method :current_user_session
+  helper_method :current_user
+  helper_method :current_experiment
+  helper_method :current_group
+  helper_method :last_round
+  
   
   private
   
@@ -17,25 +21,30 @@ class ApplicationController < ActionController::Base
       end    
     end
   
+  
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
       @current_user_session = UserSession.find
     end
+    
     
     def current_user
       return @current_user if defined?(@current_user)
       @current_user = current_user_session && current_user_session.record
     end
     
+    
     def current_experiment
     	return @current_experiment if defined?(@current_experiment)
     	@current_experiment = current_user.experiment
     end
     
+    
     def current_group
     	return @group if defined?(@group)
-    	@group = Group.find(current_user.group_id) unless current_user.name == 'admin'
+    	@group = Group.find(current_user.group_id) # unless current_user.name == 'admin'  # <TODO CL> Remove?
     end
+    
     
     def current_round
       @user = current_user
@@ -46,15 +55,16 @@ class ApplicationController < ActionController::Base
         end
       end
       @rounds_temp.sort_by{ |i| i[:number] }
-      @current_round = @rounds_temp.first      
+      @current_round = @rounds_temp.first
     end
     
-    def require_admin
-      if current_user.nil? || current_user.name != 'admin'
-        flash[:error] = "You must be logged in as an admin to access this page."
-        return redirect_to root_path
-      end
-    end
+    
+    # def require_admin   # <TODO CL> Redundant?
+    #   if current_user.nil? || current_user.name != 'admin'
+    #     flash[:error] = "You must be logged in as an admin to access this page."
+    #     return redirect_to root_path
+    #   end
+    # end
     
     
     def check_round(round, user)
@@ -63,9 +73,7 @@ class ApplicationController < ActionController::Base
       
       # Check if user exists        <TODO CL> Tidy this up
     	if @user
-    	  # Check if User belongs to this Round as a Creator
     	  if CreatorPreference.where(:round_id => @round.id, :user_id => @user.id).first.nil?
-    	    # If not, check if User belongs to this Round as a Donror
     	    if DonorPreference.where(:round_id => @round.id, :user_id => @user.id).first.nil?
       		  flash[:error] = "Not allowed to view round you dont belong to."
             return redirect_to root_path
@@ -85,7 +93,6 @@ class ApplicationController < ActionController::Base
     		flash[:error] = "Round has finished."
     		return redirect_to summary_waiting_path(@round)
     	end
-    	
     end
     
 end
