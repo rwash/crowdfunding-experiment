@@ -1,5 +1,5 @@
 ActiveAdmin.register Round do
-  actions :index, :show
+  # actions :index, :show
   config.batch_actions = false  
   menu :parent => "EXPERIMENTS", :priority => 2
   scope :all, :default => true
@@ -101,19 +101,7 @@ ActiveAdmin.register Round do
     active_admin_comments
   end
   
-  
-  # Configuration for Rounds Edit Page        <TODO CL> Remove this and disable Edit when done Troubleshooting
-  form do |f|                         
-   f.inputs "New Round" do       
-     f.input :part_a_started, :as => :select, :include_blank => false
-     f.input :part_a_finished, :as => :select, :include_blank => false
-     f.input :part_b_started, :as => :select, :include_blank => false
-     f.input :part_b_finished, :as => :select, :include_blank => false
-   end                               
-   f.actions                         
-  end
-  
-  
+
   # Configuration for Rounds CSV Output  <TODO CL> Remove if Implement This
   csv do
     column "Experiment" do |round|

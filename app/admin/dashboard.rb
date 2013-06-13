@@ -31,7 +31,7 @@ ActiveAdmin.register_page "Dashboard" do
                   experiment.current_round_number
                 end
               end
-              column "Status" do |experiment|
+              column "Status" do |experiment|  
               end
             end
           end

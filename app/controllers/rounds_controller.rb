@@ -68,8 +68,6 @@ class RoundsController < InheritedResources::Base
       @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first
   		@projects = Project.where(:round_id => @current_round.id)
       redirect_to summary_waiting_path(@current_round) if @preference.finished_round
-  	else @user.user_type == "Creator"   # <TODO CL> Can remove, no "Creator" Users should be able to get to this point!
-  	  redirect_to summary_waiting_path(@current_round)
     end
 	end
 	

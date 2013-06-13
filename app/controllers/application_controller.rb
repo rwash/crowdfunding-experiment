@@ -9,16 +9,6 @@ class ApplicationController < ActionController::Base
   
   private
   
-    def check_if_user_and_round_ready(preference, current_round)     # <TODO> Depricated?
-      @preference = preference
-      if !@preference.is_ready
-        @preference.is_ready = true
-        @preference.save!
-        current_round.check_if_round_ready_to_start
-      end    
-    end
-  
-  
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
       @current_user_session = UserSession.find

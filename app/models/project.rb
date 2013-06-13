@@ -3,26 +3,26 @@ class Project < ActiveRecord::Base
 	belongs_to :round
 		
 	after_create :generate_name
+	after_create :initialize
 	
 
-  def create_contribution(user, current_round, amount_contributed)
+  def create_contribution(user, group, round, amount_contributed)
     @user = user
-    @current_round = current_round
+    @current_round = round                                                                                             
+    @group = group
     @amount_contributed = amount_contributed
-    self.contributions << Contribution.new(:user_id => @user.id, :round_id => @current_round.id, :amount => @amount_contributed)
+    self.contributions << Contribution.new(:user_id => @user.id, :group_id => @group.id, :amount => @amount_contributed)
     self.save!
   end
 
 
-	def initialize(attributes = nil, options = {})    # <TODO CL> Update using Environmental Variables
-		super
+	def initialize    # <TODO CL> Use Environmental Variables and add in Other Project Types
 		self.goal_amount = 400
 		self.funded_amount = 0
 	end
 	
 	
 	def generate_name       # <TODO CL> Revise, lots of duplication with the Reseeding Names.
-		# self.name = "Project " + self.id.to_s
 		self.name = $project_names[0]
 		$project_names.delete($project_names[0])
 		
@@ -35,15 +35,15 @@ class Project < ActiveRecord::Base
 	
 	
 	def reseed_names        # <TODO CL> Revise.
-			require 'csv'
-			$project_names = []
-			CSV.foreach("colors4.csv", :headers => false) do |row|
-			  $project_names << row[0]
-			end
+		require 'csv'
+		$project_names = []
+		CSV.foreach("colors4.csv", :headers => false) do |row|
+		  $project_names << row[0]
+		end
 
-			$project_names.each do |n|
-				n.gsub!(";",'')
-			end
+		$project_names.each do |n|
+			n.gsub!(";",'')
+		end 
 	end
 	
 	

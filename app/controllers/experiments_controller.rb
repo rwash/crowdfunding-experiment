@@ -27,6 +27,6 @@ class ExperimentsController < InheritedResources::Base
 		@user = current_user
 		@preferences = @user.preferences
 		@preferences.sort! {|a,b| Round.find(a.round_id).number <=> Round.find(b.round_id).number}
-	end	
+	end	    
 
 end
