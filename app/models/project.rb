@@ -31,24 +31,24 @@ class Project < ActiveRecord::Base
 			reseed_names
 		end
 		self.save!
+	end      
+	
+	
+	def reseed_names        # <TODO CL> Revise.
+			require 'csv'
+			$project_names = []
+			CSV.foreach("colors4.csv", :headers => false) do |row|
+			  $project_names << row[0]
+			end
+
+			$project_names.each do |n|
+				n.gsub!(";",'')
+			end
 	end
 	
 	
-	def funded?
+	def funded?       # <TODO CL> Depricated?
 		self.goal_amount <= self.funded_amount
-	end
-	
-	
-	def reseed_names        # <TODO CL> Duplicated in Experiment Model. Refactor.
-		require 'csv'
-		$project_names = []
-		CSV.foreach("colors4.csv", :headers => false) do |row|
-		  $project_names << row[0]
-		end
-		
-		$project_names.each do |n|
-			n.gsub!(";",'')
-		end
 	end
 
 end

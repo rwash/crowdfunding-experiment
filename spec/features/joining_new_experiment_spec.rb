@@ -10,16 +10,17 @@ describe "JOINING A NEW EXPERIMENT:" do
   
   before :each do
     @user = User.first
-    login_user(@user)
+    login_user(@user)  
   end
   
   after(:all) do
     @experiment.destroy
   end
 
-  context "When first user joins a new experiment:" do
+  context "When first user joins a new experiment:" do  
+    
     it "Sets the Experiment Start Time and Started Property" do
-      click_link("Start the First Round")
+      click_link("Start the First Round")    
       current_experiment.start_time.should_not eq(nil)
       current_experiment.started.should eq(true)
     end

@@ -1,18 +1,15 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
   helper :all
   helper_method :current_user_session
   helper_method :current_user
-  helper_method :current_experiment
-  helper_method :current_group
+  helper_method :current_experiment     
+  helper_method :current_round
   helper_method :last_round
   
   
   private
   
-    def check_if_user_and_round_ready(preference, current_round)
+    def check_if_user_and_round_ready(preference, current_round)     # <TODO> Depricated?
       @preference = preference
       if !@preference.is_ready
         @preference.is_ready = true
@@ -40,38 +37,19 @@ class ApplicationController < ActionController::Base
     end
     
     
-    def current_group
-    	return @group if defined?(@group)
-    	@group = Group.find(current_user.group_id) # unless current_user.name == 'admin'  # <TODO CL> Remove?
-    end
-    
-    
     def current_round
-      @user = current_user
-      @rounds_temp = []
-      Round.where(:group_id => @user.group_id).each do |round|
-        if !round.part_b_finished
-          @rounds_temp << round
-        end
-      end
-      @rounds_temp.sort_by{ |i| i[:number] }
-      @current_round = @rounds_temp.first
-    end
+      @experiment = current_experiment
+      Round.where(:experiment_id => @experiment.id).order("number ASC").each do |round|
+        return round unless round.round_complete
+      end 
+      return @experiment.rounds.first
+    end   
     
     
-    # def require_admin   # <TODO CL> Redundant?
-    #   if current_user.nil? || current_user.name != 'admin'
-    #     flash[:error] = "You must be logged in as an admin to access this page."
-    #     return redirect_to root_path
-    #   end
-    # end
-    
-    
-    def check_round(round, user)
+    def check_round(round, user)         # <TODO CL> Implement.
       @round = round
       @user = user
-      
-      # Check if user exists        <TODO CL> Tidy this up
+
     	if @user
     	  if CreatorPreference.where(:round_id => @round.id, :user_id => @user.id).first.nil?
     	    if DonorPreference.where(:round_id => @round.id, :user_id => @user.id).first.nil?

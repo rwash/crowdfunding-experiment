@@ -29,20 +29,10 @@ def current_experiment
 end
 
 
-def current_group
-	return @group if defined?(@group)
-	@group = Group.find(current_user.group_id) # unless current_user.name == 'admin'  # <TODO CL> Remove?
-end
-
-
 def current_round
-  @user = current_user
-  @rounds_temp = []
-  Round.where(:group_id => @user.group_id).each do |round|
-    if !round.part_b_finished
-      @rounds_temp << round
-    end
-  end
-  @rounds_temp.sort_by{ |i| i[:number] }
-  @current_round = @rounds_temp.first
+  @experiment = current_experiment
+  Round.where(:experiment_id => @experiment.id).order("number ASC").each do |round|
+    return round unless round.round_complete
+  end 
+  return @experiment.rounds.first
 end

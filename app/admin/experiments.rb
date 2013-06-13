@@ -1,5 +1,6 @@
 ActiveAdmin.register Experiment do
-  menu :parent => "EXPERIMENTS", :priority => 1
+  menu :parent => "EXPERIMENTS", :priority => 1  
+  config.batch_actions = false 
   scope :all, :default => true
   scope :started do |experiment|
     experiment.where(:started => true)
@@ -21,7 +22,6 @@ ActiveAdmin.register Experiment do
   config.sort_order = "id_asc"  
   config.per_page = 15
   index do
-    selectable_column
     column "Experiment" do |experiment|
       "Experiment ##{experiment.id}"
     end
@@ -34,7 +34,7 @@ ActiveAdmin.register Experiment do
        div :class => "admin-center-column" do 
           experiment.finished.yesno
        end
-    end     
+    end          
     column :finished_calc, :sortable => :finished_calc do |experiment|
        div :class => "admin-center-column" do 
           experiment.finished_calc.yesno

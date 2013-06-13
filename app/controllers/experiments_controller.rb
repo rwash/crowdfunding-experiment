@@ -11,7 +11,7 @@ class ExperimentsController < InheritedResources::Base
 
 	def summary
 		@user = current_user
-    @rounds = @user.group.rounds
+    @rounds = current_experiment.rounds
     # <TODO CL>  Add Round Payout Calculation Here
 	end
 	
@@ -28,32 +28,5 @@ class ExperimentsController < InheritedResources::Base
 		@preferences = @user.preferences
 		@preferences.sort! {|a,b| Round.find(a.round_id).number <=> Round.find(b.round_id).number}
 	end	
-
-
-  # def index     <TODO CL> Remove?
-  #   require_admin
-  #   @experiments = Experiment.all
-  # end
-  
-  # def users     <TODO CL> Remove?
-  #   @experiment = Experiment.find(params[:id])
-  # end
-	
-  # def dashboard     <TODO CL> Remove?
-  #   require_admin
-  #   @experiment = Experiment.find(params[:id])
-  #   @roundsA = @experiment.groups.first.rounds.where(:number => (1..@experiment.current_round_number)).order("number DESC")
-  #   @roundsB = @experiment.groups.last.rounds.where(:number => (1..@experiment.current_round_number)).order("number DESC")
-  #   
-  #   if @roundsA.first.finished and @roundsB.first.finished
-  #     @roundsA = @experiment.groups.first.rounds.where(:number => (1..@experiment.current_round_number + 1)).order("number DESC")
-  #     @roundsB = @experiment.groups.last.rounds.where(:number => (1..@experiment.current_round_number + 1)).order("number DESC")
-  #   end
-  # end
-	
-  # def new     <TODO CL> Remove?
-  #   require_admin
-  #   @experiment = Experiment.new
-  # end
 
 end

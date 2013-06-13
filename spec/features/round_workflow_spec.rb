@@ -64,7 +64,7 @@ describe "USERS COMPLETING A SINGLE ROUND:" do
     it "Sets all Creators preferences to Finished" do
       @user = User.first
       @current_round = current_round
-      User.where(:group_id => @user.group_id, :user_type => "Creator").each do |user|
+      User.where(:experiment_id => @user.experiment_id, :user_type => "Creator").each do |user|
         user.creator_preferences.where(:round_id => current_round).each do |preference|
           preference.finished_round.should eq(true)
         end
@@ -83,18 +83,20 @@ describe "USERS COMPLETING A SINGLE ROUND:" do
     end
     
     it "Sets Part B of Round as Finished, the End Time and Round as Complete" do
+      @experiment = current_experiment
       @current_round = current_round
-      @previous_round = Round.where(:group_id => @current_round.group_id, :number => (@current_round.number - 1)).first
+      @previous_round = Round.where(:experiment_id => @experiment.id, :number => (@current_round.number - 1)).first
       @previous_round.part_b_finished.should eq(true)
       @previous_round.end_time.should_not eq(nil)
       @previous_round.round_complete.should eq(true)
     end
     
     it "Sets all Donors preferences to Finished" do
+      @experiment = current_experiment 
       @user = User.first
       @current_round = current_round
-      @previous_round = Round.where(:group_id => @current_round.group_id, :number => (@current_round.number - 1)).first
-      User.where(:group_id => @user.group_id, :user_type => "Donor").each do |user|
+      @previous_round = Round.where(:experiment_id => @experiment.id, :number => (@current_round.number - 1)).first
+      User.where(:experiment_id => @experiment.id, :user_type => "Donor").each do |user|
         user.donor_preferences.where(:round_id => @previous_round).each do |preference|
           preference.finished_round.should eq(true)
         end

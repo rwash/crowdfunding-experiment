@@ -13,11 +13,9 @@ ActiveAdmin.register User do
   
   # Configuration for Sidebar Filters
   filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
-  filter :group_name, :label => "Group", :as => :select, :collection => Group.uniq.pluck(:name)
   filter :name
   filter :type
   filter :payout
-  filter :questions_payout
 
 
   # Configuration for Users Index Page
@@ -27,11 +25,6 @@ ActiveAdmin.register User do
     column :experiment, :sortable => :experiment_id  do |user|
       if user.experiment_id != nil
         link_to "Experiment ##{user.experiment_id}", admin_experiment_path(user.experiment_id)
-      end
-    end
-    column :group, :sortable => :group_id  do |user|
-      if user.group_id != nil
-        link_to "Group #{user.group.name}", admin_group_path(user.group_id)
       end
     end
     column :name, :sortable => :name do |user|
@@ -54,11 +47,6 @@ ActiveAdmin.register User do
           user.payout
        end
     end
-    column :questions_payout, :sortable => :questions_payout do |user|
-       div :class => "admin-center-column" do 
-          user.questions_payout
-       end
-    end
     default_actions
   end
   
@@ -71,15 +59,9 @@ ActiveAdmin.register User do
           link_to "Experiment ##{user.experiment_id}", admin_experiment_path(user.experiment_id)
         end
       end
-      row :group do |user|
-        if user.group_id != nil
-          link_to "Group #{user.group.name}", admin_group_path(user.group_id)
-        end
-      end
       row :name
       row :user_type
       row :payout
-      row :questions_payout
       row :times_viewed_instructions
     end
     active_admin_comments

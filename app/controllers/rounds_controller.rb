@@ -4,10 +4,10 @@ class RoundsController < InheritedResources::Base
 	  @experiment = current_experiment
 		@current_round = Round.find(params[:id])
     @user = current_user
-    unless @user.group_id == @current_round.group_id
-      @user.group_id = @current_round.group_id
-      @user.save!
-    end
+    # unless @user.group_id == @current_round.group_id
+    #   @user.group_id = @current_round.group_id
+    #   @user.save!
+    # end    
     
 		if @user.user_type == "Creator"
 		  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
@@ -97,7 +97,7 @@ class RoundsController < InheritedResources::Base
 		end
 		
 		@next_round_number = @current_round.number + 1
-		@next_round = @current_experiment.rounds.where(:group_id => @current_round.group_id, :number => @next_round_number).first
+		@next_round = @current_experiment.rounds.where(:number => @next_round_number).first
 	end
 	
 end

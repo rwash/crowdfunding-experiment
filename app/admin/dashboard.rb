@@ -41,7 +41,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         div :class => "admin-center-column" do         
           panel "Completed Experiments" do
-            table_for Experiment.where(:started => true) do
+            table_for Experiment.where(:finished => true) do
               column ("Experiment") {|experiment| link_to("Experiment ##{experiment.id}", admin_experiment_path(experiment.id)) } 
               column "Current Round" do |experiment|
                 div :class => "admin-center-column" do 
@@ -52,8 +52,8 @@ ActiveAdmin.register_page "Dashboard" do
               end
             end
           end
-        end
-      end
+        end 
+      end 
     end
   end
 end

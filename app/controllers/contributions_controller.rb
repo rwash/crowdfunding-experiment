@@ -28,16 +28,5 @@ class ContributionsController < InheritedResources::Base
     @preference.set_finished_round
     redirect_to summary_waiting_path(@current_round)
   end
-
-  
-  # def create  <TODO CL> Keep or Remove?
-  #   @contribution = Contribution.create(params[:contribution])
-  #     if @contribution.save
-  #     flash[:notice] = "Contribution Successfull"
-  #   else
-  #     flash[:error] = "FAILED to Contribute"
-  #   end
-  #   redirect_to new_contribution_path
-  # end
 	
 end

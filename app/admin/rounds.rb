@@ -1,7 +1,7 @@
 ActiveAdmin.register Round do
-  # actions :index, :show
+  actions :index, :show
   config.batch_actions = false  
-  menu :parent => "EXPERIMENTS", :priority => 3
+  menu :parent => "EXPERIMENTS", :priority => 2
   scope :all, :default => true
   scope :part_a_started do |round|
     round.where(:part_a_started => true)
@@ -18,8 +18,7 @@ ActiveAdmin.register Round do
     
   
   # Configuration for Sidebar Filters
-  filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
-  # filter :group, :as => :select, :collection => Group.uniq.pluck(:name)  # TODO - DOESN'T SELECT RECORDS
+  filter :experiment, :as => :select
   filter :number, :label => "Round"
   filter :part_a_started, :as => :select
   filter :part_a_finished, :as => :select
@@ -34,10 +33,7 @@ ActiveAdmin.register Round do
   config.per_page = 15
   index do
     column :experiment, :sortable => :experiment_id do |round|
-      link_to "Experiment ##{round.group.experiment_id}", admin_experiment_path(round.group.experiment_id)
-    end
-    column :group, :sortable => :group_id do |round|
-      link_to "Group #{round.group.name}", admin_group_path(round.group_id)
+      link_to "Experiment ##{round.experiment_id}", admin_experiment_path(round.experiment_id)
     end
     column :round, :sortable => :number do |round|
        div :class => "admin-center-column" do 
@@ -82,10 +78,7 @@ ActiveAdmin.register Round do
   show do |round|
     attributes_table do
       row :experiment do |round|
-        link_to "Experiment ##{round.group.experiment_id}", admin_experiment_path(round.group.experiment_id)
-      end
-      row :group do |round|
-        link_to "Group #{round.group.name}", admin_group_path(round.group_id)
+        link_to "Experiment ##{round.experiment_id}", admin_experiment_path(round.experiment_id)
       end
       row "Round" do |round|
         "Round #{round.number}"
@@ -124,7 +117,7 @@ ActiveAdmin.register Round do
   # Configuration for Rounds CSV Output  <TODO CL> Remove if Implement This
   csv do
     column "Experiment" do |round|
-      "Experiment ##{round.group.experiment_id}"
+      "Experiment ##{round.experiment_id}"
     end
     column "Round Id" do |round|
       round.id

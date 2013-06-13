@@ -1,7 +1,7 @@
 ActiveAdmin.register Group do
   actions :index, :show
-  config.batch_actions = false  
-  menu :parent => "EXPERIMENTS", :priority => 2
+  config.batch_actions = false   
+  menu :parent => "EXPERIMENTS", :priority => 3
   scope :all, :default => true
   scope :group_a do |group|
     group.where(:name => "A")
@@ -12,7 +12,6 @@ ActiveAdmin.register Group do
     
   
   # Configuration for Sidebar Filters
-  filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
   filter :name, :label => "Group Name", :as => :select, :collection => Group.uniq.pluck(:name)
   
   
@@ -21,8 +20,11 @@ ActiveAdmin.register Group do
   config.per_page = 15
    index do
     column :experiment do |group|
-      link_to "Experiment ##{group.experiment_id}", admin_experiment_path(group.experiment_id)
-    end
+      link_to "Experiment ##{group.round.experiment_id}", admin_experiment_path(group.round.experiment_id)
+    end  
+    column "Round" do |group|
+      link_to "Round ##{group.round.number}", admin_round_path(group.round_id)
+    end  
     column "Group Name", :sortable => :name do |group|
       "Group #{group.name}"
     end
@@ -34,8 +36,11 @@ ActiveAdmin.register Group do
   show do |group|
     attributes_table do
       row :experiment do |group|
-        link_to "Experiment ##{group.experiment_id}", admin_experiment_path(group.experiment_id)
+        link_to "Experiment ##{group.round.experiment_id}", admin_experiment_path(group.round.experiment_id)
       end
+      row "Round" do |group|
+        link_to "Round ##{group.round.number}", admin_round_path(group.round_id)
+      end    
       row :group do |group|
         "Group #{group.name}"         
       end

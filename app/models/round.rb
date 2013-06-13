@@ -1,15 +1,36 @@
 class Round < ActiveRecord::Base
-	belongs_to :group
-	has_one :experiment, :through => :group
-	has_many :projects, :dependent => :destroy
-	has_many :users, :through => :prefs
-	has_many :contributions
-	has_many :creator_preferences
-	has_many :donor_preferences
+	belongs_to :experiment          
+	has_many :groups, :dependent => :destroy    
+	has_many :projects, :dependent => :destroy  
+	has_many :creator_preferences, :through => :groups
+	has_many :donor_preferences, :through => :groups
+		
+  after_create :generate_groups  
+     
+
+	def generate_groups       # <TODO CL> Revise, groups need to be randomly allocated between rounds.
+		reseed_names
+		self.groups << Group.create(:name => 'A')
+		reseed_names
+		self.groups << Group.create(:name => 'B')
+		self.save!
+	end   
+	
+	
+	def reseed_names        # <TODO CL> Revise.
+		require 'csv'
+		$project_names = []
+		CSV.foreach("colors4.csv", :headers => false) do |row|
+		  $project_names << row[0]
+		end
+
+		$project_names.each do |n|
+			n.gsub!(";",'')
+		end 
+	end
 
 
-  def check_if_part_a_finished    # <TODO CL>
-    # Loop through Creator_Preferences for the Round
+  def check_if_part_a_finished
     CreatorPreference.where(:round_id => self.id).each do |preference|
       if preference.finished_round == false
         return false
@@ -18,19 +39,6 @@ class Round < ActiveRecord::Base
     self.part_a_finished = true
     self.part_b_started = true
     self.save!
-    
-      # If a Creator has not finished the round
-        # Return false
-      # Elsif all Creators are finished
-        # Set Round PartA to Complete
-        # Set Round PartB to Started
-        # Save
-          
-
-    # if self.part_a_finished && self.part_b_started != true
-    #   self.part_b_started = true
-    #   self.save!
-    # end
   end
 
 	
@@ -66,16 +74,6 @@ class Round < ActiveRecord::Base
   end
 
 	
-  # def check_if_all_done     # <TODO CL> Redudant? Remove.
-  #   self.prefs.each do |p|
-  #     if !p.finished_and_ready
-  #       return false
-  #     end
-  #   end
-  #   self.round_over
-  # end
-
-	
 	def round_started
 		self.start_time = DateTime.now
 		self.save!
@@ -83,63 +81,7 @@ class Round < ActiveRecord::Base
 	
 	
 	def round_over        # <TODO CL> Revise logic for end of round calculations.
-		
-    # self.projects.each do |p|         # <TODO CL> Redudant? Remove.
-    #   p.funded_amount = p.start_amount
-    #   p.contributions.each do |c|
-    #     p.funded_amount += c.amount
-    #   end
-    #   p.save!
-    # end
-		
 		@experiment = self.experiment
-			
-    # self.prefs.each do |p|
-    #   p.round_payout = 0
-    #   
-    #   @total = 0
-    # 
-    #   @total = Contribution.where(:user_id => p.user_id, :project_id => self.projects[0].id).first.amount + Contribution.where(:user_id => p.user_id, :project_id => self.projects[1].id).first.amount + Contribution.where(:user_id => p.user_id, :project_id => self.projects[2].id).first.amount + Contribution.where(:user_id => p.user_id, :project_id => self.projects[3].id).first.amount
-    #   
-    #   if p.timer_expired
-    #     p.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND
-    #   else
-    #     p.round_payout = AMOUNT_USER_CAN_DONATE_PER_ROUND - @total
-    #   end
-    #   
-    #   if self.projects[0].funded?
-    #     p.round_payout += p.a_payout
-    #   elsif @experiment.return_credits
-    #     p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[0].id).first.amount
-    #   end
-    #   
-    #   if self.projects[1].funded?
-    #     p.round_payout += p.b_payout
-    #   elsif @experiment.return_credits
-    #     p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[1].id).first.amount
-    #   end
-    #   
-    #   if self.projects[2].funded?
-    #     p.round_payout += p.c_payout
-    #   elsif @experiment.return_credits
-    #     p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[2].id).first.amount
-    #   end
-    #   
-    #   if self.projects[3].funded?
-    #     p.round_payout += p.d_payout
-    #   elsif @experiment.return_credits
-    #     p.round_payout += Contribution.where(:user_id => p.user_id, :project_id => self.projects[3].id).first.amount
-    #   end
-    #   
-    #   @user = User.find(p.user_id)
-    #   @user.payout += p.round_payout
-    #   
-    #   @user.save!
-    #   p.save!
-    # end
-    # 
-    # self.finished = true
-    # self.save!  
 	end
 	
 	
