@@ -16,9 +16,10 @@ class User < ActiveRecord::Base
 	belongs_to :experiment
 	has_many :groups, :through => :creator_preferences
 	has_many :groups, :through => :donor_preferences
+	has_many :creator_preferences, :dependent => :destroy
+  has_many :donor_preferences, :dependent => :destroy 
+	has_many :projects, :dependent => :destroy 
 	has_many :contributions, :dependent => :destroy
-  has_many :creator_preferences, :dependent => :destroy
-  has_many :donor_preferences, :dependent => :destroy
 	
 	after_create :generate_name_and_password
 	

@@ -1,7 +1,6 @@
 class Round < ActiveRecord::Base
 	belongs_to :experiment          
 	has_many :groups, :dependent => :destroy    
-	has_many :projects, :dependent => :destroy  
 	has_many :creator_preferences, :through => :groups
 	has_many :donor_preferences, :through => :groups
 		
@@ -27,7 +26,7 @@ class Round < ActiveRecord::Base
 		$project_names.each do |n|
 			n.gsub!(";",'')
 		end 
-	end
+	end 
 
 
   def check_if_part_a_finished

@@ -18,11 +18,21 @@ ActiveAdmin.register Project do
   index do
     selectable_column
     column :experiment do |project|
-      link_to "Experiment ##{project.round.experiment_id}", admin_experiment_path(project.round.experiment_id)
+      link_to "Experiment ##{project.group.round.experiment_id}", admin_experiment_path(project.group.round.experiment_id)
     end
-    column :round_id, :sortable => :round_id do |project|
+    column :round, :sortable => :round_id do |project|
        div :class => "admin-center-column" do 
-          link_to "Round #{project.round.number}", admin_round_path(project.round)
+          link_to "Round #{project.group.round.number}", admin_round_path(project.group.round)
+       end
+    end                               
+    column :group, :sortable => :group do |project|
+       div :class => "admin-center-column" do 
+          link_to "Group #{project.group.name}", admin_group_path(project.group_id)
+       end
+    end    
+    column :user, :sortable => :user do |project|
+       div :class => "admin-center-column" do 
+          link_to "User #{project.user_id}", admin_user_path(project.user_id)           
        end
     end
     column "Project Name", :sortable => :name do |project|
@@ -30,19 +40,14 @@ ActiveAdmin.register Project do
           project.name
        end
     end
-    column :goal_amount, :sortable => :goal_amount do |project|
+    column :value, :sortable => :value do |project|
        div :class => "admin-center-column" do 
-          project.goal_amount
+          project.value
        end
     end
-    column :start_amount, :sortable => :start_amount do |project|
+    column :popularity, :sortable => :popularity do |project|
        div :class => "admin-center-column" do 
-          project.start_amount
-       end
-    end
-    column :funded_amount, :sortable => :funded_amount do |project|
-       div :class => "admin-center-column" do 
-          project.funded_amount
+          project.popularity
        end
     end
     default_actions
@@ -53,15 +58,30 @@ ActiveAdmin.register Project do
   show do |project|
     attributes_table do
       row :experiment do |project|
-        link_to "Experiment ##{project.round.experiment_id}", admin_experiment_path(project.round.experiment_id)
+        link_to "Experiment ##{project.group.round.experiment_id}", admin_experiment_path(project.group.round.experiment_id)
       end
       row :round do |project|
-        link_to "Round #{project.round.number}", admin_round_path(project.round_id)
+        link_to "Round #{project.group.round.number}", admin_round_path(project.group.round_id)
       end
-      row :name
+      row :group do |project|
+        link_to "Group #{project.group.name}", admin_group_path(project.group_id)
+      end  
+      row :user do |project|
+        link_to "User #{project.user_id}", admin_user_path(project.user_id) 
+      end
+      row :name  
+      row :value
+      row :popularity
       row :goal_amount
-      row :start_amount
+      row :standard_return_amount
+      row :special_return_amount
       row :funded_amount
+      row :special_user_1 do |project|
+        link_to "User #{project.special_user_1}", admin_user_path(project.special_user_1)       
+      end   
+      row :special_user_2 do |project|
+        link_to "User #{project.special_user_2}", admin_user_path(project.special_user_2)       
+      end
     end
     active_admin_comments
   end

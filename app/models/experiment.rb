@@ -30,23 +30,22 @@ class Experiment < ActiveRecord::Base
 	
 	                                                            
 	def generate_preferences
+    @creators = []
+    @donors = []
+    User.where(:experiment_id => self.id).each_with_index do |user, j|
+      if user.user_type == "Creator"
+        @creators << user
+      elsif user.user_type == "Donor"
+        @donors << user             
+      end
+    end    
+    
     self.rounds.each_with_index do |round, i|  
       @round_groups = []
-      @creators = []
-      @donors = []    
-      
       round.groups.each do |group|
         @round_groups << group
       end        
-      
-      User.where(:experiment_id => self.id).each_with_index do |user, j|
-        if user.user_type == "Creator"
-          @creators << user
-        elsif user.user_type == "Donor"
-          @donors << user             
-        end
-      end
-      
+     
       @random_creator_group = (0..(NUMBER_OF_CREATORS-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_OF_CREATORS_PER_GROUP-1)] 
       @creators.each_with_index do |creator, k|
         if @random_creator_group.include?(k)
@@ -63,8 +62,19 @@ class Experiment < ActiveRecord::Base
         else
           donor.donor_preferences << DonorPreference.create(:group => @round_groups[1], :round => round)              
         end        
-      end  
-    end                                  
+      end
+     
+      @random_special_donors = (0..(NUMBER_OF_DONORS_PER_GROUP-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_SPECIAL_DONORS_PER_GROUP-1)]  
+      @round_groups.each do |group|
+        DonorPreference.where(:round_id => round, :group_id => group).each_with_index do |preference, n|
+          if @random_special_donors.include?(n) 
+            preference.special_donor = true
+            preference.save!     
+          end
+        end
+      end
+    end
+    self.save!                                  
   end                             
 	
 	

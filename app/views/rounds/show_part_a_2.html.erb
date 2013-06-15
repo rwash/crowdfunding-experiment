@@ -1,25 +1,87 @@
-<h2><%= "Part A - Project #{@user.user_type} - Step 2" %></h2>
-<br>
-<p>Please choose the value of each of the projects:</p>
+<div id="container">	
+	<div class="row">
+   	<div class="span9">
+			<div class="page-header">
+			  	<h2>Part A: Create Projects - Step 2</h2>
+			</div>
+			<h4>Please choose the value and popularity of each of your projects:</h4>
+			<br>                                                              
 
-<%= form_tag(create_projects_path) do %>
+			<%= form_tag(create_projects_path) do %>
+            
+  			<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<td><h4>Project</h4></td>
+							<td><h4>Value</h4></td>
+							<td><h4>Popularity</h4></td>
+						 </tr>
+					</thead>
+					<tbody>
+						<% @number_of_projects.times do |i| %>
+							<tr>
+								<td>Project #<%= i + 1 %></td>
+								<td>
+									<label class="radio inline">
+										<input type="radio" name=<%= "project#{i}Value" %> id="projectValue1" value="High" checked>
+										High
+									</label>
+									<label class="radio inline">
+										<input type="radio" name=<%= "project#{i}Value" %> id="projectValue2" value="Low">
+										Low
+									</label>
+								</td>
+								<td>
+									<label class="radio inline">
+										<input type="radio" name=<%= "project#{i}Popularity" %> id="projectValue1" value="Popular" checked>
+										Popular
+									</label>
+									<label class="radio inline">
+										<input type="radio" name=<%= "project#{i}Popularity" %> id="projectValue2" value="Niche">
+										Niche
+									</label>
+								</td> 
+							 </tr>                                       
+						<% end %>
+					</tbody>
+				</table>
 
-	<% (1..@number_of_projects).each do |i| %>
-		
-		<h4><%= "Project ##{i}" %></h4>
-		<label class="radio inline">
-			<input type="radio" name=<%= "project#{i}Value" %> id="projectValue1" value="Low" checked>
-			Low Value
-		</label>
-		<label class="radio inline">
-			<input type="radio" name=<%= "project#{i}Value" %> id="projectValue2" value="High">
-			High Value
-		</label>
-				
-	<% end %>
+	         <br>
+				<h3>Hints:</h3>
+				<br>
+				<p><b> - High Value Projects: </b>These projects are requesting <%= HIGH_VALUE_PROJECT_GOAL %> credits in funding.</p>
+				<p><b> - Low Value Projects: </b>These projects are requesting <%= LOW_VALUE_PROJECT_GOAL %> credits in funding.</p> 
+				<p><b> - Popular Projects: </b>If successfully funded, these projects will return the same, moderate amount to each of it's donors.</p> 
+				<p><b> - Niche Projects: </b>If successfully funded, these projects will return a large amount randomly to 2 of it's donors, and a lower amount to the remainder.</p> 
+			   <br>
+			
+		    	<%= hidden_field_tag "number_of_projects", @number_of_projects %> 
 	
-	<div class="form-actions">
-    	<%= submit_tag :submit, :value => "Submit", :class => 'btn btn-large btn-success pull-right' %>
-  	</div>
+				<div class="form-actions">
+			    	<%= submit_tag :submit, :id => "submit-button", :value => "Submit", :class => 'btn btn-large btn-success pull-right' %>
+			  	</div>
 
-<% end %>
+			<% end %>
+		</div>
+		<div class="span3">
+			<%= render "countdown_timer_sidebar" %>  			
+		</div>
+	</div>
+</div> 
+
+
+
+<script>
+	function countDown (count) {
+   	if (count > 0) 
+		{
+    		document.getElementById("timer").innerHTML = count;
+    		setTimeout (function() { countDown(count - 1); }, 1000);
+  		}
+  		else if (count == 0) 
+		{
+ 			document.getElementById("submit-button").click(); 
+		}
+ 	}
+	countDown(<%= ROUND_PART_A2_COUNTDOWN_SECONDS %>);
+</script>

@@ -5,6 +5,7 @@ class Group < ActiveRecord::Base
 	has_many :users, :through => :donor_preferences  
 	has_many :creator_preferences
 	has_many :donor_preferences
+	has_many :projects, :dependent => :destroy 
 	has_many :contributions   
 	
 	

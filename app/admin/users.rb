@@ -59,7 +59,8 @@ ActiveAdmin.register User do
           link_to "Experiment ##{user.experiment_id}", admin_experiment_path(user.experiment_id)
         end
       end
-      row :name
+      row :name     
+      row :password
       row :user_type
       row :payout
       row :times_viewed_instructions

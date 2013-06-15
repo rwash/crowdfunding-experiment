@@ -1,9 +1,19 @@
 <style>
-	body{ padding-top: 20px; ! important; }
+	body{ padding-top: 20px; }
 </style>
+      
+             
+<div class="page-header">
+  	<h1>Instructions</h1>
+</div>
 
-<%= render "shared/instructions_return" if current_experiment.return_credits %>
-<%= render "shared/instructions_no_return" unless current_experiment.return_credits %>
-
-<p>&nbsp;</p>
-<h3><a href="" OnClick="window.close()">close window</a></h3>
+<% if current_user.user_type == "Creator" %>
+  <%= render "shared/creator_instructions" %>
+<% elsif current_user.user_type == "Donor" %>
+  <%= render "shared/donor_instructions" %>
+<% end %>
+<br>
+  
+<div class="form-actions">
+	<%= link_to "Close Window", "", :OnClick => "window.close()", :class => "btn-success btn-large pull-right" %>     
+</div>

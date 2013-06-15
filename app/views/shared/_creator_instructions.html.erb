@@ -1,0 +1,56 @@
+<h2>Crowdfunding Experiment - Project Creator</h2>  
+<br>
+
+<p>In this study, you will play the role of a Project Creator on a crowdfunding site. Crowdfunding sites are websites where people can post projects and ask for small donations from a large number of people over the Internet.</p>
+
+<p>In this simulation, you will be able to post projects to a simulated crowdfunding site where 4 donors can decide to donate to your project. Each donor has 100 credits that he or she can choose to donate. Donors can donate all 150 credits, some part, or no credits.</p>
+                                                                                                                            
+<p>You are given a budget of 200 credits. To post a project to the site costs 50 credits. You can post as many projects as you have a budget for.</p>
+
+<p>If you choose to post a project, there are two choices you must make about what type of project to post. The first choice is the risk level. You can create a high risk project which requires 200 credits in donations, or a low risk project which requires 100 credits in donations. If a high risk project is completed, you earn 200 credits plus a 100 credit bonus. If a low risk project is completed, you earn 100 credits plus a 25 credit bonus.</p>
+
+<p>The second choice you make is the popularity of the project. You can create popular projects or niche projects. To incentivize donations to your projects, donors earn a payoff when a project is completed. If you choose to create a popular project, all donors earn the same payoff if the project is completed, and this payoff is moderately sized. If you create a niche project, two donors will earn a very high payoff if the project is completed, and two other donors will earn only a small payoff. The table below describes these payoffs in more detail:</p>   
+
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<td></td>
+			<td><strong>High Risk</strong></td>
+			<td><strong>Low Risk</strong></td>
+		</tr>			
+		<tr>
+			<td><strong>Popular</strong></td>
+			<td>All donors earn 100 credits</td>
+			<td>All donors earn 50 credits</td>
+		</tr>
+		<tr>
+			<td><strong>Niche</strong></td>
+			<td>2 donors earn 200 credits <br>2 donors earn 50 credits</td>
+			<td>2 donors earn 100 credits <br>2 donors earn 25 credits</td>
+		</tr>		
+	</tbody>
+</table>                       
+<br>   
+
+<h3>Payout Calculation:</h3>
+<br>
+<% if current_experiment.return_credits %>
+
+	<p>If you create a project and that project does not receive enough donations to be completed, your creation fee will be returned to you. However, if a project receives excess donations, the excess donations are not returned to you.</p>
+	
+	<p>Your total payout for the simulation is: <strong>(Un‐donated credits + Earnings from projects that are funded + Returned credits from projects that are not funded)</strong>.</p>     
+                                                                                         
+<% else %>
+
+	<p>If you create a project and it does not receive enough donations to be completed, the creation fee is kept by the website. If a project receives excess donations, those donations are also kept by the website and not returned to you.</p>
+	
+	<strong><p>Your total payout for the simulation is: <strong>(Un‐donated credits + Sum of all payouts from funded projects)</strong>.</p></strong>  
+
+<% end %>
+<br>
+
+<h3>Additional Instructions:</h3>
+<br>      
+<p> - You will play <strong>20</strong> rounds of this simulation. In each round, you will be randomly rematched with 4 other donors and 1 other creator, so in every round you are playing with a different set of people. You will not know who else you are playing with.</p>    
+
+<p> - In each round, the credits you earn will be added to a running total. At the end of the experiment, your credits will be exchanged for cash at a rate of (<strong><%= CREDITS_TO_DOLLAR_RATE %> credits for $1</strong>).</p>

@@ -24,7 +24,8 @@ class RoundsController < InheritedResources::Base
 	def show_part_a
 		@current_round = Round.find(params[:id])
 		@user = current_user
-		check_round(@current_round, @user)
+		check_round(@current_round, @user)  
+		@number_of_project_options = ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR + 1
 		
 		if @current_round.part_b_started
       redirect_to waiting_for_part_b_path(@current_round)		  
@@ -62,11 +63,12 @@ class RoundsController < InheritedResources::Base
 	  @current_round = Round.find(params[:id])
 		@user = current_user
 
-    if @current_round.part_b_finished
+    if @current_round.part_b_finished || @user.user_type == "Creator" 
       redirect_to summary_waiting_path(@current_round)    
     elsif @user.user_type == "Donor"
-      @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first
-  		@projects = Project.where(:round_id => @current_round.id)
+      @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round).first
+      @current_group = @preference.group
+  		@projects = Project.where(:group_id => @current_group )
       redirect_to summary_waiting_path(@current_round) if @preference.finished_round
     end
 	end

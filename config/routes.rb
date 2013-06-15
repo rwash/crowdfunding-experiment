@@ -17,13 +17,13 @@ CrowdfundingExperiment::Application.routes.draw do
    
   # Routes for ROUNDS
   resources :rounds, :only => [:create]
+  match "/rounds/:id/waiting" => "rounds#waiting_for_round", :as => :round_waiting    
   match "/rounds/:id/part_a" => "rounds#show_part_a", :as => :round_show_part_a
   match "/rounds/:id/part_a_2" => "rounds#show_part_a_2", :as => :round_show_part_a_2
   match "/rounds/:id/waiting_for_part_b" => "rounds#waiting_for_part_b", :as => :waiting_for_part_b
   match "/rounds/:id/part_b" => "rounds#show_part_b", :as => :round_show_part_b
   match "/rounds/:id/summary" => "rounds#summary", :as => :round_summary
   match "/rounds/:id/summary/waiting" => "rounds#waiting_for_summary", :as => :summary_waiting
-  match "/rounds/:id/waiting" => "rounds#waiting_for_round", :as => :round_waiting
    
 
   # Routes for CONTRIBUTIONS
