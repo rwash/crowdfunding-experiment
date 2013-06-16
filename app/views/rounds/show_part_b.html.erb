@@ -49,6 +49,7 @@
 				<p> - Contributions must be positive.</p>
 				<p> - Total contributed amount cannot be more than your allowed credits.</p>
 				<p> - You do not need to allocate all of your credits to projects.</p>
+				<p> - "Your Reward" is the amount you will receive if the project is successfully funded.</p>
 				
 		    	<%= hidden_field_tag "current_round_id", @current_round.id %>
  
@@ -90,7 +91,7 @@
 
 <script type='text/javascript'>
 	$(document).ready(function() {
-   	var credits = 150
+   	var credits = <%= AMOUNT_DONOR_CAN_DONATE_PER_ROUND %>
     	$('#credits').text(credits)
 	 	<% number_of_projects = @current_group.projects.count %>
 

@@ -8,12 +8,11 @@ class Project < ActiveRecord::Base
 	after_create :assign_special_users 
   
   
-  def create_contribution(user, group, round, amount_contributed)
-    @user = user
-    @current_round = round                                                                                             
-    @group = group
+  def create_contribution(user, amount_contributed)
+    @user = user                                                                                   
+    @current_group = group
     @amount_contributed = amount_contributed
-    self.contributions << Contribution.new(:user_id => @user.id, :group_id => @group.id, :amount => @amount_contributed)
+    self.contributions << Contribution.new(:user_id => @user.id, :project_id => self, :amount => @amount_contributed)
     self.save!
   end
 
@@ -78,11 +77,23 @@ class Project < ActiveRecord::Base
 		$project_names.each do |n|
 			n.gsub!(";",'')
 		end 
-	end
+	end 
 	
 	
-	def funded?       # <TODO CL> Depricated?
-		self.goal_amount <= self.funded_amount
+	def calculate_funding_details
+    @total_amount_contributed = 0
+	  self.contributions.each do |contribution|
+	    @total_amount_contributed += contribution.amount
+	  end                 
+
+	  self.total_contributions = @total_amount_contributed
+	  self.number_donors = self.contributions.count
+    if @total_amount_contributed >= self.goal_amount
+      self.funded = true
+    else
+      self.funded = false
+    end
+	  self.save!
 	end
 
 end

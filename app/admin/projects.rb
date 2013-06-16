@@ -9,7 +9,7 @@ ActiveAdmin.register Project do
   filter :name, :label => "Project Name", :as => :select, :collection => Project.order("name ASC").uniq.pluck(:name)
   filter :goal_amount
   filter :start_amount
-  filter :funded_amount
+  filter :total_contributions
   
   
   # Configuration for Projects Index Page
@@ -74,13 +74,25 @@ ActiveAdmin.register Project do
       row :popularity
       row :goal_amount
       row :standard_return_amount
-      row :special_return_amount
-      row :funded_amount
+      row :special_return_amount 
+      row :total_contributions
+      row :number_donors
+      row :funded do |project|
+        project.funded.yesno
+      end
       row :special_user_1 do |project|
         link_to "User #{project.special_user_1}", admin_user_path(project.special_user_1)       
       end   
       row :special_user_2 do |project|
         link_to "User #{project.special_user_2}", admin_user_path(project.special_user_2)       
+      end    
+      row "Contributions" do
+        table_for(project.contributions) do
+          column :id do |contribution|
+            link_to "Contribution #{contribution.id}", admin_contribution_path(contribution.id)
+          end
+          column :amount
+        end
       end
     end
     active_admin_comments

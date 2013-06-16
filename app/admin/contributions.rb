@@ -15,20 +15,20 @@ ActiveAdmin.register Contribution do
   config.per_page = 15
   index do
     column "Experiment", :sortable => :experiment_id do |contribution|
-      link_to "Experiment ##{contribution.user.experiment_id}", admin_experiment_path(contribution.user.experiment_id)
+      link_to "Experiment ##{contribution.project.group.round.experiment_id}", admin_experiment_path(contribution.project.group.round.experiment_id)
     end
     column "Round", :sortable => :round_id do |contribution|
-      link_to "Round #{contribution.project.round.number}", admin_round_path(contribution.project.round_id)
+      link_to "Round #{contribution.project.group.round.number}", admin_round_path(contribution.project.group.round_id)
     end
     column "Group", :sortable => :group_id do |contribution|
-      link_to "Group #{contribution.group.name}", admin_group_path(contribution.group_id)
+      link_to "Group #{contribution.project.group.name}", admin_group_path(contribution.project.group_id)
     end
-    column :user_id, :sortable => :user_id do |contribution|
+    column "User", :sortable => :user do |contribution|
       link_to "User #{contribution.user_id}", admin_user_path(contribution.user_id)
     end
-    column "Project Name", :sortable => :project_id do |contribution|
+    column "Project", :sortable => :project_id do |contribution|
       div :class => "admin-center-column" do   
-        contribution.project.name
+        link_to "#{contribution.project.name}", admin_project_path(contribution.project_id)   
       end
     end
     column :amount do |contribution|
@@ -44,19 +44,19 @@ ActiveAdmin.register Contribution do
   show do |contribution|
     attributes_table do
       row "Experiment" do |contribution|
-        link_to "Experiment ##{contribution.user.experiment_id}", admin_experiment_path(contribution.user.experiment_id)
+      link_to "Experiment ##{contribution.project.group.round.experiment_id}", admin_experiment_path(contribution.project.group.round.experiment_id)
       end   
       row "Round" do |contribution|
-        link_to "Round #{contribution.project.round.number}", admin_round_path(contribution.project.round_id)
+      link_to "Round #{contribution.project.group.round.number}", admin_round_path(contribution.project.group.round_id)    
       end
       row "Group" do |contribution|
-        link_to "Group #{contribution.group.name}", admin_group_path(contribution.group_id)
+      link_to "Group #{contribution.project.group.name}", admin_group_path(contribution.project.group_id)      
       end   
       row "User" do |contribution|
-        link_to "User #{contribution.user_id}", admin_user_path(contribution.user_id)
+      link_to "User #{contribution.user_id}", admin_user_path(contribution.user_id)   
       end
-      row "Project Name" do |contribution|
-        contribution.project.name
+      row "Project" do |contribution|
+        link_to "#{contribution.project.name}", admin_project_path(contribution.project_id)     
       end
       row :amount
       row :created_at

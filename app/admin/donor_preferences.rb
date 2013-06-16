@@ -26,12 +26,6 @@ ActiveAdmin.register DonorPreference do
     column :user, :sortable => :user_id  do |donor_preferences|
       link_to "User #{donor_preferences.user_id}", admin_user_path(donor_preferences.user_id)
     end
-    column :special_donor, :sortable => :special_donor do |donor_preference|
-      div :class => "admin-center-column" do 
-         donor_preference.special_donor.yesno
-      end
-    end
-
     column :is_ready, :sortable => :is_ready do |donor_preference|
       div :class => "admin-center-column" do 
          donor_preference.is_ready.yesno
@@ -60,9 +54,6 @@ ActiveAdmin.register DonorPreference do
       end
       row :user do |donor_preferences|
         link_to "User #{donor_preferences.user_id}", admin_user_path(donor_preferences.user_id)
-      end
-      row :special_donor do |donor_preference|
-        donor_preference.special_donor.yesno
       end
       row :is_ready do |donor_preference|
         donor_preference.is_ready.yesno

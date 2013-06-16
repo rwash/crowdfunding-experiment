@@ -4,10 +4,6 @@ class RoundsController < InheritedResources::Base
 	  @experiment = current_experiment
 		@current_round = Round.find(params[:id])
     @user = current_user
-    # unless @user.group_id == @current_round.group_id
-    #   @user.group_id = @current_round.group_id
-    #   @user.save!
-    # end    
     
 		if @user.user_type == "Creator"
 		  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
@@ -84,16 +80,21 @@ class RoundsController < InheritedResources::Base
 	
 	
 	def summary
-		@current_round = Round.find(params[:id])
 		@user = current_user
 		@current_experiment = current_experiment
-		@projects = @current_round.projects
+		@current_round = Round.find(params[:id])
+
+		if @user.user_type == "Creator"
+		  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
+		elsif @user.user_type == "Donor"
+      @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first
+		end
+
+    @current_group = @preference.group
+		@projects = @current_group.projects
 		
-		@contributions = []
 		@projects.each do |project|
-		  project.contributions.each do |contribution|
-		    @contributions << contribution
-		  end
+      project.calculate_funding_details  
 		end
 		
 		@next_round_number = @current_round.number + 1
