@@ -90,10 +90,27 @@ class Project < ActiveRecord::Base
 	  self.number_donors = self.contributions.count
     if @total_amount_contributed >= self.goal_amount
       self.funded = true
+      if self.value == "High"
+        self.creator_earnings = CREATOR_EARNINGS_HIGH_VALUE_PROJECT  
+      elsif self.value == "Low"
+        self.creator_earnings = CREATOR_EARNINGS_LOW_VALUE_PROJECT        
+      end
     else
-      self.funded = false
-    end
+      self.funded = false       
+      self.creator_earnings = 0
+    end 
 	  self.save!
+	end
+	
+	
+	def get_contribution(user)
+	  @user = user
+	  self.contributions.each do |contribution|
+	    if contribution.user_id == @user.id
+	      return contribution 
+	    end
+	  end
+	  return false
 	end
 
 end

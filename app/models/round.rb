@@ -64,7 +64,8 @@ class Round < ActiveRecord::Base
     self.part_b_finished = true
     self.round_complete = true
     self.end_time = DateTime.now
-    self.save!
+    self.save! 
+    return true
   end
   
 

@@ -1,7 +1,7 @@
 ActiveAdmin.register DonorPreference do
   menu :parent => "USERS", :priority => 5
   # actions :index, :show  
-  config.batch_actions = false  
+  # config.batch_actions = false  
   scope :all, :default => true
 
 
@@ -14,6 +14,7 @@ ActiveAdmin.register DonorPreference do
   config.per_page = 15
   config.sort_order = "id_asc"
   index do
+    selectable_column
     column :experiment  do |donor_preferences|
       link_to "Experiment ##{donor_preferences.user.experiment_id}", admin_experiment_path(donor_preferences.user.experiment_id)
     end
@@ -60,7 +61,9 @@ ActiveAdmin.register DonorPreference do
       end
       row :finished_round do |donor_preference|
         donor_preference.finished_round.yesno
-      end
+      end  
+      row :credits_not_donated 
+      row :total_return
     end
     active_admin_comments
   end
@@ -71,6 +74,14 @@ ActiveAdmin.register DonorPreference do
     batch_action :is_ready, :priority => 1 do |selection|
       DonorPreference.find(selection).each do |donor_preference|
         donor_preference.is_ready = true
+        donor_preference.save
+      end
+      redirect_to admin_donor_preferences_path
+    end       
+    
+    batch_action :finished_round do |selection|             # <TODO CL> Remove when done.
+      DonorPreference.find(selection).each do |donor_preference|
+        donor_preference.finished_round = true
         donor_preference.save
       end
       redirect_to admin_donor_preferences_path

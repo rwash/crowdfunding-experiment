@@ -1,0 +1,107 @@
+<div id="container">	
+	<div class="row">
+   	<div class="span9">
+
+			<div class="page-header">
+				<h1>Round <%= @current_round.number %> - Summary: Donor</h1>
+			</div>      
+			
+			<h3>Projects created this round:</h3>      
+			<br>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<td><h4>Project</h4></td>
+						<td><h4>Popularity</h4></td>
+						<td><h4>Donors</h4></td>     
+						<td><h4>Contributions</h4></td>  
+						<td><h4>Funding</h4></td>        
+						<td><h4>Status</h4></td>  
+						<td><h4>Your Return</h4></td>   
+					 </tr>
+				</thead>
+				<tbody>
+					<% @projects.each do |project| %>
+						<tr>
+							<td><%= project.name %></td>
+							<td><%= project.popularity %></td>       				
+							<td><%= project.number_donors %></td>
+							<td><%= project.total_contributions %> / <%= project.goal_amount %></td>        
+							<td>
+								<div class="progress <%= "progress-success" if project.funded %>">
+								  <div class="bar" style="width: <%= (project.total_contributions.to_f / project.goal_amount) * 100 %>%;"></div>
+									<%= project.total_contributions %> / <%= project.goal_amount %>
+								</div>
+							</td>
+							<td>
+								<% if project.funded %>
+									<h4>Funded</h4>
+								<% else %>
+									Not Funded
+								<% end %>
+							</td>
+							<td>
+								<% if project.get_contribution(@user) %>
+									<% if project.funded? %>
+										<% if project.special_user_1 == @user.id || project.special_user_2 == @user.id %>
+											<h4><%= project.special_return_amount %></h4>
+										<% else %>
+										   <h4><%= project.standard_return_amount %></h4>
+										<% end %>         
+									<% else %>
+										0
+									<% end %>
+								<% else %> 
+								  	Did not contribute
+								<% end %>
+							</td>
+						 </tr>                                       
+					<% end %>
+				</tbody>
+			</table> 
+		  	<br> 
+		
+ 			<h3>Your Return:</h3> 
+			<br>  	 
+			<table class="table table-striped table-bordered">
+				<tbody>
+					<tr>
+						<td>1. Credits not donated to projects: </td>
+						<td><strong><%= @preference.credits_not_donated %></strong></td> 
+					</tr>
+					<tr>
+						<td>2. Earnings from successful projects: </td>
+						<td><strong><%= (@preference.total_return - @preference.credits_not_donated) %></strong></td> 
+					</tr>
+					<tr>
+						<td><h3>Total earnings for this round: </h3></td>
+						<td><h3><%= @preference.total_return %></h3></td> 
+					</tr>					
+			   </tbody>
+			</table>
+
+		   <br>
+			<h3>Hints:</h3>
+			<br>
+			
+			<% if current_experiment.return_credits %>
+				<p> - Your payout is calculated as follows: <strong>(Credits not donated to projects + Earnings from successful projects + Returned credits from not funded projects.)</strong></p> 
+			<% else %>
+				<p> - Your payout is calculated as follows: <strong>(Credits not donated to projects + Earnings from successful projects.)</strong></p> 			
+			<% end %>
+			<br>
+			
+			<div class="form-actions">
+				<% if @current_round.last_round? %>
+					<%= link_to "Experiment Summary", experiment_summary_waiting_path(@current_experiment), :class => 'btn-success btn-large pull-right' %>
+				<% else %>
+					<%= link_to "Ready for Next Round", round_waiting_path(@next_round), :class => 'btn-success btn-large pull-right' %>  
+				<% end %>
+			</div>     
+		</div>
+
+		<div class="span3">
+			<%= render "summary_sidebar" %>  
+		</div>
+	</div>   
+</div>			

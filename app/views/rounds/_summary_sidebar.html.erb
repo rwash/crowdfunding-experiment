@@ -1,0 +1,35 @@
+<div align="center">
+	<div class="page-header">
+		<h2>Experiment Summary:</h2>
+	</div> 
+	
+	<table class="table table-striped table-bordered table-condensed">
+		<thead>
+			<tr>
+				<td><h4>Round</h4></td>
+				<td><h4>Return</h4></td>
+			</tr>
+		</thead>
+		<tbody>
+			<% @current_total_return = 0 %>
+			<% Round.where(:experiment_id => current_experiment).each_with_index do |round, i| %>
+				<% if @user.user_type == "Creator" %>
+					<% @round_preference = CreatorPreference.where(:user_id => @user, :round_id => round).first %> 								
+				<% elsif @user.user_type == "Donor" %>
+					<% @round_preference = DonorPreference.where(:user_id => @user, :round_id => round).first %> 				
+				<% end %>
+				<% @current_total_return += @round_preference.total_return if @round_preference.total_return %>	
+				<tr>
+					<td><%= (i + 1) %></td>
+					<td><%= @round_preference.total_return if @round_preference.total_return %></td>
+				</tr>
+				<% break if @current_round.number <= i + 1 %>
+			<% end %>
+			<tr>
+				<td><h4>Total: </h4></td>
+				<td><h4><%= @current_total_return %></h4></td>
+			</tr>				
+		</tbody>
+	</table>
+	
+</div>

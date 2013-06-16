@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130616044209) do
+ActiveRecord::Schema.define(:version => 20130616090901) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -59,22 +59,26 @@ ActiveRecord::Schema.define(:version => 20130616044209) do
   create_table "creator_preferences", :force => true do |t|
     t.integer  "user_id"
     t.integer  "group_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.boolean  "is_ready",       :default => false
-    t.boolean  "finished_round", :default => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.boolean  "is_ready",          :default => false
+    t.boolean  "finished_round",    :default => false
     t.integer  "round_id"
+    t.integer  "total_return"
+    t.integer  "credits_not_spent"
   end
 
   create_table "donor_preferences", :force => true do |t|
     t.integer  "user_id"
     t.integer  "group_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.boolean  "is_ready",       :default => false
-    t.boolean  "finished_round", :default => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.boolean  "is_ready",            :default => false
+    t.boolean  "finished_round",      :default => false
     t.integer  "round_id"
-    t.boolean  "special_donor",  :default => false
+    t.boolean  "special_donor",       :default => false
+    t.integer  "total_return"
+    t.integer  "credits_not_donated"
   end
 
   create_table "experiments", :force => true do |t|
@@ -113,6 +117,7 @@ ActiveRecord::Schema.define(:version => 20130616044209) do
     t.integer  "special_user_2"
     t.boolean  "funded",                 :default => false
     t.integer  "number_donors"
+    t.integer  "creator_earnings"
   end
 
   create_table "rounds", :force => true do |t|

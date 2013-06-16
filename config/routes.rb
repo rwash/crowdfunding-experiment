@@ -22,7 +22,8 @@ CrowdfundingExperiment::Application.routes.draw do
   match "/rounds/:id/part_a_2" => "rounds#show_part_a_2", :as => :round_show_part_a_2
   match "/rounds/:id/waiting_for_part_b" => "rounds#waiting_for_part_b", :as => :waiting_for_part_b
   match "/rounds/:id/part_b" => "rounds#show_part_b", :as => :round_show_part_b
-  match "/rounds/:id/summary" => "rounds#summary", :as => :round_summary
+  match "/rounds/:id/creator_summary" => "rounds#creator_summary", :as => :creator_round_summary
+  match "/rounds/:id/donor_summary" => "rounds#donor_summary", :as => :donor_round_summary
   match "/rounds/:id/summary/waiting" => "rounds#waiting_for_summary", :as => :summary_waiting
    
 
@@ -51,4 +52,4 @@ CrowdfundingExperiment::Application.routes.draw do
     puts "ActiveAdmin: #{e.class}: #{e}"
   end
 
-end
+end      

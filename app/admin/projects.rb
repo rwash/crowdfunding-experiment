@@ -79,7 +79,8 @@ ActiveAdmin.register Project do
       row :number_donors
       row :funded do |project|
         project.funded.yesno
-      end
+      end  
+      row :creator_earnings
       row :special_user_1 do |project|
         link_to "User #{project.special_user_1}", admin_user_path(project.special_user_1)       
       end   

@@ -11,7 +11,8 @@ class ProjectsController < InheritedResources::Base
       @number_of_projects.times do |i|
         @current_group.projects << Project.new(:user => @user, :group => @current_group, :value => params["project#{i}Value".to_sym], :popularity => params["project#{i}Popularity".to_sym])     
       end                    
-            
+      
+      @preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT))
       @preference.set_finished_round
       @current_round.check_if_part_a_finished
       redirect_to summary_waiting_path(@current_round)

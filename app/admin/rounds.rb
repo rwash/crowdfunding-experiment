@@ -94,6 +94,12 @@ ActiveAdmin.register Round do
       end
       row :part_b_finished do |round|
         round.part_b_finished.yesno
+      end     
+      row :round_complete do |round|
+        round.round_complete.yesno
+      end
+      row :summary_complete do |round|
+        round.summary_complete.yesno
       end
       row :start_time
       row :end_time

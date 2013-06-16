@@ -11,7 +11,10 @@ class ContributionsController < InheritedResources::Base
     @current_group.projects.each_with_index do |project, i|
       @amount_contributed = params["amount_#{i}".to_sym].to_i
       @total_amount_contributed += @amount_contributed
-    end  
+    end 
+    
+    @preference.credits_not_donated = (AMOUNT_DONOR_CAN_DONATE_PER_ROUND - @total_amount_contributed) 
+    @preference.save! 
              
     if @preference.finished_round
       redirect_to summary_waiting_path(@current_round), :alert => "You have already finished your turn for this round!" and return
@@ -35,4 +38,4 @@ class ContributionsController < InheritedResources::Base
     end
   end
 	
-end
+end                
