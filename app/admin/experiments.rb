@@ -14,8 +14,6 @@ ActiveAdmin.register Experiment do
   filter :started, :as => :select
   filter :finished, :as => :select
   filter :return_credits, :as => :select
-  filter :finished_calc, :as => :select
-  filter :current_round_number
   
   
   # Configuration for Experiments Index Page
@@ -35,11 +33,6 @@ ActiveAdmin.register Experiment do
           experiment.finished.yesno
        end
     end          
-    column :finished_calc, :sortable => :finished_calc do |experiment|
-       div :class => "admin-center-column" do 
-          experiment.finished_calc.yesno
-       end
-    end    
     column :return_credits, :sortable => :name do |experiment|
        div :class => "admin-center-column" do 
           experiment.return_credits.yesno
@@ -61,10 +54,7 @@ ActiveAdmin.register Experiment do
       end
       row :finished do |experiment|
         experiment.finished.yesno
-      end
-      row :finished_calc do |experiment|
-        experiment.finished_calc.yesno
-      end      
+      end   
       row :return_credits do |experiment|
         experiment.return_credits.yesno
       end      

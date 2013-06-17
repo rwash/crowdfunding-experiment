@@ -68,7 +68,7 @@ class Experiment < ActiveRecord::Base
   end                             
 	
 	
-	def set_current_round(round)
+	def set_current_round(round)   # <TODO CL> Depricated?
     if self.current_round_number != round.number
       self.current_round_number = round.number
       self.save!
@@ -86,18 +86,23 @@ class Experiment < ActiveRecord::Base
 	end
 
 	
-	def experiment_over         # <TODO CL> Revise logic.
-		self.users.each do |user|
-			user.payout = 0
-			@preferences = Preferences.where(:user_id => user.id)
-			@preferences.each do |pref|
-				user.payout += pref.round_payout
-			end
-			user.save!
-		end
-	
-		self.finished_calc = true
-		self.save!
+	def experiment_over 
+    self.users.each do |user|
+      @user_total_return = 0
+      self.rounds.each do |round|
+    		if user.user_type == "Creator"
+    		  @preference = CreatorPreference.where(:user_id => user, :round_id => round).first
+    		elsif user.user_type == "Donor"
+          @preference = DonorPreference.where(:user_id => user, :round_id => round).first
+    		end
+        @user_total_return += @preference.total_return if @preference.total_return
+      end
+      user.total_return = @user_total_return
+      user.total_return_in_cents = ((@user_total_return.to_f * 100) / CREDITS_TO_DOLLAR_RATE)
+      user.save!
+    end
+    self.finished = true
+    self.save!
 	end
   
 end

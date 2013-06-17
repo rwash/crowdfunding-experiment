@@ -81,6 +81,7 @@ class Project < ActiveRecord::Base
 	
 	
 	def calculate_funding_details
+    @experiment = self.group.round.experiment
     @total_amount_contributed = 0
 	  self.contributions.each do |contribution|
 	    @total_amount_contributed += contribution.amount
@@ -97,7 +98,11 @@ class Project < ActiveRecord::Base
       end
     else
       self.funded = false       
-      self.creator_earnings = 0
+      if @experiment.return_credits
+        self.creator_earnings = COST_TO_CREATE_PROJECT 
+      else
+        self.creator_earnings = 0
+      end
     end 
 	  self.save!
 	end

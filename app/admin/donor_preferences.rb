@@ -62,7 +62,9 @@ ActiveAdmin.register DonorPreference do
       row :finished_round do |donor_preference|
         donor_preference.finished_round.yesno
       end  
-      row :credits_not_donated 
+      row :credits_not_donated
+      row :total_return_from_projects
+      row :credits_to_be_returned 
       row :total_return
     end
     active_admin_comments

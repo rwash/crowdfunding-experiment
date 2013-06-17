@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130616090901) do
+ActiveRecord::Schema.define(:version => 20130617112544) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -47,45 +47,45 @@ ActiveRecord::Schema.define(:version => 20130616090901) do
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
   create_table "contributions", :force => true do |t|
-    t.time     "time_contributed"
     t.integer  "amount"
     t.integer  "user_id"
     t.integer  "project_id"
-    t.integer  "group_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "creator_preferences", :force => true do |t|
     t.integer  "user_id"
     t.integer  "group_id"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.boolean  "is_ready",          :default => false
-    t.boolean  "finished_round",    :default => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.boolean  "is_ready",                   :default => false
+    t.boolean  "finished_round",             :default => false
     t.integer  "round_id"
     t.integer  "total_return"
     t.integer  "credits_not_spent"
+    t.integer  "total_return_from_projects"
+    t.integer  "credits_to_be_returned"
   end
 
   create_table "donor_preferences", :force => true do |t|
     t.integer  "user_id"
     t.integer  "group_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.boolean  "is_ready",            :default => false
-    t.boolean  "finished_round",      :default => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.boolean  "is_ready",                   :default => false
+    t.boolean  "finished_round",             :default => false
     t.integer  "round_id"
-    t.boolean  "special_donor",       :default => false
     t.integer  "total_return"
     t.integer  "credits_not_donated"
+    t.integer  "total_return_from_projects"
+    t.integer  "credits_to_be_returned"
   end
 
   create_table "experiments", :force => true do |t|
     t.boolean  "return_credits",       :default => false
     t.boolean  "started",              :default => false
     t.boolean  "finished",             :default => false
-    t.boolean  "finished_calc",        :default => false
     t.integer  "current_round_number", :default => 1
     t.datetime "start_time"
     t.datetime "end_time"
@@ -105,7 +105,6 @@ ActiveRecord::Schema.define(:version => 20130616090901) do
     t.integer  "goal_amount"
     t.integer  "total_contributions"
     t.integer  "group_id"
-    t.string   "admin_name"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.string   "value"
@@ -138,21 +137,15 @@ ActiveRecord::Schema.define(:version => 20130616090901) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "password"
-    t.integer  "payout",                    :default => 0
-    t.integer  "questions_payout",          :default => 0
     t.string   "token"
     t.integer  "experiment_id"
     t.integer  "times_viewed_instructions"
-    t.string   "persistence_token",                        :null => false
-    t.string   "question_1A"
-    t.string   "question_1B"
-    t.integer  "question_2A"
-    t.integer  "question_2B"
-    t.integer  "question_2C"
-    t.integer  "question_2D"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.string   "persistence_token",         :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "user_type"
+    t.integer  "total_return"
+    t.integer  "total_return_in_cents"
   end
 
 end

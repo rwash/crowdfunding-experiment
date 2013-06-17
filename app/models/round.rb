@@ -55,6 +55,7 @@ class Round < ActiveRecord::Base
   
   
   def check_if_round_complete
+    @experiment = self.experiment
     self.creator_preferences.each do |creator_preference|
       return false if !creator_preference.finished_round
     end
@@ -65,6 +66,10 @@ class Round < ActiveRecord::Base
     self.round_complete = true
     self.end_time = DateTime.now
     self.save! 
+
+    if self.last_round?
+      @experiment.experiment_over
+    end
     return true
   end
   
@@ -78,11 +83,5 @@ class Round < ActiveRecord::Base
 		self.start_time = DateTime.now
 		self.save!
 	end
-	
-	
-	def round_over        # <TODO CL> Revise logic for end of round calculations.
-		@experiment = self.experiment
-	end
-	
 	
 end

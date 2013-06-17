@@ -1,6 +1,6 @@
 <div id="container">	
 	<div class="row">
-   	<div class="span9">
+   	<div class="span12">
 
 			<div class="page-header">
 				<h1>Round <%= @current_round.number %> - Summary: Creator</h1>
@@ -66,8 +66,14 @@
 					</tr>
 					<tr>
 						<td>2. Credits awarded for successful projects: </td>
-						<td><strong><%= (@preference.total_return - @preference.credits_not_spent) %></strong></td> 
+						<td><strong><%= @preference.total_return_from_projects %></strong></td> 
 					</tr>
+					<% if current_experiment.return_credits %>      
+					<tr>
+						<td>3. Credits returned for unsuccessful projects: </td>
+						<td><strong><%= @preference.credits_to_be_returned %></strong></td> 
+					</tr>									        			
+					<% end %>
 					<tr>
 						<td><h3>Total earnings for this round: </h3></td>
 						<td><h3><%= @preference.total_return %></h3></td> 
@@ -78,21 +84,21 @@
 		   <br>
 			<h3>Hints:</h3>
 			<br>
-			<p> - Your payout is calculated as follows: <strong>(Credits not spend creating projects + Credits awarded for successful projects.)</strong></p> 
+			<% if current_experiment.return_credits %>
+				<p> - Your payout is calculated as follows: <strong>(Credits not spent creating projects + Credits awarded for successful projects + Credits returned for unsuccessful projects.)</strong></p> 
+			<% else %>
+				<p> - Your payout is calculated as follows: <strong>(Credits not spent creating projects + Credits awarded for successful projects.)</strong></p> 			
+			<% end %>
 			<p> - Returns are only shown for projects which you created.</p>
 			<br>
 
 			<div class="form-actions">
 				<% if @current_round.last_round? %>
-					<%= link_to "Experiment Summary", experiment_summary_waiting_path(@current_experiment), :class => 'btn-success btn-large pull-right' %>
+					<%= link_to "Experiment Summary", experiment_summary_path(@current_experiment), :class => 'btn-success btn-large pull-right' %>
 				<% else %>
 					<%= link_to "Ready for Next Round", round_waiting_path(@next_round), :class => 'btn-success btn-large pull-right' %>  
 				<% end %>
 			</div>     
-		</div>
-			
-		<div class="span3">
-			<%= render "summary_sidebar" %>  
 		</div>
 	</div>   
 </div>   		

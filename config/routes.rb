@@ -9,10 +9,7 @@ CrowdfundingExperiment::Application.routes.draw do
     
   
   # Routes for EXPERIMENTS
-  match 'new_round' => 'experiments#new_round'
-  match "/experiments/:id/summary" => "experiments#summary", :as => :experiment_summary
-  match "/experiments/:id/final-summary/waiting" => "experiments#waiting_for_summary", :as => :experiment_summary_waiting
-  match "/experiments/:id/final-summary" => "experiments#final_summary", :as => :final_experiment_summary   
+  match "/experiments/:id/summary" => "experiments#summary", :as => :experiment_summary 
   
    
   # Routes for ROUNDS

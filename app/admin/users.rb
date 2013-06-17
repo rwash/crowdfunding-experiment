@@ -42,9 +42,14 @@ ActiveAdmin.register User do
           user.user_type
        end
     end
-    column :payout, :sortable => :payout do |user|
+    column :total_return, :sortable => :total_return do |user|
        div :class => "admin-center-column" do 
-          user.payout
+          user.total_return
+       end
+    end
+    column :total_return_in_cents, :sortable => :total_return_in_cents do |user|
+       div :class => "admin-center-column" do 
+          "$" + number_with_precision(user.total_return_in_cents.to_f / 100, :precision => 2) if user.total_return_in_cents
        end
     end
     default_actions
@@ -62,7 +67,12 @@ ActiveAdmin.register User do
       row :name     
       row :password
       row :user_type
-      row :payout
+      row :total_return do |user|
+        user.total_return 
+      end
+      row :total_return_in_cents do |user|
+        "$" + number_with_precision(user.total_return_in_cents.to_f / 100, :precision => 2) if user.total_return_in_cents 
+      end
       row :times_viewed_instructions
     end
     active_admin_comments

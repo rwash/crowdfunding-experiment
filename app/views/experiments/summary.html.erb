@@ -1,31 +1,46 @@
-<div class="page-header">
-	<h1>Total Payout</h1>
-</div>
+<div id="container">	
+	<div class="row">
+		<div class="page-header">
+			<h2>Experiment Summary:</h2>
+		</div>
 
-<table class="table table-striped table-bordered table-condensed">
-	<thead>
-		<tr>
-			<td><h4>Round Number</h4></td>
-			<td><h4>Round Payout</h4></td>
-		</tr>
-	</thead>
-	<tbody>
-		<% @rounds.each do |round| %>
-			<tr>
-				<td><%= round.number %></td>
+   	<div class="span6">
+			<h4>Congratulations, you have completed the experiment!</h4>
+			<br>
+			<table class="table table-striped table-bordered table-condensed">
+				<tbody>
+					<% Round.where(:experiment_id => @experiment).each_with_index do |round, i| %>
+						<% if @user.user_type == "Creator" %>
+							<% @round_preference = CreatorPreference.where(:user_id => @user, :round_id => round).first %> 								
+						<% elsif @user.user_type == "Donor" %>
+							<% @round_preference = DonorPreference.where(:user_id => @user, :round_id => round).first %> 				
+						<% end %>
+						<tr>
+							<td>Round <%= (i + 1) %></td>
+							<td><%= "#{@round_preference.total_return} credits" if @round_preference.total_return %></td>
+						</tr>
+					<% end %>
+					<tr>
+						<td><h4>Total:</h4></td>
+						<td><h4><%= "#{@user.total_return} credits" if @user.total_return %></h4></td>
+					</tr>				
+				</tbody>
+			</table>    
+		</div>
 
-			</tr>
-		<% end %>
-	</tbody>
-</table>
+		<div class="span6">
+			<div class="page-header"> 
+				<h3>Details:</h3>
+			</div>
+			<p> - You are: <strong><%= @user.name %></strong></p>
+			<p> - You have played <strong><%= NUMBER_OF_ROUNDS %></strong> rounds</p>
+			<p> - Your total return for the experiment is: <strong><%= "#{@user.total_return} credits" if @user.total_return %></strong></p>
+			<p> - The exchange rate for this experiment is: <strong>$1</strong> per <strong><%= CREDITS_TO_DOLLAR_RATE %></strong> credits</p>
+			<br>
 
-<h3><%= @user.payout unless @user.payout.nil?%><%= "0" if @user.payout.nil? %> credits or <%= convert_credits_to_dollars(@user.payout) %> dollars.</h3>
-
-<br>
-<div class="pull-right">
-	<h4>Next, click below to answer some questions.</h4>
-</div>
-
-<div class="form-actions">
-	<p><%= link_to "Continue onto Questions", root_path, :class => 'btn-success btn-large pull-right' %></p>
-</div>
+				<h4>Your total return for this experiment is: <strong><%= "$#{number_with_precision(@user.total_return_in_cents.to_f / 100, :precision => 2)}" if @user.total_return_in_cents %></strong></h4>
+			</div>
+			
+  		</div>
+	</div>
+</div> 

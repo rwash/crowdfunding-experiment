@@ -16,7 +16,7 @@
 			<div class="form-actions">
 
 				<% if @current_round.number == 1 %>
-					<%= link_to "Start the First Round", new_round_path, :class => "btn-success btn-large pull-right" %>
+					<%= link_to "Start the First Round", round_waiting_path(@current_round), :class => "btn-success btn-large pull-right" %>
 				<% else %>	
 					<%= link_to "Back to the Experiment", round_waiting_path(@current_round), :class => "btn-success btn-large pull-right" %>
 				<% end %>      

@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
         return redirect_to round_waiting_path(@round)
     	end
     	
-    	if @user.nil? || @round.part_b_finished == true
+    	if @user.nil? || @round.round_complete == true
     		flash[:error] = "Round has finished."
     		return redirect_to summary_waiting_path(@round)
     	end

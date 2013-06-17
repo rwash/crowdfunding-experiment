@@ -17,16 +17,28 @@ class CreatorPreference < ActiveRecord::Base
   
   
   def calculate_total_return       # <TODO CL> Finish.
-    @user = self.user
+    @user = self.user   
+    @experiment = @user.experiment
     @group = self.group
-    @total_return_from_projects = 0
+    @total_return_from_projects = 0 
+    @credits_to_be_returned = 0
+    
     @group.projects.each do |project|
-      if project.funded && project.user_id == @user.id
-        @total_return_from_projects += project.creator_earnings
+      if project.user_id == @user.id
+        if project.funded
+          @total_return_from_projects += project.creator_earnings
+        else
+          if @experiment.return_credits
+            @credits_to_be_returned += COST_TO_CREATE_PROJECT
+          end
+        end
       end
     end
-    self.total_return = self.credits_not_spent + @total_return_from_projects
+    
+    self.total_return_from_projects = @total_return_from_projects 
+    self.credits_to_be_returned = @credits_to_be_returned         
+    self.total_return = self.credits_not_spent + self.total_return_from_projects + self.credits_to_be_returned
     self.save!
   end
   
-end
+end         
