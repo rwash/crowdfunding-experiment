@@ -1,0 +1,32 @@
+<h2>Crowdfunding Experiment - Project Donor</h2>       
+<br>
+
+<p>In this study you will play the role of a Donor on a crowdfunding website. Crowdfunding sites are websites where people can post projects and ask for small donations from a large number of people over the Internet.</p>
+
+<p>You will be taken to a simulated crowdfunding website where project creators have created between 1 and 4 projects soliciting funding. Some projects may require 200 credits in donations, and others may require 100 credits. You will be given 100 credits that you may donate to projects. You can donate any amount of credits to any number of projects you wish, including making no donations.</p>
+                                                                                                                            
+<p>Each project will list a payoff that you will earn of that project is completed and receives its requested donations. In this simulation, you will earn payoffs for every project that is fully funded, regardless of whether you donated to that project yourself. There are 4 donors on the site, including yourself, who also earn payouts for when projects are funded. However, the other donors’ payouts may be different from your own payouts, so others will not necessarily prefer the same projects as you.</p>
+<br>
+
+<h3>Payout Calculation:</h3>
+<br>
+<% if current_experiment.return_credits %>
+
+	<p>If you donate to a project and that project does not receive enough donations to be completed, your donation will be returned to you. However, if a project receives excess donations, the excess donations are not returned to you.</p>
+	
+	<p>Your total payout for the simulation is: <strong>(Credits not donated to projects + Earnings from successful projects + Returned credits from not funded projects.)</strong>.</p>     
+                                                                                         
+<% else %>
+
+	<p>All donations are final. If you make a donation to a project and it does not receive enough donations to be completed, the donations are kept by the website. If a project receives excess donations, those donations are also kept by the website and not returned to you.</p>
+	
+	<p>Your total payout for the simulation is: <strong>(Credits not donated to projects + Earnings from successful projects.)</strong>.</p>  
+
+<% end %>
+<br>   
+
+<h3>Additional Instructions:</h3>
+<br>      
+<p> - You will play <strong>20</strong> rounds of this simulation. In each round, you will be randomly rematched with 3 other donors and 2 other creators, so in every round you are playing with a different set of people. You will not know who else you are playing with.</p>    
+
+<p> - In each round, the credits you earn will be added to a running total. At the end of the experiment, your credits will be exchanged for cash at a rate of (<strong><%= CREDITS_TO_DOLLAR_RATE %> credits for $1</strong>).</p>

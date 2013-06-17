@@ -1,19 +1,26 @@
-<h1>Instructions</h1>
-<p>&nbsp;</p>
+<div id="container">	
+	<div class="row">
+   	<div class="span12">
+			<div class="page-header">
+			  	<h1>Instructions</h1>
+			</div>
 
-<% if current_experiment.return_credits %>
-  <%= render "shared/instructions_return" %>
-<% end %>
+			<% if current_user.user_type == "Creator" %>
+			  <%= render "shared/creator_instructions" %>
+			<% elsif current_user.user_type == "Donor" %>
+			  <%= render "shared/donor_instructions" %>
+			<% end %>
+			<br>
+			<br>
+            
+			<div class="form-actions">
 
-<% unless current_experiment.return_credits %>
-  <%= render "shared/instructions_no_return" %>
-<% end %>
-<br>
-<br>
-
-<% if @first_round == @current_round %>
-	<%= link_to "Start the First Round", round_waiting_path(@first_round), :class => 'btn-success btn-large' %>
-<% else %>	
-	<%= link_to "Back to the Experiment", round_waiting_path(@current_round), :class => 'btn-success btn-large' %>
-<% end %>
-<p>&nbsp;</p>
+				<% if @current_round.number == 1 %>
+					<%= link_to "Start the First Round", round_waiting_path(@current_round), :class => "btn-success btn-large pull-right" %>
+				<% else %>	
+					<%= link_to "Back to the Experiment", round_waiting_path(@current_round), :class => "btn-success btn-large pull-right" %>
+				<% end %>      
+		  	</div>
+		</div>
+ 	</div>
+</div>

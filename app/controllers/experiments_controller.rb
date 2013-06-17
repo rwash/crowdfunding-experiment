@@ -1,65 +1,9 @@
 class ExperimentsController < InheritedResources::Base
-  
-  # def create
-  #   require_admin
-  #   @experiment = Experiment.new(params[:experiment])
-  #   @experiment.name = "Experiment #{@experiment.id}"
-  #   
-  #     if @experiment.save
-  #       redirect_to dashboard_path(@experiment)
-  #     else
-  #       flash[:error] = "Failed to create a new experiment."
-  #       redirect_to experiments_path
-  #     end
-  # end
-	
-	
-	def users
-		@experiment = Experiment.find(params[:id])
-	end
-	
-	
-	def summary
+
+
+	def summary     # <TODO CL> Finish.
 		@user = current_user
-    @rounds = @user.group.rounds
-    # <TODO CL>  Add Round Payout Calculation Here
+    @experiment = @user.experiment
 	end
-	
-	
-	def final_summary
-		@user = current_user
-		@preferences = @user.preferences
-		@preferences.sort! {|a,b| Round.find(a.round_id).number <=> Round.find(b.round_id).number}
-	end
-	
-	
-	def waiting_for_summary
-		if current_experiment.finsihed_calc
-			redirect_to experiment_summary_path(current_experiment)
-		end
-	end
-	
-	
-	def dashboard
-		require_admin
-		@experiment = Experiment.find(params[:id])
-		@roundsA = @experiment.groups.first.rounds.where(:number => (1..@experiment.current_round_number)).order("number DESC")
-		@roundsB = @experiment.groups.last.rounds.where(:number => (1..@experiment.current_round_number)).order("number DESC")
-		
-		if @roundsA.first.finished and @roundsB.first.finished
-			@roundsA = @experiment.groups.first.rounds.where(:number => (1..@experiment.current_round_number + 1)).order("number DESC")
-			@roundsB = @experiment.groups.last.rounds.where(:number => (1..@experiment.current_round_number + 1)).order("number DESC")
-		end
-	end
-	
-	def new
-		require_admin
-		@experiment = Experiment.new
-	end
-	
-	
-	def index
-		require_admin
-		@experiments = Experiment.all
-	end
+
 end
