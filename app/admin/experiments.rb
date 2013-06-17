@@ -1,36 +1,25 @@
 ActiveAdmin.register Experiment do
-  menu :parent => "EXPERIMENTS", :priority => 1
+  menu :parent => "EXPERIMENTS", :priority => 1  
+  config.batch_actions = false 
   scope :all, :default => true
   scope :started do |experiment|
     experiment.where(:started => true)
   end
   scope :finished do |experiment|
     experiment.where(:finished => true)
-  end
-  scope :finsihed_calc do |experiment|
-    experiment.where(:finsihed_calc => true)
-  end  
-  scope :return_credits do |experiment|
-    experiment.where(:return_credits => true)
-  end
-  scope :dont_return_credits do |experiment|
-    experiment.where(:return_credits => false)
-  end    
+  end   
     
   
   # Configuration for Sidebar Filters
   filter :started, :as => :select
   filter :finished, :as => :select
   filter :return_credits, :as => :select
-  filter :finsihed_calc, :as => :select
-  filter :current_round_number
   
   
   # Configuration for Experiments Index Page
   config.sort_order = "id_asc"  
   config.per_page = 15
   index do
-    selectable_column
     column "Experiment" do |experiment|
       "Experiment ##{experiment.id}"
     end
@@ -43,12 +32,7 @@ ActiveAdmin.register Experiment do
        div :class => "admin-center-column" do 
           experiment.finished.yesno
        end
-    end     
-    column :finsihed_calc, :sortable => :finsihed_calc do |experiment|
-       div :class => "admin-center-column" do 
-          experiment.finsihed_calc.yesno
-       end
-    end    
+    end          
     column :return_credits, :sortable => :name do |experiment|
        div :class => "admin-center-column" do 
           experiment.return_credits.yesno
@@ -70,10 +54,7 @@ ActiveAdmin.register Experiment do
       end
       row :finished do |experiment|
         experiment.finished.yesno
-      end
-      row :finsihed_calc do |experiment|
-        experiment.finsihed_calc.yesno
-      end      
+      end   
       row :return_credits do |experiment|
         experiment.return_credits.yesno
       end      

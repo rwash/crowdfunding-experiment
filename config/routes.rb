@@ -6,37 +6,27 @@ CrowdfundingExperiment::Application.routes.draw do
   resources :users, :only => [:create]  
   resource :user_sessions, :only => [:create, :destroy]
   post "/rounds/:id/create_projects" => "projects#create_projects", :as => :create_projects
-  # resources :projects, :only => [:create]   # <TODO CL> Remove, if not required??
     
   
   # Routes for EXPERIMENTS
-  resources :experiments, :only => [:new, :create, :index]
-  match "/experiments/:id/admin" => "experiments#dashboard", :as => :dashboard
-  match "/experiments/:id/users" => "experiments#users", :as => :experiment_users
-  match "/experiments/:id/summary" => "experiments#summary", :as => :experiment_summary
-  match "/experiments/:id/final-summary/waiting" => "experiments#waiting_for_summary", :as => :experiment_summary_waiting
-  match "/experiments/:id/final-summary" => "experiments#final_summary", :as => :final_experiment_summary  
+  match "/experiments/:id/summary" => "experiments#summary", :as => :experiment_summary 
   
    
   # Routes for ROUNDS
   resources :rounds, :only => [:create]
+  match "/rounds/:id/waiting" => "rounds#waiting_for_round", :as => :round_waiting    
   match "/rounds/:id/part_a" => "rounds#show_part_a", :as => :round_show_part_a
   match "/rounds/:id/part_a_2" => "rounds#show_part_a_2", :as => :round_show_part_a_2
   match "/rounds/:id/waiting_for_part_b" => "rounds#waiting_for_part_b", :as => :waiting_for_part_b
   match "/rounds/:id/part_b" => "rounds#show_part_b", :as => :round_show_part_b
-  match "/rounds/:id/summary" => "rounds#summary", :as => :round_summary
+  match "/rounds/:id/creator_summary" => "rounds#creator_summary", :as => :creator_round_summary
+  match "/rounds/:id/donor_summary" => "rounds#donor_summary", :as => :donor_round_summary
   match "/rounds/:id/summary/waiting" => "rounds#waiting_for_summary", :as => :summary_waiting
-  match "/rounds/:id/waiting" => "rounds#waiting_for_round", :as => :round_waiting
    
 
   # Routes for CONTRIBUTIONS
   resources :contributions, :only => [:create]
 	match "/contributions/submit" => "contributions#submit"  
-  
-    	
-  # Routes for QUESTIONS
-	match "/questions" => "users#questions", :as => :questions
-	match "/questions/submit" => "users#submit"  
     
   
   # Routes for INSTRUCTIONS
@@ -59,4 +49,4 @@ CrowdfundingExperiment::Application.routes.draw do
     puts "ActiveAdmin: #{e.class}: #{e}"
   end
 
-end
+end      

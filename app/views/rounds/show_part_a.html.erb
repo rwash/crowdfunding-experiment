@@ -1,24 +1,99 @@
-<h2><%= "Part A - Project #{@user.user_type} - Step 1" %></h2>
-<br>
-<p>Please choose the number of projects you would like to create:</p>
-
-<%= form_tag(round_show_part_a_2_path) do %>
-
-	<label class="radio">
-		<input type="radio" name="numberOfProjects" id="numberOfProjects1" value="0" checked>
-		No Projects
-	</label>
-	<label class="radio">
-	  <input type="radio" name="numberOfProjects" id="numberOfProjects2" value="1">
-		1
-	</label>
-	<label class="radio">
-	  <input type="radio" name="numberOfProjects" id="numberOfProjects3" value="2">
-	  2
-	</label>
+<div id="container">	
+	<div class="row">
+   	<div class="span9">
+			<div class="page-header">
+			  	<h2>Part A: Create Projects - Step 1</h2>
+			</div>
+			<h4>Please choose the number of projects you would like to create:</h4>
+			<br>
+			
+			<%= form_tag(round_show_part_a_2_path) do %>
+                            
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<td><h4>Number of Projects</h4></td>
+							<td><h4>Cost</h4></td>
+						 </tr>
+					</thead>
+					<tbody>
+						<% @number_of_project_options.times do |i| %>
+							<tr>
+								<td>
+									<label class="radio">
+									<input type="radio" name="numberOfProjects" id="numberOfProjects<%= i + 1 %>" value="<%= i %>" <%= "checked" if i == 0 %>>
+										<%= i %>
+									</label>
+								</td>
+								<td><%= i * 50 %> credits</td>
+							 </tr>                                       
+						<% end %>
+					</tbody>
+				</table>
 	
-	<div class="form-actions">
-    	<%= submit_tag :submit, :value => "Next", :class => 'btn btn-large btn-primary pull-right' %>
-  	</div>
+				<div class="form-actions">
+					<%= submit_tag :submit, :id => "next-button", :value => "Next", :class => 'btn btn-large btn-primary pull-right' %>
+			  	</div>
 
-<% end %>
+			<% end %>  
+
+		</div>
+		<div class="span3">
+			<%= render "countdown_timer_sidebar" %>
+			<div align="center">
+				<div class="page-header">
+				  	<h2>Credits</h2>
+				</div>
+
+				<h3>You have <span id="credits"></span> credits remaining.</h3>
+				<br>  
+			</div>
+  		</div>
+	</div>
+</div>  
+
+
+<script>
+	function countDown (count) {
+   	if (count > 0) 
+		{
+    		document.getElementById("timer").innerHTML = count;
+    		setTimeout (function() { countDown(count - 1); }, 1000);
+  		}
+  		else if (count == 0) 
+		{
+ 			document.getElementById("next-button").click(); 
+		}
+ 	}
+	countDown(<%= ROUND_PART_A1_COUNTDOWN_SECONDS %>);
+</script> 
+      
+
+<script type='text/javascript'>
+	$(document).ready(function() {
+		var credits = <%= AMOUNT_CREATOR_CAN_SPEND_PER_ROUND %>
+	 	$('#credits').text(credits)
+	});  
+
+	$("input[name='numberOfProjects']").change(function() {     
+		var credits = <%= AMOUNT_CREATOR_CAN_SPEND_PER_ROUND %>
+	 	$('#credits').text(credits)
+	   	
+
+		<% @number_of_project_options.times do |i| %>
+      	<% if i == 0 %>                     
+				if ($("input[name='numberOfProjects']:checked").val() == <%= i %>)
+				{
+					$('#credits').text(credits);  
+				}    
+			<% else %>
+				else if ($("input[name='numberOfProjects']:checked").val() == <%= i %>)
+				{
+					var remaining_credits = (credits - (<%= COST_TO_CREATE_PROJECT %> * <%= i %>))   
+					$('#credits').text(remaining_credits); 
+				}			
+			<% end %>		
+		<% end %>
+				
+	}); 
+</script>		

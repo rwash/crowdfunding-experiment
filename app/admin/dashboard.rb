@@ -15,11 +15,8 @@ ActiveAdmin.register_page "Dashboard" do
                 end
               end
               column "Status" do |experiment|
-                div :class => "admin-center-column" do 
-                  link_to("STATUS", dashboard_path(experiment))
-                end
               end
-            end
+            end 
           end
         end
       end
@@ -34,10 +31,7 @@ ActiveAdmin.register_page "Dashboard" do
                   experiment.current_round_number
                 end
               end
-              column "Status" do |experiment|
-                div :class => "admin-center-column" do 
-                  link_to("STATUS", dashboard_path(experiment))
-                end
+              column "Status" do |experiment|  
               end
             end
           end
@@ -47,7 +41,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         div :class => "admin-center-column" do         
           panel "Completed Experiments" do
-            table_for Experiment.where(:started => true) do
+            table_for Experiment.where(:finished => true) do
               column ("Experiment") {|experiment| link_to("Experiment ##{experiment.id}", admin_experiment_path(experiment.id)) } 
               column "Current Round" do |experiment|
                 div :class => "admin-center-column" do 
@@ -55,14 +49,11 @@ ActiveAdmin.register_page "Dashboard" do
                 end
               end
               column "Status" do |experiment|
-                div :class => "admin-center-column" do 
-                  link_to("STATUS", dashboard_path(experiment))
-                end
               end
             end
           end
-        end
-      end
+        end 
+      end 
     end
   end
 end

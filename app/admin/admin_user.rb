@@ -1,4 +1,5 @@
 ActiveAdmin.register AdminUser do     
+  menu :parent => "ADMIN", :priority => 1  
 
   filter :email
 

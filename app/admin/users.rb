@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  actions :index, :show, :edit, :update
+  # actions :index, :show
   config.batch_actions = false  
   menu :parent => "USERS", :priority => 1
   scope :all, :default => true
@@ -13,11 +13,9 @@ ActiveAdmin.register User do
   
   # Configuration for Sidebar Filters
   filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
-  filter :group_name, :label => "Group", :as => :select, :collection => Group.uniq.pluck(:name)
   filter :name
   filter :type
   filter :payout
-  filter :questions_payout
 
 
   # Configuration for Users Index Page
@@ -27,11 +25,6 @@ ActiveAdmin.register User do
     column :experiment, :sortable => :experiment_id  do |user|
       if user.experiment_id != nil
         link_to "Experiment ##{user.experiment_id}", admin_experiment_path(user.experiment_id)
-      end
-    end
-    column :group, :sortable => :group_id  do |user|
-      if user.group_id != nil
-        link_to "Group #{user.group.name}", admin_group_path(user.group_id)
       end
     end
     column :name, :sortable => :name do |user|
@@ -49,14 +42,14 @@ ActiveAdmin.register User do
           user.user_type
        end
     end
-    column :payout, :sortable => :payout do |user|
+    column :total_return, :sortable => :total_return do |user|
        div :class => "admin-center-column" do 
-          user.payout
+          user.total_return
        end
     end
-    column :questions_payout, :sortable => :questions_payout do |user|
+    column :total_return_in_cents, :sortable => :total_return_in_cents do |user|
        div :class => "admin-center-column" do 
-          user.questions_payout
+          "$" + number_with_precision(user.total_return_in_cents.to_f / 100, :precision => 2) if user.total_return_in_cents
        end
     end
     default_actions
@@ -71,30 +64,18 @@ ActiveAdmin.register User do
           link_to "Experiment ##{user.experiment_id}", admin_experiment_path(user.experiment_id)
         end
       end
-      row :group do |user|
-        if user.group_id != nil
-          link_to "Group #{user.group.name}", admin_group_path(user.group_id)
-        end
-      end
-      row :name
+      row :name     
+      row :password
       row :user_type
-      row :payout
-      row :questions_payout
+      row :total_return do |user|
+        user.total_return 
+      end
+      row :total_return_in_cents do |user|
+        "$" + number_with_precision(user.total_return_in_cents.to_f / 100, :precision => 2) if user.total_return_in_cents 
+      end
       row :times_viewed_instructions
     end
     active_admin_comments
-  end
-  
-
-  # Configuration for Users Edit Page
-  form do |f|                         
-   f.inputs "New User" do       
-     f.input :experiment, :as => :select
-     f.input :name
-     f.input :password 
-     f.input :user_type
-   end                               
-   f.actions                         
   end
   
 end

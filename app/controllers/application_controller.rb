@@ -1,71 +1,47 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
   helper :all
-  helper_method :current_user_session, :current_user, :current_experiment, :current_group, :last_round
-  # filter_parameter_logging :password, :password_confirmation
+  helper_method :current_user_session
+  helper_method :current_user
+  helper_method :current_experiment     
+  helper_method :current_round
+  helper_method :last_round
+  
   
   private
-  
-    def check_if_user_and_round_ready(preference, current_round)
-      @preference = preference
-      if !@preference.is_ready
-        @preference.is_ready = true
-        @preference.save!
-        current_round.check_if_round_ready_to_start
-      end    
-    end
   
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
       @current_user_session = UserSession.find
     end
     
+    
     def current_user
       return @current_user if defined?(@current_user)
       @current_user = current_user_session && current_user_session.record
     end
+    
     
     def current_experiment
     	return @current_experiment if defined?(@current_experiment)
     	@current_experiment = current_user.experiment
     end
     
-    def current_group
-    	return @group if defined?(@group)
-    	@group = Group.find(current_user.group_id) unless current_user.name == 'admin'
-    end
     
     def current_round
-      @user = current_user
-      @rounds_temp = []
-      Round.where(:group_id => @user.group_id).each do |round|
-        if !round.part_b_finished
-          @rounds_temp << round
-        end
-      end
-      @rounds_temp.sort_by{ |i| i[:number] }
-      @current_round = @rounds_temp.first      
-    end
-    
-    def require_admin
-      if current_user.nil? || current_user.name != 'admin'
-        flash[:error] = "You must be logged in as an admin to access this page."
-        return redirect_to root_path
-      end
-    end
+      @experiment = current_experiment
+      Round.where(:experiment_id => @experiment.id).order("number ASC").each do |round|
+        return round unless round.round_complete
+      end 
+      return @experiment.rounds.first
+    end   
     
     
-    def check_round(round, user)
+    def check_round(round, user)         # <TODO CL> Implement.
       @round = round
       @user = user
-      
-      # Check if user exists        <TODO CL> Tidy this up
+
     	if @user
-    	  # Check if User belongs to this Round as a Creator
     	  if CreatorPreference.where(:round_id => @round.id, :user_id => @user.id).first.nil?
-    	    # If not, check if User belongs to this Round as a Donror
     	    if DonorPreference.where(:round_id => @round.id, :user_id => @user.id).first.nil?
       		  flash[:error] = "Not allowed to view round you dont belong to."
             return redirect_to root_path
@@ -81,11 +57,10 @@ class ApplicationController < ActionController::Base
         return redirect_to round_waiting_path(@round)
     	end
     	
-    	if @user.nil? || @round.part_b_finished == true
+    	if @user.nil? || @round.round_complete == true
     		flash[:error] = "Round has finished."
     		return redirect_to summary_waiting_path(@round)
     	end
-    	
     end
     
 end
