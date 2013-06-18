@@ -43,7 +43,9 @@ class RoundsController < InheritedResources::Base
 	  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
     @number_of_projects = params[:numberOfProjects].to_i
     if @number_of_projects == 0
+      @preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT)) 
       @preference.set_finished_round
+      @preference.save!
       @current_round.check_if_part_a_finished
       redirect_to summary_waiting_path(@current_round)
     end
