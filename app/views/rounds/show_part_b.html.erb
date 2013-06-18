@@ -4,52 +4,63 @@
 			<div class="page-header">
 			  	<h2>Part B: Contribute to Projects</h2>
 			</div>
-			<h4>Please allocate credits to the available projects:</h4>
-			<br>
 
 			<%= form_tag(contributions_submit_path) do %>
 
-				<table class="table">
-					<thead>
-						<tr>
-							<td><h3>Project</h3></td>
-							<td><h3>Goal</h3></td>
-							<td><h3>Your Reward</h3></td>
-							<td><h3>Your Contributions</h3></td>															
-						</tr>
-					</thead>
-					<tbody>
-						<% @projects.each_with_index do |project, i| %>
+				<% if @projects.count > 0 %>     
+
+					<h4>Please allocate credits to the available projects:</h4>
+					<br>
+
+					<table class="table">
+						<thead>
 							<tr>
-								<td><%= project.name %></td>
-								<td><%= project.goal_amount %> credits</td>
-								<td>
-                        <% if project.popularity == "Niche" %>
-                        	<% if project.special_user_1 == @user.id || project.special_user_2 == @user.id %>
-									 	<%= project.special_return_amount %>
-								   <% else %>
+								<td><h3>Project</h3></td>
+								<td><h3>Goal</h3></td>
+								<td><h3>Your Reward</h3></td>
+								<td><h3>Your Contributions</h3></td>															
+							</tr>
+						</thead>
+						<tbody>
+							<% @projects.each_with_index do |project, i| %>
+								<tr>
+									<td><%= project.name %></td>
+									<td><%= project.goal_amount %> credits</td>
+									<td>
+	                        <% if project.popularity == "Niche" %>
+	                        	<% if project.special_user_1 == @user.id || project.special_user_2 == @user.id %>
+										 	<%= project.special_return_amount %>
+									   <% else %>
+											<%= project.standard_return_amount %>
+										<% end %>
+	                        <% elsif project.popularity == "Popular" %>
 										<%= project.standard_return_amount %>
 									<% end %>
-                        <% elsif project.popularity == "Popular" %>
-									<%= project.standard_return_amount %>
-								<% end %>
-								</td>
-								<td>
-									<%= text_field_tag "amount_#{i}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{i}", :class => 'contribution-field' %><br>
-						    		<%= hidden_field_tag "project_id_#{i}", project.id %>
-								</td>
-							</tr>						
-						<% end %>                    
-					</tbody>				
-				</table>
+									</td>
+									<td>
+										<%= text_field_tag "amount_#{i}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{i}", :class => 'contribution-field' %><br>
+							    		<%= hidden_field_tag "project_id_#{i}", project.id %>
+									</td>
+								</tr>						
+							<% end %>                    
+						</tbody>				
+					</table>
 
-	         <br>
-				<h3>Hints:</h3>
-				<br>
-				<p> - Contributions must be positive.</p>
-				<p> - Total contributed amount cannot be more than your allowed credits.</p>
-				<p> - You do not need to allocate all of your credits to projects.</p>
-				<p> - "Your Reward" is the amount you will receive if the project is successfully funded.</p>
+		         <br>
+					<h3>Hints:</h3>
+					<br>
+					<p> - Contributions must be positive.</p>
+					<p> - Total contributed amount cannot be more than your allowed credits.</p>
+					<p> - You do not need to allocate all of your credits to projects.</p>
+					<p> - "Your Reward" is the amount you will receive if the project is successfully funded.</p>    
+					
+				<% else %>                
+				
+					<h3>No projects have been created in your group this round!</h3> 
+					<br>
+					<h4>Click "Submit" to continue.</h4>
+				
+				<% end %>
 				
 		    	<%= hidden_field_tag "current_round_id", @current_round.id %>
  
