@@ -1,4 +1,5 @@
 class ProjectsController < InheritedResources::Base
+                          
 
   def create_projects                  # <TODO CL> Refactor and Move into Model.
     @user = current_user       
@@ -18,7 +19,7 @@ class ProjectsController < InheritedResources::Base
       redirect_to summary_waiting_path(@current_round)
     else
       flash[:alert] = "You have finished your turn for this round!"
-      redirect_to summary_waiting_path(@current_round)
+      redirect_to summary_waiting_path(@current_round)     
     end
   end
 
