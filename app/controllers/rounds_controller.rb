@@ -23,17 +23,21 @@ class RoundsController < InheritedResources::Base
       elsif @preference.finished_round 
         redirect_to summary_waiting_path(@current_round)
       else 
-        redirect_to round_show_part_a_path(@current_round)
+        redirect_to round_show_part_a_path(@current_round)                  
       end
     end
 	end
 	
 
-	def show_part_a
+	def show_part_a       # <TODO CL>
 		@current_round = Round.find(params[:id])
 		@user = current_user
+		@preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
 		check_round(@current_round, @user)     # <TODO CL> Implement or Depricated?
 		@number_of_project_options = ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR + 1
+    # @group = @preference.group
+    @group = Group.new 
+    3.times { @group.projects.build }
 	end
 	
 	
