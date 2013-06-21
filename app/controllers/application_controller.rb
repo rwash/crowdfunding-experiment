@@ -61,6 +61,6 @@ class ApplicationController < ActionController::Base
     		flash[:error] = "Round has finished."
     		return redirect_to summary_waiting_path(@round)
     	end
-    end
+    end 
     
 end

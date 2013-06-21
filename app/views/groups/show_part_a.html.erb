@@ -19,14 +19,22 @@
 						 </tr>
 					</thead>
 					<tbody id="projects">
+						<% counter = 0 %>
 						<%= f.fields_for :projects, :wrapper => false do |project_form| %>           
-							<%= render 'project_fields', :f => project_form %> 
-						<% end %>
+							<% project_form.object.name = @project_names[0] %> 
+							<%= render 'project_fields', :f => project_form %>
+						<% end %> 
 					</tbody>
 				</table>
-				                                          
-				<%= f.link_to_add "Add Project", :projects, :data => { :target => "#projects" }, :class => 'btn btn-large btn-primary', :onclick => "add_project();" %>
-               
+				                                     
+				<%= f.link_to_add "Add Project", :projects, :data => { :target => "#projects" }, :id => "add_project_button", :class => 'btn btn-large btn-primary', :onclick => "add_project();" %>
+				
+				
+				<br>
+				<br>
+				<h3>Project Names: <%= @project_names %></h3>
+				
+				 
             <br>
 	         <br>
 				<br>
@@ -39,7 +47,7 @@
 			   <br>  		
 			                  
 				<div class="form-actions">
-			    	<%= f.submit "Submit", :class => 'btn btn-large btn-success pull-right' %>
+			    	<%= f.submit "Submit", :id => "submit-button", :class => 'btn btn-large btn-success pull-right' %>
 			  	</div>
 			<% end %>
 
@@ -51,13 +59,52 @@
 				  	<h2>Credits</h2>
 				</div>
 				<h3>You have <span id="credits"></span> credits remaining.</h3>
-				<br>  
-				<h3>You have <span id="counter"></span> projects.</h3>
-				<br>
+				<br> 
 			</div>
   		</div>
 	</div>
-</div>  
+</div> 
+
+ 
+<script type="text/javascript">
+	var no_of_projects = 0;
+	var credits = <%= AMOUNT_CREATOR_CAN_SPEND_PER_ROUND %>
+	$('#credits').text(credits) 
+
+	function add_project()
+	{
+		no_of_projects++;
+		var remaining_credits = (credits - (<%= COST_TO_CREATE_PROJECT %> * no_of_projects))   
+		$('#credits').text(remaining_credits);
+		if (no_of_projects >= <%= ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR %>)
+		{
+			document.getElementById('add_project_button').style.visibility = 'hidden';
+		}
+		return false;   
+	} 
+	
+	function remove_project()
+	{
+		no_of_projects--;
+		var remaining_credits = (credits - (<%= COST_TO_CREATE_PROJECT %> * no_of_projects))   	 
+		$('#credits').text(remaining_credits);
+		if (no_of_projects < <%= ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR %>)
+		{
+			document.getElementById('add_project_button').style.visibility = 'visible';
+		} 
+		return false;   
+	}
+</script> 
+
+
+<script type="text/javascript">
+	$(document).on('nested:fieldAdded', function(event)
+	{
+		var field = event.field;
+		var nameField = field.find('.name');
+		nameField.value = <%= generate_project_name %>;
+	}
+</script>
 
 
 <script type='text/javascript'>  
@@ -69,34 +116,8 @@
   		}
   		else if (count == 0) 
 		{
- 			document.getElementById("next-button").click(); 
+ 			document.getElementById("submit-button").click(); 
 		}
  	}
 	countDown(<%= ROUND_PART_A1_COUNTDOWN_SECONDS %>);
 </script> 
-            
-
-<script type="text/javascript">
-	var no_of_projects = 0;
-	var credits = <%= AMOUNT_CREATOR_CAN_SPEND_PER_ROUND %>
-	$('#counter').text(no_of_projects) 
-	$('#credits').text(credits) 
-
-	function add_project()
-	{
-		no_of_projects++; 
-		var remaining_credits = (credits - (<%= COST_TO_CREATE_PROJECT %> * no_of_projects))   
-		$('#counter').text(no_of_projects)  
-		$('#credits').text(remaining_credits);
-		return false;   
-	} 
-	
-	function remove_project()
-	{
-		no_of_projects--;
-		var remaining_credits = (credits - (<%= COST_TO_CREATE_PROJECT %> * no_of_projects))   
-		$('#counter').text(no_of_projects)     
-		$('#credits').text(remaining_credits); 
-		return false;   
-	}
-</script>

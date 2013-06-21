@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
 	belongs_to :group                                               
 	belongs_to :user
 		
-	after_create :generate_name
+  # after_initialize :generate_name     # <TODO CL>
 	after_create :initalize_project
 	after_create :assign_special_users 
   

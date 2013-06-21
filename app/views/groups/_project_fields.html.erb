@@ -1,5 +1,8 @@
 <tr class="fields">
-	<td>--Project Name Here--</td>  
+	<td>                                   
+		<%= f.hidden_field :name, :value => f.object.name %>
+		<%= f.object.name %>
+	</td>  
 	<td>
 		<label class="radio inline">  
 			<%= f.radio_button :value, "High", :checked => true %>    

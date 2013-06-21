@@ -1,0 +1,25 @@
+<h3>Parms: <%= params %></h3>
+<br>
+<br>    
+
+<h3>@build_group: <%= @build_group %></h3>
+<% @build_group.projects.each_with_index do |project, i| %>
+	<h4>#<%= i %></h4>
+	<h4>Project Name: <%= project.name %></h4>
+	<h4>Project Value: <%= project.value %></h4>
+	<h4>Project Popularity: <%= project.popularity %></h4>				
+	<h4>Project User ID: <%= project.user_id %></h4>				
+	<h4>Project Group ID: <%= project.group_id %></h4>						
+<% end %>              
+
+<br>
+<br>
+<h3>@current_group: <%= @current_group %></h3>
+<% @current_group.projects.each_with_index do |project, i| %>
+	<h4>#<%= i %></h4>
+	<h4>Project Name: <%= project.name %></h4>
+	<h4>Project Value: <%= project.value %></h4>
+	<h4>Project Popularity: <%= project.popularity %></h4>				
+	<h4>Project User ID: <%= project.user_id %></h4>				
+	<h4>Project Group ID: <%= project.group_id %></h4>						
+<% end %>

@@ -29,31 +29,29 @@ class RoundsController < InheritedResources::Base
 	end
 	
 
-	def show_part_a       # <TODO CL>
-		@current_round = Round.find(params[:id])
-		@user = current_user
-		@preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
-		check_round(@current_round, @user)     # <TODO CL> Implement or Depricated?
-		@number_of_project_options = ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR + 1
-    # @group = @preference.group
-    @group = Group.new 
-    3.times { @group.projects.build }
-	end
+  # def show_part_a       # <TODO CL>
+  #   @current_round = Round.find(params[:id])
+  #   @user = current_user
+  #   @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
+  #   check_round(@current_round, @user)     # <TODO CL> Implement or Depricated?
+  #   @number_of_project_options = ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR + 1
+  #   
+  # end 
 	
 	
-	def show_part_a_2
-		@current_round = Round.find(params[:id])
-		@user = current_user
-	  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
-    @number_of_projects = params[:numberOfProjects].to_i
-    if @number_of_projects == 0
-      @preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT)) 
-      @preference.set_finished_round
-      @preference.save!
-      @current_round.check_if_part_a_finished
-      redirect_to summary_waiting_path(@current_round)
-    end
-	end
+  # def show_part_a_2
+  #   @current_round = Round.find(params[:id])
+  #   @user = current_user
+  #   @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
+  #     @number_of_projects = params[:numberOfProjects].to_i
+  #     if @number_of_projects == 0
+  #       @preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT)) 
+  #       @preference.set_finished_round
+  #       @preference.save!
+  #       @current_round.check_if_part_a_finished
+  #       redirect_to summary_waiting_path(@current_round)
+  #     end
+  # end   
 	
 	
 	def waiting_for_part_b
@@ -132,6 +130,6 @@ class RoundsController < InheritedResources::Base
  		@projects = @current_group.projects     
 		@next_round_number = @current_round.number + 1
 		@next_round = @experiment.rounds.where(:number => @next_round_number).first
-	end
+	end     
 	
 end
