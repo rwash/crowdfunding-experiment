@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130617112544) do
+ActiveRecord::Schema.define(:version => 20130701061027) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20130617112544) do
     t.string   "user_type"
     t.integer  "total_return"
     t.integer  "total_return_in_cents"
+    t.string   "status"
   end
 
 end

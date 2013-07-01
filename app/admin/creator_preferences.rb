@@ -1,7 +1,7 @@
 ActiveAdmin.register CreatorPreference do
   menu :parent => "USERS", :priority => 4
-  # actions :index, :show
-  # config.batch_actions = false  
+  actions :index, :show
+  config.batch_actions = false        
   scope :all, :default => true
   
   
@@ -15,7 +15,6 @@ ActiveAdmin.register CreatorPreference do
   config.sort_order = "id_asc"
   
   index do
-    selectable_column
     column :experiment do |creator_preference|
       link_to "Experiment ##{creator_preference.user.experiment_id}", admin_experiment_path(creator_preference.user.experiment_id)
     end
@@ -69,26 +68,6 @@ ActiveAdmin.register CreatorPreference do
       row :total_return
     end
     active_admin_comments
-  end
-  
-  
-  # Configuration for Creator_Preferences Batch Actions
-  ActiveAdmin.register CreatorPreference do
-    batch_action :is_ready, :priority => 1 do |selection|
-      CreatorPreference.find(selection).each do |creator_preference|
-        creator_preference.is_ready = true
-        creator_preference.save
-      end
-      redirect_to admin_creator_preferences_path
-    end
-    
-    batch_action :finished_round do |selection|             # <TODO CL> Remove when done.
-      CreatorPreference.find(selection).each do |creator_preference|
-        creator_preference.finished_round = true
-        creator_preference.save
-      end
-      redirect_to admin_creator_preferences_path
-    end
   end
   
 end

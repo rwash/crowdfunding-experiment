@@ -1,0 +1,26 @@
+<div align="center">
+	<div class="page-header">
+	  	<h2>Users Summary</h2>
+	</div>    
+	
+	<table class="table table-striped table-bordered table-condensed">      
+		<thead>
+			<tr>
+				<td><h4>User</h4></td>
+				<td><h4>User Type</h4></td>
+				<td><h4>Return (credits)</h4></td>
+			</tr>
+	 	</thead>
+		<tbody>
+			<% @round_preferences.each do |preference| %>
+				<tr>
+					<td><%= preference.user.name %></td>
+					<td><%= preference.user.user_type %></td>
+					<td><%= preference.total_return %></td>
+				</tr>							
+			<% end %>
+		</tbody>
+	</table>	
+
+</div>          
+<br>

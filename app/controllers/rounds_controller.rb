@@ -4,7 +4,11 @@ class RoundsController < InheritedResources::Base
 	def waiting_for_round
 	  @experiment = current_experiment
 		@current_round = Round.find(params[:id])
-    @user = current_user
+    @user = current_user       
+    
+    @experiment.start_experiment
+    
+    set_user_status(@user, "Waiting for Round ##{@current_round.number} to Start")
     
 		if @user.user_type == "Creator"
 		  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
@@ -23,37 +27,18 @@ class RoundsController < InheritedResources::Base
       elsif @preference.finished_round 
         redirect_to summary_waiting_path(@current_round)
       else 
-        redirect_to round_show_part_a_path(@current_round)
+        redirect_to round_show_part_a_path(@current_round)                  
       end
     end
 	end
-	
 
-	def show_part_a
-		@current_round = Round.find(params[:id])
-		@user = current_user
-		check_round(@current_round, @user)     # <TODO CL> Implement or Depricated?
-		@number_of_project_options = ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR + 1
-	end
-	
-	
-	def show_part_a_2
-		@current_round = Round.find(params[:id])
-		@user = current_user
-	  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
-    @number_of_projects = params[:numberOfProjects].to_i
-    if @number_of_projects == 0
-      @preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT)) 
-      @preference.set_finished_round
-      @preference.save!
-      @current_round.check_if_part_a_finished
-      redirect_to summary_waiting_path(@current_round)
-    end
-	end
-	
 	
 	def waiting_for_part_b
-		@current_round = Round.find(params[:id])
+		@current_round = Round.find(params[:id])  
+		@user = current_user
+		
+    set_user_status(@user, "Waiting for Round ##{@current_round.number} - Part B")   
+		
 	  if @current_round.part_b_started
 	    redirect_to round_show_part_b_path(@current_round)
 	  end
@@ -62,7 +47,9 @@ class RoundsController < InheritedResources::Base
 	
 	def show_part_b
 	  @current_round = Round.find(params[:id])
-		@user = current_user
+		@user = current_user    
+		
+    set_user_status(@user, "In Part B: Submit Contributions - Round ##{@current_round.number}")   
 
     if @current_round.part_b_finished || @user.user_type == "Creator" 
       redirect_to summary_waiting_path(@current_round)    
@@ -78,7 +65,9 @@ class RoundsController < InheritedResources::Base
 	def waiting_for_summary
     @user = current_user
 		@current_round = Round.find(params[:id]) 
-		@experiment = current_experiment
+		@experiment = current_experiment    
+		
+    set_user_status(@user, "Waiting for Round ##{@current_round.number} Summary")  
 		
     if @current_round.check_if_round_complete
       Group.where(:round_id => @current_round).each do |group|
@@ -96,7 +85,10 @@ class RoundsController < InheritedResources::Base
       end 
     
       @current_round.summary_complete = true
-      @current_round.save! 
+      @current_round.save!     
+                                    
+      @next_round_number = @current_round.number + 1
+      @experiment.set_current_round(@next_round_number)      # <TODO CL> Check this sets the current round to the experiment properly.
 
       if @user.user_type == "Creator"
         redirect_to creator_round_summary_path(@current_round)   
@@ -115,7 +107,9 @@ class RoundsController < InheritedResources::Base
     @current_group = @preference.group
 		@projects = @current_group.projects   
 		@next_round_number = @current_round.number + 1
-		@next_round = @experiment.rounds.where(:number => @next_round_number).first
+		@next_round = @experiment.rounds.where(:number => @next_round_number).first  
+		
+    set_user_status(@user, "Viewing Round ##{@current_round.number} Summary") 		
 	end         
 	
 	
@@ -127,7 +121,24 @@ class RoundsController < InheritedResources::Base
     @current_group = @preference.group 
  		@projects = @current_group.projects     
 		@next_round_number = @current_round.number + 1
-		@next_round = @experiment.rounds.where(:number => @next_round_number).first
+		@next_round = @experiment.rounds.where(:number => @next_round_number).first   
+		
+    set_user_status(@user, "Viewing Round ##{@current_round.number} Summary") 	 		
+	end      
+	
+	
+	def round_history
+    @round = Round.find(params[:id])      
+    @experiment = @round.experiment
+    @round_preferences = []
+    @experiment.users.each do |user|
+  		if user.user_type == "Creator"
+  		  @preference = CreatorPreference.where(:user_id => user, :round_id => @round).first
+  		elsif user.user_type == "Donor"
+        @preference = DonorPreference.where(:user_id => user, :round_id => @round.id).first
+  		end
+      @round_preferences << @preference
+    end
 	end
 	
 end

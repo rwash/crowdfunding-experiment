@@ -14,6 +14,7 @@ gem "twitter-bootstrap-rails"
 gem 'therubyracer'
 gem 'authlogic'
 gem 'activeadmin'               # For Administration Interfaces
+gem 'nested_form'               # For Nested Models and JS Forms
 
 group :test, :development do
   gem "rspec-rails"

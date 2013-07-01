@@ -1,0 +1,20 @@
+<div class="page-header">
+  	<h2>Experiment Details</h2>
+</div>
+
+<table class="table table-striped table-bordered table-condensed">
+	<tbody>
+		<tr>
+			<td><h4>Started: </h4> </td>
+			<td><%= @experiment.started.yesno %></td>
+		</tr>
+		<tr>
+			<td><h4>Finished: </h4> </td>
+			<td><%= @experiment.finished.yesno %></td>
+		</tr>
+		<tr>
+			<td><h4>Current Round: </h4></td>
+			<td>Round #<%= @experiment.current_round_number %></td>
+		</tr>
+	</tbody>
+</table>

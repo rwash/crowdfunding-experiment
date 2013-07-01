@@ -1,0 +1,27 @@
+<tr class="fields">
+	<td>                                   
+		<%= f.hidden_field :name, :class => "TEST" %>
+		<%= f.object.name %>
+	</td>  
+	<td>
+		<label class="radio inline">  
+			<%= f.radio_button :value, "High", :checked => true %>    
+			High     
+		</label> 
+		<label class="radio inline">  
+			<%= f.radio_button :value, "Low" %>    
+			Low
+		</label>
+	</td>
+	<td>
+		<label class="radio inline">  
+			<%= f.radio_button :popularity, "Popular", :checked => true %>
+			Popular
+		</label> 
+		<label class="radio inline">
+			<%= f.radio_button :popularity, "Niche" %>
+			Niche
+		<label class="radio inline">
+	</td>
+	<td><%= f.link_to_remove "Remove", :class => "btn btn-mini btn-inverse", :onclick => "remove_project();" %></td>
+</tr>
