@@ -1,7 +1,8 @@
 class Project < ActiveRecord::Base
 	has_many :contributions, :dependent => :destroy
 	belongs_to :group                                               
-	belongs_to :user
+	belongs_to :user  
+	
 		
   # after_initialize :generate_name     # <TODO CL>
 	after_create :initalize_project

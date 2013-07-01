@@ -57,7 +57,11 @@
 										<% end %>                      
 									<% else %> 
 										<% if current_experiment.return_credits %>
-									   	<h4><%= project.get_contribution(@user).amount %></h4>
+											<% if project.get_contribution(@user) %>
+									   		<h4><%= project.get_contribution(@user).amount %></h4>
+											<% else %>
+												<h4>0</h4>
+											<% end %>
 										<% else %>
 											0
 										<% end %>  

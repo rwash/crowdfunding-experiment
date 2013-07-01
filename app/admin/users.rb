@@ -12,10 +12,7 @@ ActiveAdmin.register User do
   
   
   # Configuration for Sidebar Filters
-  filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
   filter :name
-  filter :type
-  filter :payout
 
 
   # Configuration for Users Index Page
