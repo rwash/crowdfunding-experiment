@@ -68,11 +68,9 @@ class Experiment < ActiveRecord::Base
   end                             
 	
 	
-	def set_current_round(round)   # <TODO CL> Depricated?
-    if self.current_round_number != round.number
-      self.current_round_number = round.number
-      self.save!
-    end
+	def set_current_round(round_number)
+    self.current_round_number = round_number
+    self.save!
   end
 	
 	

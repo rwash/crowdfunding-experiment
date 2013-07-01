@@ -1,6 +1,6 @@
 ActiveAdmin.register Round do
-  # actions :index, :show
-  # config.batch_actions = false  
+  actions :index, :show
+  config.batch_actions = false    
   menu :parent => "EXPERIMENTS", :priority => 2
   scope :all, :default => true
   scope :part_a_started do |round|
@@ -32,7 +32,6 @@ ActiveAdmin.register Round do
   config.sort_order = "id_asc"
   config.per_page = 15
   index do 
-    selectable_column
     column :experiment, :sortable => :experiment_id do |round|
       link_to "Experiment ##{round.experiment_id}", admin_experiment_path(round.experiment_id)
     end
@@ -96,22 +95,6 @@ ActiveAdmin.register Round do
       row :end_time
     end
     active_admin_comments
-  end
-     
- 
-  # Configuration for Rounds Batch Actions     # <TODO CL> Remove.
-  ActiveAdmin.register Round do
-    batch_action :finish_round, :priority => 1 do |selection|
-      Round.find(selection).each do |round|
-        round.part_a_finished = true
-        round.part_b_finished = true
-        round.part_a_started = true
-        round.part_b_started = true                     
-        round.round_complete = true                             
-        round.save
-      end
-      redirect_to admin_rounds_path
-    end                                      
   end
  
 

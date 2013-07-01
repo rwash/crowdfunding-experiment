@@ -1,0 +1,43 @@
+<div id="container">	
+	<div class="row">
+   	<div class="span9">
+			<div class="page-header">
+			  	<h2>User Payouts - Experiment #<%= @experiment.id %></h2>
+			</div>
+			  
+			<div class="hero-unit">
+				 <p>The exchange rate for this experiment is: <strong>$1</strong> per <strong><%= CREDITS_TO_DOLLAR_RATE %></strong> credits</p>
+			</div> 
+			<br>
+
+			<table class="table table-striped table-bordered table-condensed">      
+				<thead>
+					<tr>
+						<td><h4>User Name</h4></td>
+						<td><h4>User Type</h4></td>
+						<td><h4>Total Return (credits)</h4></td>
+						<td><h4>Total Return (dollars)</h4></td>
+					</tr>
+				</thead>
+				<tbody>
+					<% @experiment.users.each do |user| %>
+						<tr>
+							<td><%= user.name %></td>
+							<td><%= user.user_type %></td>
+							<td><%= "#{user.total_return} credits" if user.total_return %></td>
+							<td><strong><%= "$#{number_with_precision(user.total_return_in_cents.to_f / 100, :precision => 2)}" if user.total_return_in_cents %></strong></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>       
+			<br>                                                                 
+			
+			<div class="form-actions">
+				<%= link_to "Return to Dashboard", admin_dashboard_path, :class => "btn-info btn-large pull-right" %>
+			</div>
+		</div>
+		<div class="span3">
+ 			<%= render "payouts_sidebar" %>
+		</div> 
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<div id="container">	
+	<div class="row">
+   	<div class="span9">
+			<div class="page-header">
+			  	<h2>History - Experiment #<%= @experiment.id %></h2>
+			</div>
+		
+		  	<h3>Completed Rounds</h3>
+			<br>
+
+			<table class="table table-striped table-bordered table-condensed">      
+				<tbody>
+					<% @completed_rounds.each do |round| %>
+						<tr>
+							<td>Round #<%= round.number %></td>
+							<td><%= link_to "Round History", round_history_path(round), :class => "btn btn-link" %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>       
+			<br>                                                                 
+			
+			<div class="form-actions">
+				<%= link_to "Return to Dashboard", admin_dashboard_path, :class => "btn-info btn-large pull-right" %>
+			</div>
+		</div> 
+	</div>
+</div>

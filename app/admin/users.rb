@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  # actions :index, :show
+  actions :index, :show
   config.batch_actions = false  
   menu :parent => "USERS", :priority => 1
   scope :all, :default => true
@@ -12,10 +12,7 @@ ActiveAdmin.register User do
   
   
   # Configuration for Sidebar Filters
-  filter :experiment, :as => :select, :collection => Experiment.uniq.pluck(:id)
   filter :name
-  filter :type
-  filter :payout
 
 
   # Configuration for Users Index Page

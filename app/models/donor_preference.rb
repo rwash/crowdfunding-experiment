@@ -24,20 +24,20 @@ class DonorPreference < ActiveRecord::Base
     @credits_to_be_returned = 0
    
     @group.projects.each do |project| 
-      if project.get_contribution(@user)
-        @contribution = project.get_contribution(@user)
-        if project.funded?
-          if project.popularity == "Niche" && (project.special_user_1 == @user.id || project.special_user_2 == @user.id)
-            @total_return_from_projects += project.special_return_amount
-          else
-            @total_return_from_projects += project.standard_return_amount
-          end                                              
+      if project.funded?
+        if project.popularity == "Niche" && (project.special_user_1 == @user.id || project.special_user_2 == @user.id)
+          @total_return_from_projects += project.special_return_amount
         else
-          if @experiment.return_credits
-            @credits_to_be_returned += @contribution.amount
-          end  
-        end                                           
-      end
+          @total_return_from_projects += project.standard_return_amount
+        end                                              
+      else
+        if @experiment.return_credits
+          if project.get_contribution(@user)
+            @contribution = project.get_contribution(@user) 
+            @credits_to_be_returned += @contribution.amount 
+          end
+        end  
+      end                                           
     end
     
     self.total_return_from_projects = @total_return_from_projects
