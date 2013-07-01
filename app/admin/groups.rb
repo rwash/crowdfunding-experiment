@@ -1,5 +1,5 @@
 ActiveAdmin.register Group do
-  # actions :index, :show
+  actions :index, :show
   config.batch_actions = false   
   menu :parent => "EXPERIMENTS", :priority => 3
   scope :all, :default => true

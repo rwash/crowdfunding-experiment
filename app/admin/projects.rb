@@ -1,6 +1,6 @@
 ActiveAdmin.register Project do
-  # actions :index, :show  
-  # config.batch_actions = false  
+  actions :index, :show  
+  config.batch_actions = false         
   menu :parent => "USERS", :priority => 2
   scope :all, :default => true
   
@@ -16,7 +16,6 @@ ActiveAdmin.register Project do
   config.sort_order = "id_asc"
   config.per_page = 15
   index do
-    selectable_column
     column :experiment do |project|
       link_to "Experiment ##{project.group.round.experiment_id}", admin_experiment_path(project.group.round.experiment_id)
     end
