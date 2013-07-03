@@ -2,17 +2,16 @@
 
 # Rounds
 NUMBER_OF_PRACTICE_ROUNDS = 3
-NUMBER_OF_LIVE_ROUNDS = 15
+NUMBER_OF_LIVE_ROUNDS = 12
 TOTAL_NUMBER_OF_ROUNDS = NUMBER_OF_PRACTICE_ROUNDS + NUMBER_OF_LIVE_ROUNDS
-AMOUNT_DONOR_CAN_DONATE_PER_ROUND = 100                    
-ROUND_PART_A1_COUNTDOWN_SECONDS = 180
-ROUND_PART_A2_COUNTDOWN_SECONDS = 180
-ROUND_PART_B_COUNTDOWN_SECONDS = 180
+AMOUNT_DONOR_CAN_DONATE_PER_ROUND = 150                    
+ROUND_PART_A_COUNTDOWN_SECONDS = 60
+ROUND_PART_B_COUNTDOWN_SECONDS = 60
 
 # Users
 NUMBER_OF_CREATORS = 4
 NUMBER_OF_DONORS = 8 
-NUMBER_SPECIAL_DONORS_PER_GROUP = 2             # These donors will recieve the "special", larger return when a project is funded.     
+NUMBER_SPECIAL_DONORS_PER_GROUP = 2
 NUMBER_OF_USERS = NUMBER_OF_CREATORS + NUMBER_OF_DONORS
 CREDITS_TO_DOLLAR_RATE = 350  
                                                                 
@@ -21,6 +20,7 @@ NUMBER_OF_GROUPS = 2
 NUMBER_OF_USERS_PER_GROUP = NUMBER_OF_USERS / NUMBER_OF_GROUPS    
 NUMBER_OF_CREATORS_PER_GROUP = NUMBER_OF_CREATORS / NUMBER_OF_GROUPS
 NUMBER_OF_DONORS_PER_GROUP = NUMBER_OF_DONORS / NUMBER_OF_GROUPS
+NUMBER_STANDARD_DONORS_PER_GROUP = NUMBER_OF_DONORS_PER_GROUP - NUMBER_SPECIAL_DONORS_PER_GROUP 
 
 # Projects
 ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR = 4 
@@ -49,16 +49,3 @@ end
 $project_names.each do |n|
 	n.gsub!(";",'')
 end
-
-
-# if Rails.env.production?      # <TODO CL> Replace with inbuilt survey
-#   TOKEN_SOURCE = 'tokens.csv'
-# else
-#   TOKEN_SOURCE = 'dummyTokens.csv'
-# end
-
-# $tokens = []                   # <TODO CL> Replace with inbuilt survey
-# #CSV.foreach("tokens.csv", :headers => false) do |row|
-# CSV.foreach(TOKEN_SOURCE, :headers => false) do |row|
-#   $tokens << row[0]
-# end

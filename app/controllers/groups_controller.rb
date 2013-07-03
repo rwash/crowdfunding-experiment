@@ -8,7 +8,8 @@ class GroupsController < InheritedResources::Base
     set_user_status(@user, "In Part A: Create Projects - Round ##{@current_round.number}")  
 		
 		check_round(@current_round, @user)     # <TODO CL> Implement or Depricated?
-    @group = Group.new 
+    @group = Group.new
+    @project = Project.new(:name => generate_project_name)
     # ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR.times { @group.projects.build(:name => generate_project_name) }
 	end   
 	
