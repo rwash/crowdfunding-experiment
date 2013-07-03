@@ -23,10 +23,10 @@ class ExperimentsController < InheritedResources::Base
 	def payouts
 	  @experiment = Experiment.find(params[:id])  
 	  @total_return = 0
-	  @total_return_in_cents = 0
+	  @total_return_in_dollars = 0
 	  @experiment.users.each do |user|
 	    @total_return += user.total_return if user.total_return
-	    @total_return_in_cents += user.total_return_in_cents if user.total_return_in_cents
+	    @total_return_in_dollars += user.total_return_in_dollars if user.total_return_in_dollars
 	  end    	 
 	end
 

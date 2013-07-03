@@ -44,9 +44,9 @@ ActiveAdmin.register User do
           user.total_return
        end
     end
-    column :total_return_in_cents, :sortable => :total_return_in_cents do |user|
+    column :total_return_in_dollars, :sortable => :total_return_in_dollars do |user|
        div :class => "admin-center-column" do 
-          "$" + number_with_precision(user.total_return_in_cents.to_f / 100, :precision => 2) if user.total_return_in_cents
+          "$" + user.total_return_in_dollars if user.total_return_in_dollars
        end
     end
     default_actions
@@ -67,8 +67,8 @@ ActiveAdmin.register User do
       row :total_return do |user|
         user.total_return 
       end
-      row :total_return_in_cents do |user|
-        "$" + number_with_precision(user.total_return_in_cents.to_f / 100, :precision => 2) if user.total_return_in_cents 
+      row :total_return_in_dollars do |user|
+        "$" + user.total_return_in_dollars if user.total_return_in_dollars 
       end
       row :times_viewed_instructions
     end

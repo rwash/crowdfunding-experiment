@@ -15,14 +15,14 @@ describe "GENERATING A NEW EXPERIMENT:" do
       Experiment.find(:all).uniq.count.should eq(1)
     end
 
-    it "Creates (#{NUMBER_OF_ROUNDS}) Round records & correct associations" do
-      Round.find(:all).uniq.count.should eq(NUMBER_OF_ROUNDS)
-      Round.where(:experiment_id == 1).count.should eq(NUMBER_OF_ROUNDS)
+    it "Creates (#{TOTAL_NUMBER_OF_ROUNDS}) Round records & correct associations" do
+      Round.find(:all).uniq.count.should eq(TOTAL_NUMBER_OF_ROUNDS)
+      Round.where(:experiment_id == 1).count.should eq(TOTAL_NUMBER_OF_ROUNDS)
     end
     
-    it "Creates (#{NUMBER_OF_GROUPS * NUMBER_OF_ROUNDS}) Group records & correct associations" do
-      Group.find(:all).uniq.count.should eq(NUMBER_OF_GROUPS * NUMBER_OF_ROUNDS)
-      Group.where(:experiment_id == 1).count.should eq(NUMBER_OF_GROUPS * NUMBER_OF_ROUNDS)
+    it "Creates (#{NUMBER_OF_GROUPS * TOTAL_NUMBER_OF_ROUNDS}) Group records & correct associations" do
+      Group.find(:all).uniq.count.should eq(NUMBER_OF_GROUPS * TOTAL_NUMBER_OF_ROUNDS)
+      Group.where(:experiment_id == 1).count.should eq(NUMBER_OF_GROUPS * TOTAL_NUMBER_OF_ROUNDS)
     end
 
     it "Creates (#{NUMBER_OF_USERS}) User records & correct associations" do
@@ -32,24 +32,24 @@ describe "GENERATING A NEW EXPERIMENT:" do
       User.where(:user_type => "Donor").count.should eq(NUMBER_OF_DONORS_PER_GROUP * NUMBER_OF_GROUPS)
     end
 
-    it "Creates (#{NUMBER_OF_CREATORS * NUMBER_OF_ROUNDS}) Creator_Preferences records & correct associations" do
-      CreatorPreference.find(:all).uniq.count.should eq(NUMBER_OF_CREATORS * NUMBER_OF_ROUNDS)
+    it "Creates (#{NUMBER_OF_CREATORS * TOTAL_NUMBER_OF_ROUNDS}) Creator_Preferences records & correct associations" do
+      CreatorPreference.find(:all).uniq.count.should eq(NUMBER_OF_CREATORS * TOTAL_NUMBER_OF_ROUNDS)
       @round_id = []
       @group_id = Group.first.id
       CreatorPreference.find(:all).each do |creator_preference|
         @round_id << creator_preference.round_id
       end
-      @round_id.uniq.count.should eq(NUMBER_OF_ROUNDS)
+      @round_id.uniq.count.should eq(TOTAL_NUMBER_OF_ROUNDS)
     end
 
-    it "Creates (#{NUMBER_OF_DONORS * NUMBER_OF_ROUNDS}) Donor_Preferences records & correct associations" do
-      DonorPreference.find(:all).uniq.count.should eq(NUMBER_OF_DONORS * NUMBER_OF_ROUNDS)
+    it "Creates (#{NUMBER_OF_DONORS * TOTAL_NUMBER_OF_ROUNDS}) Donor_Preferences records & correct associations" do
+      DonorPreference.find(:all).uniq.count.should eq(NUMBER_OF_DONORS * TOTAL_NUMBER_OF_ROUNDS)
       @round_id = []
       @group_id = Group.first.id
       DonorPreference.find(:all).each do |donor_preference|
         @round_id << donor_preference.round_id
       end
-      @round_id.uniq.count.should eq(NUMBER_OF_ROUNDS)
+      @round_id.uniq.count.should eq(TOTAL_NUMBER_OF_ROUNDS)
     end
 
     it "Creates (0) Project records" do

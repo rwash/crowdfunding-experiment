@@ -5,6 +5,12 @@
 			<div class="page-header">
 				<h1>Round <%= @current_round.number %> - Summary: Creator</h1>
 			</div>     
+
+			<% if @current_round.round_type == "PRACTICE" %>
+				<div class="hero-unit">
+					<p>This round is a Practice Round and does not count towards your final return for this experiment.</p>
+				</div>
+			<% end %>
 			
 			<% if @projects.count > 0 %>   			
 
@@ -19,7 +25,7 @@
 							<td><h4>Contributions</h4></td>  
 							<td><h4>Funding</h4></td>        
 							<td><h4>Status</h4></td>  
-							<td><h4>Your Return</h4></td>   
+							<td><h4>Your Payoff</h4></td>   
 						 </tr>
 					</thead>
 					<tbody>
@@ -44,11 +50,7 @@
 								</td>
 								<td>
 									<% if project.user_id == @user.id %>
-										<% if project.creator_earnings == 0 %>
-									 		<%= project.creator_earnings %>  
-										<% else %>
-											<h4><%= project.creator_earnings %></h4>
-										<% end %>
+										<h4><%= project.creator_earnings %></h4>
 									<% else %> 
 									  	Not your project
 									<% end %>
@@ -79,12 +81,6 @@
 						<td>2. Credits awarded for successful projects: </td>
 						<td><strong><%= @preference.total_return_from_projects %></strong></td> 
 					</tr>
-					<% if current_experiment.return_credits %>      
-					<tr>
-						<td>3. Credits returned for unsuccessful projects: </td>
-						<td><strong><%= @preference.credits_to_be_returned %></strong></td> 
-					</tr>									        			
-					<% end %>
 					<tr>
 						<td><h3>Total earnings for this round: </h3></td>
 						<td><h3><%= @preference.total_return %></h3></td> 
@@ -95,11 +91,7 @@
 		   <br>
 			<h3>Hints:</h3>
 			<br>
-			<% if current_experiment.return_credits %>
-				<p> - Your payout is calculated as follows: <strong>(Credits not spent creating projects + Credits awarded for successful projects + Credits returned for unsuccessful projects.)</strong></p> 
-			<% else %>
-				<p> - Your payout is calculated as follows: <strong>(Credits not spent creating projects + Credits awarded for successful projects.)</strong></p> 			
-			<% end %>
+			<p> - Your total return is calculated as follows: <strong>(Credits not spent creating projects + Credits awarded for successful projects.)</strong></p> 			
 			<p> - Returns are only shown for projects which you created.</p>
 			<br>
 

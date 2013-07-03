@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
 	has_many :contributions, :dependent => :destroy
 	belongs_to :group                                               
-	belongs_to :user  
+	belongs_to :user 
 	
 		
   # after_initialize :generate_name     # <TODO CL>
@@ -99,11 +99,11 @@ class Project < ActiveRecord::Base
       end
     else
       self.funded = false       
-      if @experiment.return_credits
-        self.creator_earnings = COST_TO_CREATE_PROJECT 
-      else
-        self.creator_earnings = 0
-      end
+      # if @experiment.return_credits   # <TODO CL> Remove if not required.  No returns for unfunded projects.
+      #   self.creator_earnings = COST_TO_CREATE_PROJECT 
+      # else  
+      self.creator_earnings = 0
+      # end
     end 
 	  self.save!
 	end
