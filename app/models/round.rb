@@ -1,4 +1,4 @@
-class Round < ActiveRecord::Base
+class Round < ActiveRecord::Base         
 	belongs_to :experiment          
 	has_many :groups, :dependent => :destroy    
 	has_many :creator_preferences, :through => :groups
@@ -75,7 +75,7 @@ class Round < ActiveRecord::Base
   
 
   def last_round?
-    return true if self.number == NUMBER_OF_ROUNDS
+    return true if self.number == TOTAL_NUMBER_OF_ROUNDS
   end
 
 	

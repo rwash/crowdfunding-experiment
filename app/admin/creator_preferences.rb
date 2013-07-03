@@ -1,6 +1,6 @@
 ActiveAdmin.register CreatorPreference do
   menu :parent => "USERS", :priority => 4
-  actions :index, :show
+  # actions :index, :show       # <TODO CL>
   config.batch_actions = false        
   scope :all, :default => true
   
@@ -64,7 +64,6 @@ ActiveAdmin.register CreatorPreference do
       end
       row :credits_not_spent
       row :total_return_from_projects
-      row :credits_to_be_returned
       row :total_return
     end
     active_admin_comments

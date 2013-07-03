@@ -52,7 +52,10 @@ ActiveAdmin.register_page "Dashboard" do
               end
               column "User Payouts" do |experiment|  
                 link_to "Payouts", experiment_payouts_path(experiment)  
-              end
+              end   
+              column "History" do |experiment|  
+                link_to "History", experiment_history_summary_path(experiment)  
+              end              
             end
           end
         end 

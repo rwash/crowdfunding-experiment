@@ -3,8 +3,12 @@
     	<div class="container">
       	<% if current_user.nil? %>
         		<span class="brand">Crowdfunding Experiment</span>
-      	<% else %>
-        		<span class="brand"><%= "Round #{@current_round.number} of #{NUMBER_OF_ROUNDS}" unless @current_round.nil? %></span> 
+      	<% else %>                                                                
+				<% if current_round.round_type == "PRACTICE" %>
+	        		<span class="brand"><%= "Round #{@current_round.number} of #{TOTAL_NUMBER_OF_ROUNDS} - PRACTICE" unless @current_round.nil? %></span> 				
+				<% elsif current_round.round_type == "LIVE" %>
+	        		<span class="brand"><%= "Round #{@current_round.number} of #{TOTAL_NUMBER_OF_ROUNDS} - LIVE" unless @current_round.nil? %></span> 			
+				<% end %>
       		<ul class="nav">
         			<li><%= link_to "Instructions", '/instructions_iframe?header=false', :onclick => "window.open(this.href,'window','width=1100,height=800') ;return false;" unless current_user.name == 'admin' %></li>  
       		</ul>

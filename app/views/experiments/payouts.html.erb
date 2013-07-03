@@ -24,8 +24,8 @@
 						<tr>
 							<td><%= user.name %></td>
 							<td><%= user.user_type %></td>
-							<td><%= "#{user.total_return} credits" if user.total_return %></td>
-							<td><strong><%= "$#{number_with_precision(user.total_return_in_cents.to_f / 100, :precision => 2)}" if user.total_return_in_cents %></strong></td>
+							<td><%= user.total_return if user.total_return %></td>
+							<td><strong><%= "$#{user.total_return_in_dollars}" if user.total_return_in_dollars %></strong></td>
 						</tr>
 					<% end %>
 				</tbody>
