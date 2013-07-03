@@ -1,6 +1,6 @@
 ActiveAdmin.register CreatorPreference do
   menu :parent => "USERS", :priority => 4
-  # actions :index, :show       # <TODO CL>
+  actions :index, :show
   config.batch_actions = false        
   scope :all, :default => true
   
