@@ -46,7 +46,7 @@ ActiveAdmin.register User do
     end
     column :total_return_in_dollars, :sortable => :total_return_in_dollars do |user|
        div :class => "admin-center-column" do 
-          "$" + user.total_return_in_dollars if user.total_return_in_dollars
+          "$" + user.total_return_in_dollars.to_s if user.total_return_in_dollars
        end
     end
     default_actions
@@ -68,7 +68,7 @@ ActiveAdmin.register User do
         user.total_return 
       end
       row :total_return_in_dollars do |user|
-        "$" + user.total_return_in_dollars if user.total_return_in_dollars 
+        "$" + user.total_return_in_dollars.to_s if user.total_return_in_dollars 
       end
       row :times_viewed_instructions
     end
