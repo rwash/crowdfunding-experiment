@@ -1,5 +1,5 @@
 ActiveAdmin.register Round do
-  actions :index, :show
+  # actions :index, :show
   config.batch_actions = false    
   menu :parent => "EXPERIMENTS", :priority => 2
   scope :all, :default => true

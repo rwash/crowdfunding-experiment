@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701061027) do
+ActiveRecord::Schema.define(:version => 20130703005520) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(:version => 20130701061027) do
     t.integer  "total_return"
     t.integer  "credits_not_spent"
     t.integer  "total_return_from_projects"
-    t.integer  "credits_to_be_returned"
   end
 
   create_table "donor_preferences", :force => true do |t|

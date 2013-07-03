@@ -25,7 +25,7 @@
 					</tbody>
 				</table> 
 				
-				<%= link_to "Refresh Projects", round_show_part_a_path(@current_round), :class => 'btn btn-primary' %>
+				<%= f.link_to_add "Add Project", :projects, :data => { :target => "#projects" }, :id => "add_project_button", :class => 'btn btn-large btn-primary', :onclick => "add_project();" %>
 				                                     
             <br>
 	         <br>
@@ -60,8 +60,23 @@
 
 <script type="text/javascript">
 	var no_of_projects = 0;  
-	var credits = 0;
+	var credits = <%= AMOUNT_CREATOR_CAN_SPEND_PER_ROUND %>
 	$('#credits').text(credits)    
+
+	function add_project()
+	{
+		no_of_projects++;
+		var remaining_credits = (credits - (<%= COST_TO_CREATE_PROJECT %> * no_of_projects))   
+		$('#credits').text(remaining_credits); 
+		
+		var project = document.getElementsByClass('add_project_button')
+		
+		if (no_of_projects >= <%= ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR %>)
+		{
+			document.getElementById('add_project_button').style.visibility = 'hidden';
+		}
+		return false;   
+	}
 
 	function remove_project()
 	{
@@ -73,7 +88,16 @@
 			document.getElementById('add_project_button').style.visibility = 'visible';
 		} 
 		return false;   
-	}
+	}     
+	
+	$(document).on('nested:fieldAdded', function(event){
+	  // this field was just inserted into your form
+	  var field = event.field; 
+	  // it's a jQuery object already! Now you can find date input
+	  var dateField = field.find('.fields');
+	  // and activate datepicker on it
+	  dateField.object.name = "TEST";
+	})
 </script>
 
 
