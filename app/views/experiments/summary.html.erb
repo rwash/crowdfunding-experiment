@@ -17,7 +17,11 @@
 						<% end %>
 						<tr>
 							<td>Round <%= (i + 1) %></td>
-							<td><%= "#{@round_preference.total_return} credits" if @round_preference.total_return %></td>
+							<% if round.round_type == "PRACTICE" %>
+								<td>Practice</td>
+							<% else %>
+								<td><%= "#{@round_preference.total_return} credits" if @round_preference.total_return %></td>
+							<% end %>
 						</tr>
 					<% end %>
 					<tr>
@@ -33,14 +37,14 @@
 				<h3>Details:</h3>
 			</div>
 			<p> - You are: <strong><%= @user.name %></strong></p>
-			<p> - You have played <strong><%= NUMBER_OF_ROUNDS %></strong> rounds</p>
+			<p> - You have played <strong><%= NUMBER_OF_PRACTICE_ROUNDS %></strong> practice rounds</p> 
+			<p> - You have played <strong><%= NUMBER_OF_LIVE_ROUNDS %></strong> live rounds</p>
 			<p> - Your total return for the experiment is: <strong><%= "#{@user.total_return} credits" if @user.total_return %></strong></p>
 			<p> - The exchange rate for this experiment is: <strong>$1</strong> per <strong><%= CREDITS_TO_DOLLAR_RATE %></strong> credits</p>
 			<br>
-
-				<h4>Your total return for this experiment is: <strong><%= "$#{number_with_precision(@user.total_return_in_cents.to_f / 100, :precision => 2)}" if @user.total_return_in_cents %></strong></h4>
+         <div class="hero-unit">
+				<h4>Your total return for this experiment is: <strong><%= "$#{@user.total_return_in_dollars}" if @user.total_return_in_dollars %></strong></h4>
 			</div>
-			
   		</div>
 	</div>
 </div> 

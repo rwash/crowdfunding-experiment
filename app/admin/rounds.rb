@@ -1,8 +1,14 @@
 ActiveAdmin.register Round do
-  # actions :index, :show
+  actions :index, :show
   config.batch_actions = false    
   menu :parent => "EXPERIMENTS", :priority => 2
   scope :all, :default => true
+  scope "TEST" do |round|
+    round.where(:round_type => "TEST")
+  end
+  scope "LIVE" do |round|
+    round.where(:round_type => "LIVE")
+  end  
   scope :part_a_started do |round|
     round.where(:part_a_started => true)
   end
@@ -20,12 +26,6 @@ ActiveAdmin.register Round do
   # Configuration for Sidebar Filters
   filter :experiment, :as => :select
   filter :number, :label => "Round"
-  filter :part_a_started, :as => :select
-  filter :part_a_finished, :as => :select
-  filter :part_b_started, :as => :select
-  filter :part_b_finished, :as => :select
-  filter :start_time
-  filter :end_time
   
   
   # Configuration for Rounds Index Page
@@ -35,30 +35,20 @@ ActiveAdmin.register Round do
     column :experiment, :sortable => :experiment_id do |round|
       link_to "Experiment ##{round.experiment_id}", admin_experiment_path(round.experiment_id)
     end
+    column :round_type, :sortable => :round_type do |round|
+       div :class => "admin-center-column" do 
+          round.round_type
+       end
+    end
     column :round, :sortable => :number do |round|
        div :class => "admin-center-column" do 
           round.number
        end
     end
-    column :part_a_started, :sortable => :part_a_started do |round|
-       div :class => "admin-center-column" do 
-          round.part_a_started.yesno
-       end
-    end
-    column :part_a_finished, :sortable => :part_a_finished do |round|
-       div :class => "admin-center-column" do 
-          round.part_a_finished.yesno
-       end
-    end
-    column :part_b_started, :sortable => :part_b_started do |round|
-       div :class => "admin-center-column" do 
-          round.part_b_started.yesno
-       end
-    end
-    column :part_b_finished, :sortable => :part_b_finished do |round|
-       div :class => "admin-center-column" do 
-          round.part_b_finished.yesno
-       end
+    column :round_complete, :sortable => :round_complete do |round|
+      div :class => "admin-center-column" do
+        round.round_complete.yesno
+      end
     end
     default_actions
   end
@@ -69,6 +59,9 @@ ActiveAdmin.register Round do
     attributes_table do
       row :experiment do |round|
         link_to "Experiment ##{round.experiment_id}", admin_experiment_path(round.experiment_id)
+      end 
+      row :round_type do |round|
+        round.round_type
       end
       row "Round" do |round|
         "Round #{round.number}"

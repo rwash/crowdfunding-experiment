@@ -68,9 +68,6 @@
 		no_of_projects++;
 		var remaining_credits = (credits - (<%= COST_TO_CREATE_PROJECT %> * no_of_projects))   
 		$('#credits').text(remaining_credits); 
-		
-		var project = document.getElementsByClass('add_project_button')
-		
 		if (no_of_projects >= <%= ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR %>)
 		{
 			document.getElementById('add_project_button').style.visibility = 'hidden';
@@ -89,15 +86,6 @@
 		} 
 		return false;   
 	}     
-	
-	$(document).on('nested:fieldAdded', function(event){
-	  // this field was just inserted into your form
-	  var field = event.field; 
-	  // it's a jQuery object already! Now you can find date input
-	  var dateField = field.find('.fields');
-	  // and activate datepicker on it
-	  dateField.object.name = "TEST";
-	})
 </script>
 
 

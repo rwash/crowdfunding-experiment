@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703005520) do
+ActiveRecord::Schema.define(:version => 20130703034508) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20130703005520) do
     t.boolean  "part_b_finished",  :default => false
     t.boolean  "round_complete",   :default => false
     t.boolean  "summary_complete", :default => false
+    t.string   "round_type"
   end
 
   create_table "users", :force => true do |t|
@@ -144,7 +145,7 @@ ActiveRecord::Schema.define(:version => 20130703005520) do
     t.datetime "updated_at",                :null => false
     t.string   "user_type"
     t.integer  "total_return"
-    t.integer  "total_return_in_cents"
+    t.integer  "total_return_in_dollars"
     t.string   "status"
   end
 

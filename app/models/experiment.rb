@@ -1,4 +1,4 @@
-class Experiment < ActiveRecord::Base
+class Experiment < ActiveRecord::Base 
 	has_many :rounds, :dependent => :destroy
   has_many :groups, :through => :rounds
 	has_many :users, :dependent => :destroy  
@@ -9,9 +9,13 @@ class Experiment < ActiveRecord::Base
 	
 	
 	def generate_rounds
-		1.upto(NUMBER_OF_ROUNDS) do |i|
-			self.rounds << Round.create(:number => i)
-		end
+		1.upto(TOTAL_NUMBER_OF_ROUNDS) do |i|
+      if i <= NUMBER_OF_PRACTICE_ROUNDS
+        self.rounds << Round.create(:number => i, :round_type => "PRACTICE")
+      else
+        self.rounds << Round.create(:number => i, :round_type => "LIVE")            
+      end
+    end
 		self.save!
 	end
 	
@@ -93,13 +97,15 @@ class Experiment < ActiveRecord::Base
     		elsif user.user_type == "Donor"
           @preference = DonorPreference.where(:user_id => user, :round_id => round).first
     		end
-        @user_total_return += @preference.total_return if @preference.total_return
+    		if round.round_type == "LIVE"
+          @user_total_return += @preference.total_return if @preference.total_return
+        end
       end
       user.total_return = @user_total_return
-      user.total_return_in_cents = ((@user_total_return.to_f * 100) / CREDITS_TO_DOLLAR_RATE)
+      user.total_return_in_dollars = (@user_total_return.to_f / CREDITS_TO_DOLLAR_RATE).ceil
       user.save!
     end
-    self.finished = true
+    self.finished = true                                        
     self.save!
 	end
   

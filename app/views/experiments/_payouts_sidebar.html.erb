@@ -1,7 +1,7 @@
 <div class="page-header">
   	<h3>Total Experiment Payouts</h3>
 </div>
-
+	
 	<table class="table table-striped table-bordered table-condensed">
 		<tbody>
 			<tr>
@@ -10,7 +10,7 @@
 			</tr>
 			<tr>
 				<td><h4>Total Return (dollars)</h4></td>
-				<td><%= "$#{number_with_precision(@total_return_in_cents.to_f / 100, :precision => 2)}" %></td>
+				<td><%= "$#{(@total_return_in_dollars)}" %></td>
 			</tr>
 		</tbody>
 	</table>
