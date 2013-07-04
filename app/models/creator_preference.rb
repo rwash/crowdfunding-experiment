@@ -16,7 +16,7 @@ class CreatorPreference < ActiveRecord::Base
   end              
   
   
-  def calculate_total_return       # <TODO CL> Finish.
+  def calculate_total_return
     @user = self.user   
     @experiment = @user.experiment
     @group = self.group

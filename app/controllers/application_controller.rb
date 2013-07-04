@@ -37,41 +37,13 @@ class ApplicationController < ActionController::Base
     end   
     
     
-    def check_round(round, user)         # <TODO CL> Implement.
-      @round = round
-      @user = user
-
-    	if @user
-    	  if CreatorPreference.where(:round_id => @round.id, :user_id => @user.id).first.nil?
-    	    if DonorPreference.where(:round_id => @round.id, :user_id => @user.id).first.nil?
-      		  flash[:error] = "Not allowed to view round you dont belong to."
-            return redirect_to root_path
-          end
-        end
-      else
-        flash[:error] = "Not logged in."
-        return redirect_to root_path
-    	end
-    	
-    	if @user.nil? || @round.part_a_started == false
-    		flash[:error] = "Not allowed to view round that hasn't started."
-        return redirect_to round_waiting_path(@round)
-    	end
-    	
-    	if @user.nil? || @round.round_complete == true
-    		flash[:error] = "Round has finished."
-    		return redirect_to summary_waiting_path(@round)
-    	end
-    end   
-    
-    
     def set_user_status(user, status)
       user.status = status
       user.save!
     end  
          
     
-    def generate_project_name       # <TODO CL> Revise, lots of duplication with the Reseeding Names.
+    def generate_project_name
   		@project_name = $project_names[0]
   		$project_names.delete($project_names[0])
 
@@ -83,7 +55,7 @@ class ApplicationController < ActionController::Base
   	end      
 
 
-  	def reseed_names        # <TODO CL> Revise.
+  	def reseed_names
   		require 'csv'
   		$project_names = []
   		CSV.foreach("colors4.csv", :headers => false) do |row|

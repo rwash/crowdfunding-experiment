@@ -7,7 +7,7 @@ class RoundsController < InheritedResources::Base
     @user = current_user       
     
     @experiment.start_experiment
-    
+
     set_user_status(@user, "Waiting for Round ##{@current_round.number} to Start")
     
 		if @user.user_type == "Creator"
@@ -99,7 +99,7 @@ class RoundsController < InheritedResources::Base
 	end
 	
 	
-	def creator_summary       # <TODO CL> Revise and Refactor. Move into model. Duplicated.
+	def creator_summary
 		@user = current_user
 		@experiment = current_experiment
 		@current_round = Round.find(params[:id])
@@ -113,7 +113,7 @@ class RoundsController < InheritedResources::Base
 	end         
 	
 	
-	def donor_summary      # <TODO CL> Revise and Refactor. Move into model. Duplicated.     
+	def donor_summary    
 	  @user = current_user
 		@experiment = current_experiment
 		@current_round = Round.find(params[:id]) 
