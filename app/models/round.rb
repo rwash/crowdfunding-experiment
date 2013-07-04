@@ -7,7 +7,7 @@ class Round < ActiveRecord::Base
   after_create :generate_groups  
      
 
-	def generate_groups       # <TODO CL> Revise, groups need to be randomly allocated between rounds.
+	def generate_groups
 		reseed_names
 		self.groups << Group.create(:name => 'A')
 		reseed_names
@@ -16,7 +16,7 @@ class Round < ActiveRecord::Base
 	end   
 	
 	
-	def reseed_names        # <TODO CL> Revise.
+	def reseed_names
 		require 'csv'
 		$project_names = []
 		CSV.foreach("colors4.csv", :headers => false) do |row|

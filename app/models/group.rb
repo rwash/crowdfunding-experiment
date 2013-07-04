@@ -6,7 +6,7 @@ class Group < ActiveRecord::Base
 	has_many :creator_preferences
 	has_many :donor_preferences
 	has_many :projects, :dependent => :destroy 
-	accepts_nested_attributes_for :projects, :allow_destroy => true      # <TODO CL> Check implementation.   
+	accepts_nested_attributes_for :projects, :allow_destroy => true   
 	
 	
 end

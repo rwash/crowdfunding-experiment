@@ -2,9 +2,7 @@ class Project < ActiveRecord::Base
 	has_many :contributions, :dependent => :destroy
 	belongs_to :group                                               
 	belongs_to :user 
-	
-		
-  # after_initialize :generate_name     # <TODO CL>
+
 	after_create :initalize_project
 	after_create :assign_special_users 
   
@@ -40,13 +38,13 @@ class Project < ActiveRecord::Base
 	end 
 	
 	
-	def assign_special_users    # <TODO CL> Revise and refactor.
+	def assign_special_users
     @group = self.group 
     @random_special_donors = (0..(NUMBER_OF_DONORS_PER_GROUP-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_SPECIAL_DONORS_PER_GROUP-1)]                  
     @first_special = true
     DonorPreference.where(:group_id => @group).each_with_index do |preference, i|
       if @random_special_donors.include?(i) && @first_special
-        self.special_user_1 = preference.user_id     # <TODO CL> This saves the id to the project as a value, not the object as a foreign key.
+        self.special_user_1 = preference.user_id
         @first_special = false                                     
       elsif @random_special_donors.include?(i)
         self.special_user_2 = preference.user_id      
@@ -54,31 +52,6 @@ class Project < ActiveRecord::Base
     end
 	  self.save!
 	end
-	
-	
-	def generate_name       # <TODO CL> Revise, lots of duplication with the Reseeding Names.
-		self.name = $project_names[0]
-		$project_names.delete($project_names[0])
-		
-		# if we run out of names refill the array again
-		if $project_names == []
-			reseed_names
-		end
-		self.save!
-	end      
-	
-	
-	def reseed_names        # <TODO CL> Revise.
-		require 'csv'
-		$project_names = []
-		CSV.foreach("colors4.csv", :headers => false) do |row|
-		  $project_names << row[0]
-		end
-
-		$project_names.each do |n|
-			n.gsub!(";",'')
-		end 
-	end 
 	
 	
 	def calculate_funding_details
@@ -99,11 +72,7 @@ class Project < ActiveRecord::Base
       end
     else
       self.funded = false       
-      # if @experiment.return_credits   # <TODO CL> Remove if not required.  No returns for unfunded projects.
-      #   self.creator_earnings = COST_TO_CREATE_PROJECT 
-      # else  
       self.creator_earnings = 0
-      # end
     end 
 	  self.save!
 	end
