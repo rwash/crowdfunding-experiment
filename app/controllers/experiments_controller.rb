@@ -1,10 +1,9 @@
 class ExperimentsController < InheritedResources::Base
 
 
-	def summary     # <TODO CL> Finish.
+	def summary
 		@user = current_user
     @experiment = @user.experiment     
-    
     set_user_status(@user, "Viewing Experiment Summary") 	 	 
 	end               
 	

@@ -33,7 +33,7 @@ describe "USERS COMPLETING A SINGLE ROUND:" do
       @user = User.where(:user_type => "Creator").first
       login_user(@user)
       click_link("Start the First Round")
-      current_path.should eq(round_show_part_a_path(@current_round))
+      current_path.should eq(round_show_part_a1_path(@current_round))
     end
     
     it "Directs all Project Donors to the Waiting For Part B page" do

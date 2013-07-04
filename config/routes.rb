@@ -5,7 +5,7 @@ CrowdfundingExperiment::Application.routes.draw do
   # Routes for USERS / USER_SESSIONS / PROJECTS
   resources :users, :only => [:create]  
   resources :user_sessions, :only => [:create, :destroy]
-  post "/rounds/:id/create_projects" => "projects#create_projects", :as => :create_projects    
+  post "/rounds/:id/create_projects" => "projects#create_projects", :as => :create_projects
     
   
   # Routes for EXPERIMENTS
@@ -27,7 +27,8 @@ CrowdfundingExperiment::Application.routes.draw do
          
    
   # Routes for GROUPS
-  match "/rounds/:id/part_a" => "groups#show_part_a", :as => :round_show_part_a 
+  match "/rounds/:id/part_a1" => "groups#show_part_a1", :as => :round_show_part_a1 
+  match "/rounds/:id/part_a2" => "groups#show_part_a2", :as => :round_show_part_a2  
                        
 
   # Routes for CONTRIBUTIONS

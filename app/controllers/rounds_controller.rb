@@ -7,7 +7,7 @@ class RoundsController < InheritedResources::Base
     @user = current_user       
     
     @experiment.start_experiment
-    
+
     set_user_status(@user, "Waiting for Round ##{@current_round.number} to Start")
     
 		if @user.user_type == "Creator"
@@ -27,7 +27,7 @@ class RoundsController < InheritedResources::Base
       elsif @preference.finished_round 
         redirect_to summary_waiting_path(@current_round)
       else 
-        redirect_to round_show_part_a_path(@current_round)                  
+        redirect_to round_show_part_a1_path(@current_round)                  
       end
     end
 	end
@@ -99,7 +99,7 @@ class RoundsController < InheritedResources::Base
 	end
 	
 	
-	def creator_summary       # <TODO CL> Revise and Refactor. Move into model. Duplicated.
+	def creator_summary
 		@user = current_user
 		@experiment = current_experiment
 		@current_round = Round.find(params[:id])
@@ -113,7 +113,7 @@ class RoundsController < InheritedResources::Base
 	end         
 	
 	
-	def donor_summary      # <TODO CL> Revise and Refactor. Move into model. Duplicated.     
+	def donor_summary    
 	  @user = current_user
 		@experiment = current_experiment
 		@current_round = Round.find(params[:id]) 
