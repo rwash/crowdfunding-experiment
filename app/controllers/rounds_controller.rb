@@ -27,7 +27,7 @@ class RoundsController < InheritedResources::Base
       elsif @preference.finished_round 
         redirect_to summary_waiting_path(@current_round)
       else 
-        redirect_to round_show_part_a_path(@current_round)                  
+        redirect_to round_show_part_a1_path(@current_round)                  
       end
     end
 	end

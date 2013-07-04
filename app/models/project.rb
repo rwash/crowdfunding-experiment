@@ -99,11 +99,7 @@ class Project < ActiveRecord::Base
       end
     else
       self.funded = false       
-      # if @experiment.return_credits   # <TODO CL> Remove if not required.  No returns for unfunded projects.
-      #   self.creator_earnings = COST_TO_CREATE_PROJECT 
-      # else  
       self.creator_earnings = 0
-      # end
     end 
 	  self.save!
 	end
