@@ -5,32 +5,33 @@ class RoundsController < InheritedResources::Base
 	  @experiment = current_experiment
 		@current_round = Round.find(params[:id])
     @user = current_user       
-    
     @experiment.start_experiment
-
-    set_user_status(@user, "Waiting for Round ##{@current_round.number} to Start")
-    
-		if @user.user_type == "Creator"
-		  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
-		elsif @user.user_type == "Donor"
-      @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first
-		end
 		
-    @preference.set_ready_to_start unless @preference.is_ready
-    @current_round.check_if_round_ready_to_start 
-    
     if @current_round.round_complete
 		  redirect_to summary_waiting_path(@current_round)
-		elsif @current_round.part_a_started
-      if @user.user_type == "Donor" || @current_round.part_b_started
+    elsif @user.user_type == "Creator"
+      @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first       
+      @preference.set_ready_to_start unless @preference.is_ready
+      if @preference.finished_round
+        redirect_to summary_waiting_path(@current_round) 
+      else
+        @current_round.start_round_part_a 
+        redirect_to round_show_part_a1_path(@current_round)
+      end
+    elsif @user.user_type == "Donor" 
+      @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first 
+      @preference.set_ready_to_start unless @preference.is_ready 
+      @current_round.check_if_round_part_b_ready_to_start   
+
+      set_user_status(@user, "Waiting for Round ##{@current_round.number} to Start")
+
+      if @current_round.part_a_started
         redirect_to waiting_for_part_b_path(@current_round)
       elsif @preference.finished_round 
-        redirect_to summary_waiting_path(@current_round)
-      else 
-        redirect_to round_show_part_a1_path(@current_round)                  
+        redirect_to summary_waiting_path(@current_round)              
       end
     end
-	end
+  end 
 
 	
 	def waiting_for_part_b

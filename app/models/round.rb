@@ -41,15 +41,23 @@ class Round < ActiveRecord::Base
   end
 
 	
-	def check_if_round_ready_to_start
+	def start_round_part_a
+    if self.part_a_started != true
+      self.part_a_started = true
+      self.start_time = DateTime.now
+      self.save! 
+    end
+  end
+      
+  
+  def check_if_round_part_b_ready_to_start
     self.creator_preferences.each do |creator_preference|
       return false if !creator_preference.is_ready
     end
     self.donor_preferences.each do |donor_preference|
       return false if !donor_preference.is_ready
     end
-    self.part_a_started = true
-    self.start_time = DateTime.now
+    self.part_b_started = true
     self.save!
   end
   
