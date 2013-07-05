@@ -1,7 +1,40 @@
-<h1>Login</h1>
-<br>
-<br>
-<%= render 'form' %>
-<br>
-<br>
-<%= link_to "LOG OUT", user_sessions_path, :method => :delete unless current_user.nil? %>
+<div id="container">	
+	<div class="row">
+   	<div class="span12">
+
+			<img src="assets/BIT_Labs_Header.png"> 
+			<div class="hero-unit">
+				<h2 align="center">Welcome to the BITLAB Crowdfunding Experiment!</h2>
+				<br>                                 
+				<br>     
+				 
+				<%= form_for(@user_session) do |f| %>
+
+					<div class="row">
+					  	<div class="span1"><%= f.label :name %></div>
+	  			  		<div class="span3"><%= f.text_field :name %></div>
+					</div>
+
+					<div class="row">
+					  	<div class="span1"><%= f.label :password %></div>
+					  	<div class="span3"><%= f.password_field :password %></div>
+					</div>  
+
+					<div class="row">
+					  	<div class="span1 offset1"><%= f.submit "Login", :class => "btn btn-success btn-large" %></div>
+					</div>
+
+				<% end %>
+			</div>
+
+			<% if current_user %>                                                                                                             
+				<div class="form-actions">
+            	<%= link_to "Log Out", user_sessions_path, :class => "btn btn-danger pull-right", :method => :delete %>
+				</div>
+		  <% end %>    
+		
+  		</div>
+	</div>
+</div>
+
+

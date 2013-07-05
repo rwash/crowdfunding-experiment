@@ -1,5 +1,7 @@
 class Project < ActiveRecord::Base
 	has_many :contributions, :dependent => :destroy
+	validates_presence_of :value
+	validates_presence_of :popularity
 	belongs_to :group                                               
 	belongs_to :user 
 

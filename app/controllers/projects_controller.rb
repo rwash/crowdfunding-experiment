@@ -17,12 +17,15 @@ class ProjectsController < InheritedResources::Base
         @current_group.projects << @new_project  
         @number_of_projects += 1          
       end  
-      @current_group.save!
-            
-      @preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT))
-      @preference.set_finished_round
-      @current_round.check_if_part_a_finished
-      redirect_to round_show_part_a2_path(@current_round)
+      
+      if @current_group.save
+        @preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT))
+        @preference.set_finished_round
+        @current_round.check_if_part_a_finished
+        redirect_to round_show_part_a2_path(@current_round)
+      else
+        redirect_to round_show_part_a1_path(@current_round), :alert => "You must select both a Value and a Popularity for each Project created!" and return      
+      end
     else
       flash[:alert] = "You have finished your turn for this round!"
       redirect_to summary_waiting_path(@current_round)     

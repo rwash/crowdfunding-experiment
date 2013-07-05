@@ -1,7 +1,7 @@
 <tr class="fields">
 	<td>
 		<label class="radio inline">  
-			<%= f.radio_button :value, "High", :checked => true, :input_html => { :class => 'value' } %>    
+			<%= f.radio_button :value, "High", :input_html => { :class => 'value' } %>    
 			<%= CREATOR_EARNINGS_HIGH_VALUE_PROJECT %> 
 		</label> 
 		<label class="radio inline">  
@@ -11,7 +11,7 @@
 	</td>
 	<td>
 		<label class="radio inline">  
-			<%= f.radio_button :popularity, "Popular", :checked => true %>
+			<%= f.radio_button :popularity, "Popular" %>
 			Popular
 		</label> 
 		<label class="radio inline">

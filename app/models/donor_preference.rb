@@ -1,4 +1,5 @@
-class DonorPreference < ActiveRecord::Base
+class DonorPreference < ActiveRecord::Base   
+  serialize :project_display_order
   belongs_to :user
   belongs_to :group
   belongs_to :round
@@ -13,6 +14,28 @@ class DonorPreference < ActiveRecord::Base
   def set_finished_round
     self.finished_round = true
     self.save!
+  end
+
+           
+  def generate_project_display_order(group)
+    @project_ids = []
+    Project.where(:group_id => group).each do |project|  
+      @project_ids << project.id
+    end
+    @randomized_project_list = @project_ids.shuffle
+    self.project_display_order = @randomized_project_list
+    self.save!   
+  end                                                                                 
+  
+  
+  def get_project_list
+    @project_id_list = self.project_display_order
+    @group_projects = []
+    @project_id_list.each do |id|
+      @project = Project.find(id)
+      @group_projects << @project
+    end
+    return @group_projects
   end
 
 

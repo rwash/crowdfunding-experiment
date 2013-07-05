@@ -65,6 +65,7 @@ ActiveAdmin.register DonorPreference do
       row :total_return_from_projects
       row :credits_to_be_returned 
       row :total_return
+      row :project_display_order
     end
     active_admin_comments
   end
