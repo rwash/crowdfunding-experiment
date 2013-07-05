@@ -56,7 +56,8 @@ class RoundsController < InheritedResources::Base
     elsif @user.user_type == "Donor"
       @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round).first
       @current_group = @preference.group
-  		@projects = Project.where(:group_id => @current_group )
+      @preference.generate_project_display_order(@current_group)  
+      @projects = @preference.get_project_list
       redirect_to summary_waiting_path(@current_round) if @preference.finished_round
     end
 	end
@@ -119,7 +120,7 @@ class RoundsController < InheritedResources::Base
 		@current_round = Round.find(params[:id]) 
     @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first 
     @current_group = @preference.group 
- 		@projects = @current_group.projects     
+    @projects = @preference.get_project_list 		     
 		@next_round_number = @current_round.number + 1
 		@next_round = @experiment.rounds.where(:number => @next_round_number).first   
 		
