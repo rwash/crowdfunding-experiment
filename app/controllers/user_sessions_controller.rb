@@ -3,8 +3,9 @@ class UserSessionsController < InheritedResources::Base
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-    	redirect_to instructions_path
-    else
+    	redirect_to welcome_path
+    else                    
+      flash[:error] = "Incorrect Login Details"
       render :action => :new
     end
   end
