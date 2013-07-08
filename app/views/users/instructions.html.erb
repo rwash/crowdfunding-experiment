@@ -14,9 +14,11 @@
 			<br>
             
 			<div class="form-actions">
-				<% if @current_round.number == 1 %>
-					<%= link_to "Start the First Round", round_waiting_path(@current_round), :class => "btn-success btn-large pull-right" %>
-				<% else %>	
+				<% if @current_experiment.finished %>	
+					<%= link_to "Proceed to Experiment Summary", experiment_summary_path(@current_experiment), :class => "btn-warning btn-large pull-right" %>				
+				<% elsif @current_round.number == 1 %>
+						<%= link_to "Start the First Round", round_waiting_path(@current_round), :class => "btn-success btn-large pull-right" %>
+				<% else %>
 					<%= link_to "Back to the Experiment", round_waiting_path(@current_round), :class => "btn-success btn-large pull-right" %>
 				<% end %>      
 		  	</div>

@@ -14,6 +14,7 @@ CrowdfundingExperiment::Application.routes.draw do
   match "/experiments/:id/status" => "experiments#status", :as => :experiment_status
   match "/experiments/:id/history_summary" => "experiments#history_summary", :as => :experiment_history_summary
   match "/experiments/:id/payouts" => "experiments#payouts", :as => :experiment_payouts
+  match "/experiment_complete" => "experiments#complete", :as => :experiment_complete
   
    
   # Routes for ROUNDS
@@ -39,7 +40,11 @@ CrowdfundingExperiment::Application.routes.draw do
   
   # Routes for INSTRUCTIONS
 	match "/instructions" => "users#instructions", :as => :instructions
-	match "/instructions_iframe" => "users#instructions_iframe", :as => :instructions_iframe  
+	match "/instructions_iframe" => "users#instructions_iframe", :as => :instructions_iframe    
+	
+	
+	# Routes for SURVEYS
+  resources :surveys, :only => [:edit, :update]
 
 
   # Routes for ACTIVE_ADMIN

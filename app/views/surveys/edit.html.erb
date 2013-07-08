@@ -1,0 +1,103 @@
+<div id="container">	
+	<div class="row">
+   	<div class="span12">
+			<div class="page-header">
+			  	<h2>Crowdfunding Experiment - Survey</h2>
+			</div>                                 
+		
+			<%= simple_form_for(@survey, :html => {:class => 'form-horizontal' }) do |f| %> 
+ 
+				<table class="table table-striped table-bordered table-condensed">
+					<tbody>
+				 		<tr>
+							<td class="span7"><h4><%= Q1_TEXT %></h4></td>
+							<td class="span5"><%= f.input :q1, label: false, as: :select, collection: 15..80, :include_blank => true, :selected => nil %></td>
+						</tr>
+				 		<tr>
+							<td><h4><%= Q2_TEXT %></h4></td>
+							<td><%= f.input :q2, label: false, as: :select, :collection => ["Male", "Female"], :include_blank => true, :selected => nil %></td>
+						</tr>
+				 		<tr>
+							<td><h4><%= Q3_TEXT %></h4></td>
+							<td><%= f.input :q3, label: false, as: :select, :include_blank => true, :selected => nil %></td>
+						</tr>	 
+				 		<tr>
+							<td><h4><%= Q4_TEXT %></h4></td>
+							<td><%= f.input :q4, label: false, as: :select, :collection => SURVEY_RISK_SELECTION, :include_blank => true, :selected => nil %></td>
+						</tr>							  						
+				 		<tr>
+							<td><h4><%= Q5_TEXT %></h4></td>
+							<td><%= f.input :q5, label: false, as: :select, :include_blank => true, :selected => nil %></td>
+						</tr>							  						
+				 		<tr>
+							<td><h4><%= Q6_TEXT %></h4></td>
+							<td><%= f.input :q6, label: false, as: :select, :include_blank => true, :selected => nil %></td>
+						</tr>							  						
+				 		<tr>
+							<td colspan="2">
+								<h4><%= Q7_TEXT_1 %> --- <%= Q7_TEXT_2 %></h4>
+							</td>
+						</tr>
+				 		<tr>
+							<td><h4><%= Q7_A_TEXT %></h4></td>
+							<td><%= f.input :q7_a, label: false, as: :select, :collection => SURVEY_RISK_SELECTION, :include_blank => true, :selected => nil %></td>
+						</tr>  				
+				 		<tr>
+							<td><h4><%= Q7_B_TEXT %></h4></td>
+							<td><%= f.input :q7_b, label: false, as: :select, :collection => SURVEY_RISK_SELECTION, :include_blank => true, :selected => nil %></td>
+						</tr>
+				 		<tr>
+							<td><h4><%= Q8_TEXT %></h4></td>
+							<td><%= f.input :q8, label: false, as: :select, :include_blank => true, :selected => nil %></td>
+						</tr>
+				 		<tr>
+							<td><h4><%= Q9_TEXT %></h4></td>
+							<td><%= f.input :q9, label: false, as: :text, :input_html => { :class => 'survey-text-field' } %></td>
+						</tr>
+				 		<tr>
+							<td><h4><%= Q10_TEXT %></h4></td>
+							<td><%= f.input :q10, label: false, as: :text, :input_html => { :class => 'survey-text-field' } %></td>
+						</tr> 
+						
+						<% if @user.user_type == "Creator" %>  
+						
+					 		<tr>
+								<td><h4><%= Q11_TEXT %></h4></td>
+								<td><%= f.input :q11, label: false, as: :select, :collection => SURVEY_RISK_SELECTION, :include_blank => true, :selected => nil %></td>
+							</tr>
+					 		<tr>
+								<td colspan="2">
+									<h4><%= Q12_TEXT_1 %> --- <%= Q12_TEXT_2 %></h4>
+								</td>
+							</tr>
+					 		<tr>
+								<td><h4><%= Q12_A_TEXT %></h4></td>
+								<td><%= f.input :q12_a, label: false, as: :select, :collection => SURVEY_RISK_SELECTION, :include_blank => true, :selected => nil %></td>
+							</tr>																														
+					 		<tr>
+								<td><h4><%= Q12_B_TEXT %></h4></td>
+								<td><%= f.input :q12_b, label: false, as: :select, :collection => SURVEY_RISK_SELECTION, :include_blank => true, :selected => nil %></td>
+							</tr>
+					 		<tr>
+								<td><h4><%= Q12_C_TEXT %></h4></td>
+								<td><%= f.input :q12_c, label: false, as: :select, :collection => SURVEY_RISK_SELECTION, :include_blank => true, :selected => nil %></td>
+							</tr>
+					 		<tr>
+								<td><h4><%= Q12_D_TEXT %></h4></td>
+								<td><%= f.input :q12_d, label: false, as: :select, :collection => SURVEY_RISK_SELECTION, :include_blank => true, :selected => nil %></td>
+							</tr>																		
+							
+						<% end %>
+
+				   </tbody>
+			  	</table>
+                                                                                          
+				<div class="form-actions">
+					<%= f.button :submit, :value => "Submit Survey", :class => 'btn btn-large btn-success pull-right' %> 
+				</div>
+			
+			<% end %>      
+		
+  		</div>
+	</div>
+</div>                   

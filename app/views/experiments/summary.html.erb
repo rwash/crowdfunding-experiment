@@ -45,6 +45,10 @@
          <div class="hero-unit">
 				<h4>Your total return for this experiment is: <strong><%= "$#{@user.total_return_in_dollars}" if @user.total_return_in_dollars %></strong></h4>
 			</div>
-  		</div>
-	</div>
+  		</div>   
+	</div> 
+
+	<div class="form-actions">
+		<%= link_to "Proceed to Survey", edit_survey_path(@survey), :class => "btn-warning btn-large pull-right" %>     
+  	</div>
 </div> 

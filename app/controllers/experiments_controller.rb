@@ -3,7 +3,8 @@ class ExperimentsController < InheritedResources::Base
 
 	def summary
 		@user = current_user
-    @experiment = @user.experiment     
+    @experiment = @user.experiment
+    @survey = @user.survey     
     set_user_status(@user, "Viewing Experiment Summary") 	 	 
 	end               
 	
@@ -27,6 +28,11 @@ class ExperimentsController < InheritedResources::Base
 	    @total_return += user.total_return if user.total_return
 	    @total_return_in_dollars += user.total_return_in_dollars if user.total_return_in_dollars
 	  end    	 
+	end      
+	
+	
+	def complete
+	 @user = current_user
 	end
 
 end
