@@ -1,5 +1,5 @@
 ActiveAdmin.register CreatorPreference do
-  menu :parent => "USERS", :priority => 4
+  menu :parent => "USERS", :priority => 2
   actions :index, :show
   config.batch_actions = false        
   scope :all, :default => true

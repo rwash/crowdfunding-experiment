@@ -22,20 +22,26 @@ class DonorPreference < ActiveRecord::Base
     Project.where(:group_id => group).each do |project|  
       @project_ids << project.id
     end
-    @randomized_project_list = @project_ids.shuffle
-    self.project_display_order = @randomized_project_list
-    self.save!   
+    if @project_ids
+      @randomized_project_list = @project_ids.shuffle
+      self.project_display_order = @randomized_project_list
+      self.save!   
+    end
   end                                                                                 
   
   
   def get_project_list
-    @project_id_list = self.project_display_order
-    @group_projects = []
-    @project_id_list.each do |id|
-      @project = Project.find(id)
-      @group_projects << @project
-    end
-    return @group_projects
+    if self.project_display_order
+      @project_id_list = self.project_display_order
+      @group_projects = []
+      @project_id_list.each do |id|
+        @project = Project.find(id)
+        @group_projects << @project
+      end
+      return @group_projects
+    else
+     return false
+   end
   end
 
 

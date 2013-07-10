@@ -1,7 +1,7 @@
 ActiveAdmin.register Contribution do    
   actions :index, :show
   config.batch_actions = false  
-  menu :parent => "USERS", :priority => 3
+  menu :parent => "EXPERIMENTS", :priority => 5
   scope :all, :default => true
 
 

@@ -15,6 +15,7 @@ gem 'therubyracer'
 gem 'authlogic'
 gem 'activeadmin'               # For Administration Interfaces
 gem 'nested_form'               # For Nested Models and JS Forms
+gem 'simple_form'               # For Survey Forms
 
 group :test, :development do
   gem "rspec-rails"

@@ -20,8 +20,9 @@ class User < ActiveRecord::Base
   has_many :donor_preferences, :dependent => :destroy 
 	has_many :projects, :dependent => :destroy 
 	has_many :contributions, :dependent => :destroy
+	has_one :survey, :dependent => :destroy
 	
-	after_create :generate_name_and_password
+	after_create :generate_name_and_password       
 	
 
 	def generate_name_and_password
@@ -30,7 +31,7 @@ class User < ActiveRecord::Base
     self.password = (0...3).collect { chars[rand(chars.length)] }.join
 		self.times_viewed_instructions = 0
 		self.save!
-	end
+	end                          
 	
 	
 	def valid_password?(incoming_password)

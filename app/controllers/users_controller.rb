@@ -3,7 +3,8 @@ class UsersController < InheritedResources::Base
 	def instructions
 		@user = current_user
 		@user.user_viewed_instructions
-    @current_round = current_round
+    @current_round = current_round 
+    @current_experiment = current_experiment
     
 		if !current_experiment.started
 			current_experiment.start_time = DateTime.now
