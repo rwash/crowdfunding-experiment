@@ -1,5 +1,5 @@
 ActiveAdmin.register DonorPreference do
-  menu :parent => "USERS", :priority => 5
+  menu :parent => "USERS", :priority => 3
   actions :index, :show  
   config.batch_actions = false    
   scope :all, :default => true

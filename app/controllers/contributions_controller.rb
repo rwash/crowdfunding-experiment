@@ -22,6 +22,7 @@ class ContributionsController < InheritedResources::Base
       redirect_to round_show_part_b_path(@current_round), :alert => "Total amount contributed cannot exceed: #{AMOUNT_DONOR_CAN_DONATE_PER_ROUND} credits!" and return
     else
       @current_group.projects.each_with_index do |project, i|
+        break if @project_id == 0
         @project_id = params["project_id_#{i}".to_sym].to_i
         @project = Project.find(@project_id)
         @amount_contributed = params["amount_#{i}".to_sym].to_i      

@@ -1,6 +1,6 @@
 <div id="container">	
 	<div class="row">
-   	<div class="span9">
+   	<div class="span12">
 			<div class="page-header">
 			  	<h2>Part A-2: Summary of Created Projects</h2>
 			</div>
@@ -30,31 +30,14 @@
 					<% end %> 
 	 			</tbody>
 			</table>   
+			<br>     
+				<h4>Please click next when you are ready to proceed.</h4>
 			<br>
 			
 			<div class="form-actions">
-				<%= link_to "Next", summary_waiting_path(@current_round), :id => "next-button", :class => "btn-success btn-large pull-right" %>		
+				<%= link_to "Next", summary_waiting_path(@current_round), :class => "btn-success btn-large pull-right" %>		
 		  	</div>
 
 		</div>
-		<div class="span3">
-			<%= render "rounds/countdown_timer_sidebar" %>
-  		</div>
 	</div>
-</div>	   	
-
-
-<script type='text/javascript'>  
-	function countDown (count) {
-   	if (count > 0) 
-		{
-    		document.getElementById("timer").innerHTML = count;
-    		setTimeout (function() { countDown(count - 1); }, 1000);
-  		}
-  		else if (count == 0) 
-		{
- 			document.getElementById("next-button").click(); 
-		}
- 	}
-	countDown(<%= ROUND_PART_A2_COUNTDOWN_SECONDS %>);
-</script>			
+</div>

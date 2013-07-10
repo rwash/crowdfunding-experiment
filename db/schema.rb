@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130705051920) do
+ActiveRecord::Schema.define(:version => 20130708043630) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -133,6 +133,29 @@ ActiveRecord::Schema.define(:version => 20130705051920) do
     t.boolean  "round_complete",   :default => false
     t.boolean  "summary_complete", :default => false
     t.string   "round_type"
+  end
+
+  create_table "surveys", :force => true do |t|
+    t.integer  "user_id"
+    t.boolean  "survey_complete", :default => false
+    t.integer  "q1"
+    t.string   "q2"
+    t.boolean  "q3"
+    t.string   "q4"
+    t.boolean  "q5"
+    t.boolean  "q6"
+    t.string   "q7_a"
+    t.string   "q7_b"
+    t.boolean  "q8"
+    t.string   "q9"
+    t.string   "q10"
+    t.string   "q11"
+    t.string   "q12_a"
+    t.string   "q12_b"
+    t.string   "q12_c"
+    t.string   "q12_d"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   create_table "users", :force => true do |t|
