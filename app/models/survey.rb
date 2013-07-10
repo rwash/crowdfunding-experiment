@@ -1,20 +1,29 @@
-class Survey < ActiveRecord::Base
-  validates_presence_of :q1
-  validates_presence_of :q2   
-  validates_presence_of :q3  
-  validates_presence_of :q4
-  validates_presence_of :q5
-  validates_presence_of :q6  
-  validates_presence_of :q7_a
-  validates_presence_of :q7_b
-  validates_presence_of :q8  
-  # validates_presence_of :q9       # <TODO CL> Include validation for text fields in Surveys Controller.
-  # validates_presence_of :q10      
-  validates_presence_of :q11  
-  validates_presence_of :q12_a
-  validates_presence_of :q12_b
-  validates_presence_of :q12_c  
-  validates_presence_of :q12_d   
-  belongs_to :user
+class Survey < ActiveRecord::Base   
+  attr_accessor :user_type
+  validates :q1, :presence => { :message => "Can't be blank" }
+  validates :q2, :presence => { :message => "Can't be blank" }               
+  validates :q3, :inclusion => { :in => [true, false], :message => "Can't be blank" }
+  validates :q4, :presence => { :message => "Can't be blank" } 
+  validates :q5, :inclusion => { :in => [true, false], :message => "Can't be blank" } 
+  validates :q6, :inclusion => { :in => [true, false], :message => "Can't be blank" }  
+  validates :q7_a, :presence => { :message => "Can't be blank" } 
+  validates :q7_b, :presence => { :message => "Can't be blank" } 
+  validates :q8, :inclusion => { :in => [true, false], :message => "Can't be blank" }    
+
+  validates :q11, :presence => { :message => "Can't be blank" }, :if => :user_creator?  
+  validates :q12_a, :presence => { :message => "Can't be blank" }, :if => :user_creator? 
+  validates :q12_b, :presence => { :message => "Can't be blank" }, :if => :user_creator? 
+  validates :q12_c, :presence => { :message => "Can't be blank" }, :if => :user_creator? 
+  validates :q12_d, :presence => { :message => "Can't be blank" }, :if => :user_creator?         
+  belongs_to :user     
+    
+
+  def user_creator?
+    if self.user_type == "Creator"
+      return true
+    else
+      return false
+    end
+  end
 
 end

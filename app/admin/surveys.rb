@@ -34,27 +34,29 @@ ActiveAdmin.register Survey do
       row :q1
       row :q2 
       row :q3 do |survey|
-        survey.q3.yesno if survey.q3
+        survey.q3.yesno
       end
       row :q4
       row :q5 do |survey|
-        survey.q5.yesno if survey.q5
+        survey.q5.yesno
       end
       row :q6 do |survey|
-        survey.q6.yesno if survey.q6
+        survey.q6.yesno
       end  
       row :q7_a
       row :q7_b
       row :q8 do |survey|
-        survey.q8.yesno if survey.q8
+        survey.q8.yesno
       end        
       row :q9
       row :q10
-      row :q11
-      row :q12_a
-      row :q12_b
-      row :q12_c
-      row :q12_d                 
+      if survey.user.user_type == "Creator"
+        row :q11
+        row :q12_a
+        row :q12_b
+        row :q12_c
+        row :q12_d                 
+      end
     end
     active_admin_comments
   end

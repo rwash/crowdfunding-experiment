@@ -1,24 +1,36 @@
 class SurveysController < ApplicationController                         
        
             
-  def edit
+  def new
     @user = current_user
-    @survey = @user.survey
-    set_user_status(@user, "Completing the Experiment Survey")     
+    if @user.survey
+      redirect_to experiment_complete_path, :alert => "Survey already completed!"
+    else
+      @survey = Survey.new
+      set_user_status(@user, "Completing the Experiment Survey")     
+    end
   end
   
   
-  def update 
+  def create
     @user = current_user
-    @survey = @user.survey
-    if @survey.update_attributes(params[:survey]) 
-      @survey.survey_complete = true
-      @survey.save!
-      set_user_status(@user, "Survey Completed - EXPERIMENT COMPLETE")       
-      redirect_to experiment_complete_path
-    else                   
-      flash[:error] = "Please fill in all fields."
-      render "edit"
+    # @survey = Survey.new(params[:survey])      
+    if @user.survey
+      redirect_to experiment_complete_path, :alert => "Survey already completed!"
+    else
+      @survey = Survey.new(params[:survey])
+      if @survey.valid? && @survey.q9? && @survey.q10?
+        @survey.survey_complete = true
+        @user.survey = @survey
+        @user.save!
+        set_user_status(@user, "Survey Completed - EXPERIMENT COMPLETE")       
+        redirect_to experiment_complete_path, :notice => "Survey submitted!"
+      else
+        flash[:error] = "Please fill in all fields." 
+        @q9_error = "Can't be blank" if !@survey.q9?
+        @q10_error = "Can't be blank" if !@survey.q10?
+        render "new"
+      end
     end
   end
   

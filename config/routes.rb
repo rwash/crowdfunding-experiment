@@ -44,7 +44,7 @@ CrowdfundingExperiment::Application.routes.draw do
 	
 	
 	# Routes for SURVEYS
-  resources :surveys, :only => [:edit, :update]
+  resources :surveys, :only => [:new, :create]
 
 
   # Routes for ACTIVE_ADMIN

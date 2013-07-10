@@ -23,7 +23,6 @@ class User < ActiveRecord::Base
 	has_one :survey, :dependent => :destroy
 	
 	after_create :generate_name_and_password       
-	after_create :generate_survey
 	
 
 	def generate_name_and_password
@@ -33,11 +32,6 @@ class User < ActiveRecord::Base
 		self.times_viewed_instructions = 0
 		self.save!
 	end                          
-	
-	
-	def generate_survey
-	 self.survey = Survey.new
-	end
 	
 	
 	def valid_password?(incoming_password)
