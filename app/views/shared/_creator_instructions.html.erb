@@ -3,20 +3,22 @@
 
 <p>In this study, you will play the role of a Project Creator on a crowdfunding site. Crowdfunding sites are websites where people can post projects and ask for small donations from a large number of people over the Internet.</p>
 
-<p>In this simulation, you will be able to post projects to a simulated crowdfunding site where <strong><%= NUMBER_OF_DONORS_PER_GROUP %></strong> donors can decide to donate to your project. Each donor has <strong><%= AMOUNT_DONOR_CAN_DONATE_PER_ROUND %></strong> credits that he or she can choose to donate. Donors can donate all credits, some or no credits.</p>
+<p>In this simulation, you will be able to post projects to a simulated crowdfunding site where <strong><%= NUMBER_OF_DONORS_PER_GROUP %></strong> donors can decide to donate to your project.</p>
+
+<p>Each donor has <strong><%= AMOUNT_DONOR_CAN_DONATE_PER_ROUND %></strong> credits that he or she can choose to donate. Donors can donate all credits, some or no credits. <% if current_experiment.return_credits %>Donations made to projects that are not funded will be returned to the donors <% end %></p>
                                                                                                                             
 <p>You are given a budget of <strong><%= AMOUNT_CREATOR_CAN_SPEND_PER_ROUND %></strong> credits. To post a project to the site costs <strong><%= COST_TO_CREATE_PROJECT %></strong> credits. You can post as many projects as you have a budget for.</p>
 
-<p>If you choose to post a project, there are two choices you must make about what type of project to post. The first choice is the risk level. You can create a high risk project which requires <strong><%= CREATOR_EARNINGS_HIGH_VALUE_PROJECT %></strong> credits in donations, or a low risk project which requires <strong><%= CREATOR_EARNINGS_LOW_VALUE_PROJECT %></strong> credits in donations. If a high risk project is completed, you earn <strong><%= CREATOR_EARNINGS_HIGH_VALUE_PROJECT %></strong> credits. If a low risk project is completed, you earn <strong><%= CREATOR_EARNINGS_LOW_VALUE_PROJECT %></strong> credits.</p>
+<p>If you choose to post a project, there are two choices you must make about what type of project to post. The first choice is the amount to ask for. You can ask for either <strong><%= HIGH_VALUE_PROJECT_GOAL %></strong> credits in donations, or <strong><%= LOW_VALUE_PROJECT_GOAL %></strong> credits in donations. </p>
 
-<p>The second choice you make is the popularity of the project. You can create popular projects or niche projects. To incentivize donations to your projects, donors earn a payoff when a project is completed. If you choose to create a popular project, all donors earn the same payoff if the project is completed, and this payoff is moderately sized. If you create a niche project, two donors will earn a very high payoff if the project is completed, and two other donors will earn only a small payoff. The table below describes these payoffs in more detail:</p>   
+<p>You can create popular projects or niche projects. To incentivize donations to your projects, donors earn a payoff when a project is completed. If you choose to create a popular project, all donors earn the same payoff if the project is completed, and this payoff is moderately sized. If you create a niche project, two donors will earn a very high payoff if the project is completed, and two other donors will earn only a small payoff. The table below describes these payoffs in more detail:</p>   
 
 <table class="table table-bordered">
 	<tbody>
 		<tr>
 			<td></td>
-			<td><strong>High Risk</strong></td>
-			<td><strong>Low Risk</strong></td>
+			<td><strong><%= HIGH_VALUE_PROJECT_GOAL %> credit project</strong></td>
+			<td><strong><%= LOW_VALUE_PROJECT_GOAL %> credit project</strong></td>
 		</tr>			
 		<tr>
 			<td><strong>Popular</strong></td>
@@ -30,14 +32,18 @@
 		</tr>		
 	</tbody>
 </table>                       
-<br>   
+<br>
+	
+<p>Below is the interface you will use to make your donations:</p>
+<% image_tag("creator_interface.png", :width => "450px", :height => "400px", :style => "border: 1px solid black" %> 
 
 <h3>Payout Calculation:</h3>
 <br>
 
-<p>If you create a project and it does not receive enough donations to be completed, the creation fee is kept by the website. If a project receives excess donations, those donations are also kept by t\he website and not returned to you.</p>
+<p>If you create a project and it does not receive enough donations to be completed, the creation fee is kept by the website. If a project receives excess donations, those donations are also kept by the website and not returned to you.</p>
 
-<strong><p>Your total payout for the simulation is: <strong>(Credits not spent creating projects + Credits awarded for successful projects.)</strong>.</p></strong>     
+<strong><p>Your total payout for the simulation is: <strong>(Credits not spent creating projects + Credits awarded for successful projects.)</strong>.Below is screen you will see when a round is completed:</p></strong>
+<% image_tag("creator_summary.png", :width => "450px", :height => "400px", :style => "border: 1px solid black" %>
 
 <br>
 

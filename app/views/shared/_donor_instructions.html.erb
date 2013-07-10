@@ -5,8 +5,9 @@
 
 <p>You will be taken to a simulated crowdfunding website where project creators have created between <strong>1</strong> and <strong><%= ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR %></strong> projects soliciting funding. Some projects may require <strong><%= HIGH_VALUE_PROJECT_GOAL %></strong> credits in donations, and others may require <strong><%= LOW_VALUE_PROJECT_GOAL %></strong> credits. You will be given <strong><%= AMOUNT_DONOR_CAN_DONATE_PER_ROUND %></strong> credits that you may donate to projects. You can donate any amount of credits to any number of projects you wish, including making no donations.</p>
                                                                                                                             
-<p>Each project will list a payoff that you will earn of that project is completed and receives its requested donations. In this simulation, you will earn payoffs for every project that is fully funded, regardless of whether you donated to that project yourself. There are <strong><%= NUMBER_OF_DONORS_PER_GROUP %></strong> donors in your group, including yourself, who also earn payouts for when projects are funded. However, the other donors’ payouts may be different from your own payouts, so others will not necessarily prefer the same projects as you.</p>
+<p>Each project will list a payoff that you will earn of that project is completed and receives its requested donations. In this simulation, you will earn payoffs for every project that is fully funded, <strong>regardless of whether you donated to that project yourself.</strong> There are <strong><%= NUMBER_OF_DONORS_PER_GROUP %></strong> donors in your group, including yourself, who also earn payouts for when projects are funded. However, the other donors’ payouts may be different from your own payouts, so others will not necessarily prefer the same projects as you. Below is a picture of the interface you will use to make your donations:</p>
 <br>
+<% image_tag("donor_interface.png", :width => "450px", :height => "400px", :style => "border: 1px solid black" %>
 
 <h3>Payout Calculation:</h3>
 <br>
@@ -24,7 +25,7 @@
 
 <% end %>
 <br>   
-
+<% image_tag("donor_summary.png", :width => "450px", :height => "400px", :style => "border: 1px solid black" %>
 <h3>Additional Instructions:</h3>
 <br>      
 <p> - You will play <strong><%= NUMBER_OF_PRACTICE_ROUNDS %></strong> practice rounds and <strong><%= NUMBER_OF_LIVE_ROUNDS %></strong> live rounds of this simulation. In each round, you will be randomly rematched with <strong><%= NUMBER_OF_DONORS_PER_GROUP - 1 %></strong> other donors and <strong><%= NUMBER_OF_CREATORS_PER_GROUP %></strong> other creators, so in every round you are playing with a different set of people. You will not know who else you are playing with.</p>    
