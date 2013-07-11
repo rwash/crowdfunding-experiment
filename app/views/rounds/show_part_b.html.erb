@@ -16,6 +16,7 @@
 						<thead>
 							<tr>
 								<td><h3>Project</h3></td>
+								<td><h3>Popularity</h3></td>
 								<td><h3>Goal</h3></td>
 								<td><h3>Your Payoff</h3></td>
 								<td><h3>Your Contributions</h3></td>															
@@ -25,6 +26,7 @@
 							<% @projects.each_with_index do |project, i| %>
 								<tr>
 									<td><%= project.name %></td>
+									<td><%= project.popularity %></td>
 									<td><%= project.goal_amount %> credits</td>
 									<td>
 	                        <% if project.popularity == "Niche" %>
