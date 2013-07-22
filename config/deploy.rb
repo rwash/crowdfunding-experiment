@@ -29,3 +29,8 @@ role :db,  "orithena.cas.msu.edu", :primary => true # This is where Rails migrat
      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
    end
  end
+
+task :symlink_db_yml do
+  run "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+end
+before 'bundle:install', 'customs:symlink_db_yml'
