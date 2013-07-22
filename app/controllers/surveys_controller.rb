@@ -19,7 +19,7 @@ class SurveysController < ApplicationController
       redirect_to experiment_complete_path, :alert => "Survey already completed!"
     else
       @survey = Survey.new(params[:survey])
-      if @survey.valid? && @survey.q9? && @survey.q10?
+      if @survey.valid? 
         @survey.survey_complete = true
         @user.survey = @survey
         @user.save!
@@ -27,8 +27,6 @@ class SurveysController < ApplicationController
         redirect_to experiment_complete_path, :notice => "Survey submitted!"
       else
         flash[:error] = "Please fill in all fields." 
-        @q9_error = "Can't be blank" if !@survey.q9?
-        @q10_error = "Can't be blank" if !@survey.q10?
         render "new"
       end
     end

@@ -52,7 +52,8 @@ class Round < ActiveRecord::Base
   
   def check_if_round_part_b_ready_to_start
     self.creator_preferences.each do |creator_preference|
-      return false if !creator_preference.is_ready
+      # return false if !creator_preference.is_ready
+      return false if !creator_preference.finished_round
     end
     self.donor_preferences.each do |donor_preference|
       return false if !donor_preference.is_ready
