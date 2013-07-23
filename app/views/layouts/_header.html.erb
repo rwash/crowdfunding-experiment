@@ -10,7 +10,7 @@
 	        		<span class="brand"><%= "Round #{@current_round.number} of #{TOTAL_NUMBER_OF_ROUNDS} - LIVE" unless @current_round.nil? %></span> 			
 				<% end %>
       		<ul class="nav">
-        			<li><%= link_to "Instructions", '/instructions_iframe?header=false', :onclick => "window.open(this.href,'window','width=1100,height=800') ;return false;" unless current_user.name == 'admin' %></li>  
+        			<li><%= link_to "Instructions", instructions_iframe_path(:header => false), :onclick => "window.open(this.href,'window','width=1100,height=800') ;return false;" unless current_user.name == 'admin' %></li>  
       		</ul>
       		<ul class="nav secondary-nav pull-right">
         			<li class="divider-vertical"></li>
