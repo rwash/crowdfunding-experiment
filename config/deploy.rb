@@ -30,7 +30,9 @@ role :db,  "orithena.cas.msu.edu", :primary => true # This is where Rails migrat
    end
  end
 
-task :symlink_db_yml do
-  run "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+namespace :customs do
+  task :symlink_db_yml do
+    run "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  end
 end
 before 'bundle:install', 'customs:symlink_db_yml'
