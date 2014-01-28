@@ -24,7 +24,7 @@ class RoundsController < InheritedResources::Base
       @current_round.check_if_round_part_b_ready_to_start   
 
       set_user_status(@user, "Waiting for Round ##{@current_round.number} to Start")
-
+      
       if @current_round.part_a_started
         redirect_to waiting_for_part_b_path(@current_round)
       elsif @preference.finished_round 
@@ -68,7 +68,8 @@ class RoundsController < InheritedResources::Base
     @user = current_user
 		@current_round = Round.find(params[:id]) 
 		@experiment = current_experiment    
-		
+		@group = Group.where(:round_id => @current_round)
+
     set_user_status(@user, "Waiting for Round ##{@current_round.number} Summary")  
 		
     if @current_round.check_if_round_complete
@@ -97,6 +98,22 @@ class RoundsController < InheritedResources::Base
       elsif @user.user_type == "Donor"
         redirect_to donor_round_summary_path(@current_round)  
       end
+    else
+      if @user.user_type == "Creator"
+        @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
+        @current_group = @preference.group
+        @projects = @current_group.projects   
+        @projects.each do |project|
+          project.calculate_funding_details 
+        end
+      elsif @user.user_type == "Donor"
+        @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first 
+        @current_group = @preference.group
+        @projects = @preference.get_project_list
+        @projects.each do |project|
+          project.calculate_funding_details 
+        end        
+      end      
     end
 	end
 	
