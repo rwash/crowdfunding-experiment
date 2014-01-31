@@ -71,6 +71,7 @@ class DonorPreference < ActiveRecord::Base
     
     self.total_return_from_projects = @total_return_from_projects
     self.credits_to_be_returned = @credits_to_be_returned
+    self.credits_not_donated = AMOUNT_DONOR_CAN_DONATE_PER_ROUND if self.credits_not_donated.nil?
     self.total_return = self.total_return_from_projects + self.credits_not_donated + self.credits_to_be_returned 
     self.save!
   end

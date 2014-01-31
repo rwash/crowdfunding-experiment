@@ -30,6 +30,7 @@ class CreatorPreference < ActiveRecord::Base
       end
     end
     
+    self.credits_not_spent = 0 if self.credits_not_spent.nil?
     self.total_return_from_projects = @total_return_from_projects        
     self.total_return = self.credits_not_spent + self.total_return_from_projects
     self.save!

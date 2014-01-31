@@ -1,4 +1,6 @@
+
 <div id="container">	
+	<%= render :partial => "donatur_summary_results" %> 	
 	<div class="row">
    	<div class="span9">
 			<div class="page-header">
@@ -24,26 +26,28 @@
 						</thead>
 						<tbody>
 							<% @projects.each_with_index do |project, i| %>
-								<tr>
-									<td><%= project.name %></td>
-									<td><%= project.popularity %></td>
-									<td><%= project.goal_amount %> credits</td>
-									<td>
-	                        <% if project.popularity == "Niche" %>
-	                        	<% if project.special_user_1 == @user.id || project.special_user_2 == @user.id %>
-										 	<%= project.special_return_amount %>
-									   <% else %>
+
+									<tr>
+										<td><%= project.name %></td>
+										<td><%= project.popularity %></td>
+										<td><%= project.goal_amount %> credits</td>
+										<td>
+		                        <% if project.popularity == "Niche" %>
+		                        	<% if project.special_user_1 == @user.id || project.special_user_2 == @user.id %>
+											 	<%= project.special_return_amount %>
+										   <% else %>
+												<%= project.standard_return_amount %>
+											<% end %>
+		                        <% elsif project.popularity == "Popular" %>
 											<%= project.standard_return_amount %>
 										<% end %>
-	                        <% elsif project.popularity == "Popular" %>
-										<%= project.standard_return_amount %>
-									<% end %>
-									</td>
-									<td>
-										<%= text_field_tag "amount_#{i}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{i}", :class => 'contribution-field' %><br>
-							    		<%= hidden_field_tag "project_id_#{i}", project.id %>
-									</td>
-								</tr>						
+										</td>
+										<td>
+											<%= text_field_tag "amount_#{i}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{i}", :class => 'contribution-field' %><br>
+								    		<%= hidden_field_tag "project_id_#{i}", project.id %>
+										</td>
+									</tr>						
+             
 							<% end %>                    
 						</tbody>				
 					</table>
@@ -85,26 +89,44 @@
 	</div>   
 </div>
         
-
-<script>
-	function countDown (count) {
-   	if (count > 0) 
-		{
-    		document.getElementById("timer").innerHTML = count;
-    		setTimeout (function() { countDown(count - 1); }, 1000);
-  		}
-  		else if (count == 0) 
-		{
- 			document.getElementById("submit-button").click(); 
+<script type='text/javascript'>
+	$(document).ready(function() {
+		// live countdown
+		function countDown() {
+			$.ajax({
+				url: "<%= countdown_path(@current_round) %>",
+				dataType: "json"
+			}).done(function( data ) {
+				if (data.count === 0)  {
+					document.getElementById("submit-button").click(); 
+				} else {
+					document.getElementById("timer").innerHTML = data.count;
+					setTimeout (function() { countDown(); }, 1000);					
+				}
+			});
 		}
- 	}
-	countDown(<%= ROUND_PART_B_COUNTDOWN_SECONDS %>);
-</script>          
 
+		// update results
+		function updateResults(){
+			$.ajax({
+				url: "<%= update_donation_results_path(@current_round) %>",
+				dataType: "html"
+			}).done(function( data ) {
+				document.getElementById("donation-results").innerHTML = data;
+				if(document.getElementById("timer").innerHTML !== "0") {
+					setTimeout (function() { updateResults(); }, 5000);
+				}				
+			});
+		}
+
+		countDown();		
+		updateResults();
+	});
+</script>
 
 <script type='text/javascript'>
 	$(document).ready(function() {
-   	var credits = <%= AMOUNT_DONOR_CAN_DONATE_PER_ROUND %>
+   	var credits = <%= @user_donate_amount %>
     	$('#credits').text(credits)
 	 	<% number_of_projects = @current_group.projects.count %>
 

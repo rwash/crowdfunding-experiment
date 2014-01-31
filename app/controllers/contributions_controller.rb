@@ -13,13 +13,14 @@ class ContributionsController < InheritedResources::Base
       @total_amount_contributed += @amount_contributed
     end 
     
-    @preference.credits_not_donated = (AMOUNT_DONOR_CAN_DONATE_PER_ROUND - @total_amount_contributed) 
-    @preference.save! 
+    if @preference.credits_not_donated.blank?
+      @user_donate_amount = AMOUNT_DONOR_CAN_DONATE_PER_ROUND
+    else
+      @user_donate_amount = @preference.credits_not_donated
+    end
              
-    if @preference.finished_round
-      redirect_to summary_waiting_path(@current_round), :alert => "You have already finished your turn for this round!" and return
-    elsif @total_amount_contributed > AMOUNT_DONOR_CAN_DONATE_PER_ROUND
-      redirect_to round_show_part_b_path(@current_round), :alert => "Total amount contributed cannot exceed: #{AMOUNT_DONOR_CAN_DONATE_PER_ROUND} credits!" and return
+    if @total_amount_contributed > @user_donate_amount
+      redirect_to round_show_part_b_path(@current_round), :alert => "Total amount contributed cannot exceed: #{@user_donate_amount} credits!" and return
     else
       @current_group.projects.each_with_index do |project, i|
         break if @project_id == 0
@@ -28,14 +29,18 @@ class ContributionsController < InheritedResources::Base
         @amount_contributed = params["amount_#{i}".to_sym].to_i      
         
         if @amount_contributed > 0
-          @project.create_contribution(@user, @amount_contributed)  
+          unless @project.create_contribution(@user, @amount_contributed)
+            @total_amount_contributed = @total_amount_contributed - @amount_contributed
+          end          
         elsif @amount_contributed < 0
           redirect_to round_show_part_b_path(@current_round), :alert => "Cannot contribute negative amounts!" and return            
         end     
       end
-      @preference.set_finished_round 
+      
+      @preference.credits_not_donated = (@user_donate_amount - @total_amount_contributed) 
       @preference.save!  
-      redirect_to summary_waiting_path(@current_round), :notice => "Contributions submitted!"  
+
+      redirect_to round_show_part_b_path(@current_round), :notice => "Contributions submitted!"  
     end
   end
 	

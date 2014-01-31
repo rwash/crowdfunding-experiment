@@ -61,6 +61,17 @@ class Round < ActiveRecord::Base
     self.part_b_started = true
     self.save!
   end
+
+  def set_finished_round
+    self.creator_preferences.each do |creator_preference|
+      creator_preference.finished_round = true
+      creator_preference.save!
+    end
+    self.donor_preferences.each do |donor_preference|
+      donor_preference.finished_round = true
+      donor_preference.save!
+    end    
+  end
   
   
   def check_if_round_complete
@@ -92,5 +103,15 @@ class Round < ActiveRecord::Base
 		self.start_time = DateTime.now
 		self.save!
 	end
+
+  def remaining_seconds
+    diff = ((Time.zone.now.to_datetime - self.start_time.to_datetime) * 24 * 60 * 60).to_i    
+    if diff > 60
+      remaining_seconds = 0
+    else
+      remaining_seconds = 60 - diff
+    end
+    remaining_seconds
+  end
 	
 end

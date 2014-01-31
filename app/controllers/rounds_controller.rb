@@ -59,6 +59,19 @@ class RoundsController < InheritedResources::Base
       @current_group = @preference.group
       @preference.generate_project_display_order(@current_group)  
       @projects = @preference.get_project_list
+      @projects.each do |project|
+        project.calculate_funding_details 
+      end
+
+      if @preference.credits_not_donated.blank?
+        @user_donate_amount = AMOUNT_DONOR_CAN_DONATE_PER_ROUND
+      else
+        @user_donate_amount = @preference.credits_not_donated
+      end
+
+      if @current_round.remaining_seconds == 0
+        @preference.set_finished_round
+      end
       redirect_to summary_waiting_path(@current_round) if @preference.finished_round
     end
 	end
@@ -72,6 +85,9 @@ class RoundsController < InheritedResources::Base
 
     set_user_status(@user, "Waiting for Round ##{@current_round.number} Summary")  
 		
+    if @current_round.remaining_seconds == 0
+      @current_round.set_finished_round
+    end    
     if @current_round.check_if_round_complete
       Group.where(:round_id => @current_round).each do |group|
         group.projects.each do |project|
@@ -147,7 +163,7 @@ class RoundsController < InheritedResources::Base
 	
 	
 	def round_history
-    @round = Round.find(params[:id])      
+    @round = Round.find(params[:id])
     @experiment = @round.experiment
     @round_preferences = []
     @experiment.users.each do |user|
@@ -159,5 +175,27 @@ class RoundsController < InheritedResources::Base
       @round_preferences << @preference
     end
 	end
+
+  def countdown
+    @round = Round.find(params[:id])
+    render json: {count: @round.remaining_seconds}.to_json
+  end
+
+  def update_donation_results
+    @current_round = Round.find(params[:id])
+    @user = current_user        
+
+    if @user.user_type == "Donor"
+      @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round).first
+      @current_group = @preference.group
+      @preference.generate_project_display_order(@current_group)  
+      @projects = @preference.get_project_list
+      @projects.each do |project|
+        project.calculate_funding_details 
+      end
+    end    
+
+    render layout: false
+  end
 	
 end
