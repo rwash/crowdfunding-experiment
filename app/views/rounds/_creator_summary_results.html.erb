@@ -1,63 +1,56 @@
 <div id="container">  
   <div class="row">
     <div class="span12">      
-      <% if @projects.count > 0 %>        
 
         <h3>Projects created this round:</h3>      
         <br>
-        <table class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <td><h4>Project</h4></td>
-              <td><h4>Popularity</h4></td>
-              <td><h4>Donors</h4></td>     
-              <td><h4>Contributions</h4></td>  
-              <td><h4>Funding</h4></td>        
-              <td><h4>Status</h4></td>  
-              <td><h4>Your Payoff</h4></td>   
-             </tr>
-          </thead>
-          <tbody>
-            <% @projects.each do |project| %>
-              <tr>
-                <td><%= project.name %></td>
-                <td><%= project.popularity %></td>              
-                <td><%= project.number_donors %></td>
-                <td><%= project.total_contributions %> / <%= project.goal_amount %></td>        
-                <td>
-                  <div class="progress <%= "progress-success" if project.funded %>">
-                    <div class="bar" style="width: <%= (project.total_contributions.to_f / project.goal_amount) * 100 %>%;"></div>
-                    <%= project.total_contributions %> / <%= project.goal_amount %>
-                  </div>
-                </td>
-                <td>
-                  <% if project.funded %>
-                    <h4>Funded</h4>
-                  <% else %>
-                    Not Funded
-                  <% end %>
-                </td>
-                <td>
-                  <% if project.user_id == @user.id %>
-                    <h4><%= project.creator_earnings %></h4>
-                  <% else %> 
-                      Not your project
-                  <% end %>
-                </td>
-               </tr>                                       
-            <% end %>
-          </tbody>
-        </table>                         
         
-      <% else %>
-
-        <div class="hero-unit">
-          <h3>There were no projects created for your group in this round!</h3>
-        </div>
-        <br>
-
-      <% end %>                                 
-
+        <% @preferences.each do |preference| %>
+          <h4>Group: <%= preference.group.name %></h4>        
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <td><h4>Project</h4></td>
+                <td><h4>Popularity</h4></td>
+                <td><h4>Donors</h4></td>     
+                <td><h4>Contributions</h4></td>  
+                <td><h4>Funding</h4></td>        
+                <td><h4>Status</h4></td>  
+                <td><h4>Your Payoff</h4></td>   
+               </tr>
+            </thead>
+            <tbody>
+              <% preference.group.projects.each do |project| %>
+                <tr>
+                  <td><%= project.name %></td>
+                  <td><%= project.popularity %></td>              
+                  <td><%= project.number_donors %></td>
+                  <td><%= project.total_contributions %> / <%= project.goal_amount %></td>        
+                  <td>
+                    <div class="progress <%= "progress-success" if project.funded %>">
+                      <div class="bar" style="width: <%= (project.total_contributions.to_f / project.goal_amount) * 100 %>%;"></div>
+                      <%= project.total_contributions %> / <%= project.goal_amount %>
+                    </div>
+                  </td>
+                  <td>
+                    <% if project.funded %>
+                      <h4>Funded</h4>
+                    <% else %>
+                      Not Funded
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if project.user_id == @user.id %>
+                      <h4><%= project.creator_earnings %></h4>
+                    <% else %> 
+                        Not your project
+                    <% end %>
+                  </td>
+                 </tr>                                       
+              <% end %>
+            </tbody>
+          </table>                                                   
+        <% end %>
     </div>
   </div>   
 </div>      

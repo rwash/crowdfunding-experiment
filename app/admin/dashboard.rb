@@ -21,6 +21,15 @@ ActiveAdmin.register_page "Dashboard" do
               column "User Payouts" do |experiment|  
                 link_to "Payouts", experiment_payouts_path(experiment)  
               end              
+              column "Action" do |experiment|  
+                if experiment.finished
+                  "Finished"
+                elsif experiment.current_round_number == 1
+                  link_to "Start the First Round", round_waiting_path(experiment.current_round)
+                else
+                  link_to "Back to the Experiment", round_waiting_path(experiment.current_round)
+                end 
+              end              
             end 
           end
         end

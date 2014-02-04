@@ -52,11 +52,8 @@ class Experiment < ActiveRecord::Base
      
       @random_creator_group = (0..(NUMBER_OF_CREATORS-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_OF_CREATORS_PER_GROUP-1)] 
       @creators.each_with_index do |creator, k|
-        if @random_creator_group.include?(k)
-          creator.creator_preferences << CreatorPreference.create(:group => @round_groups[0], :round => round)            
-        else
-          creator.creator_preferences << CreatorPreference.create(:group => @round_groups[1], :round => round)           
-        end
+        creator.creator_preferences << CreatorPreference.create(:group => @round_groups[0], :round => round)            
+        creator.creator_preferences << CreatorPreference.create(:group => @round_groups[1], :round => round)           
       end
       
       @random_donor_group = (0..(NUMBER_OF_DONORS-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_OF_DONORS_PER_GROUP-1)]   
@@ -108,5 +105,12 @@ class Experiment < ActiveRecord::Base
     self.finished = true                                        
     self.save!
 	end
+
+  def current_round
+    rounds.order("number ASC").each do |round|
+      return round unless round.round_complete
+    end 
+    return experiment.rounds.first    
+  end
   
 end

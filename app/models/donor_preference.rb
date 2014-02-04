@@ -40,7 +40,7 @@ class DonorPreference < ActiveRecord::Base
       end
       return @group_projects
     else
-     return false
+     return []
    end
   end
 

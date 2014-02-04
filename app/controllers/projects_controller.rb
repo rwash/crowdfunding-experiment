@@ -2,37 +2,41 @@ class ProjectsController < InheritedResources::Base
                           
 
   def create_projects                  # <TODO CL> Refactor and Move into Model.
-    @user = current_user  
-    @experiment = @user.experiment     
-		@current_round = Round.find(params[:id])    
-		@number_of_projects = params[:number_of_projects].to_i
-    @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
-    @current_group = @preference.group
-    @build_group = Group.new(params[:group])
-                      
-    if @preference.finished_round == false    
-      Group.transaction do 
-        @build_group.projects.each do |project|
-          @new_project = Project.new
-          @new_project.update_attributes(:user_id => @user.id, :group_id => @current_group.id, :name => generate_project_name, :value => project.value, :popularity => project.popularity)     
-          @current_group.projects << @new_project  
-          @number_of_projects += 1          
-        end  
-        
-        if @current_group.save
-          @preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT))
-          @preference.set_finished_round
-          @current_round.check_if_part_a_finished
-          redirect_to round_show_part_a2_path(@current_round)
-        else
-          redirect_to round_show_part_a1_path(@current_round), :alert => "You must select both a Value and a Popularity for each Project created!"
-					raise ActiveRecord::Rollback
-        end
-      end
+    @current_round = Round.find(params[:id])    
+    if current_admin_user.present?
+      @user = @current_round.experiment.users.where("user_type = ?", "Creator").first
     else
-      flash[:alert] = "You have finished your turn for this round!"
-      redirect_to summary_waiting_path(@current_round)     
-    end      
-  end                             
+      @user = current_user
+    end        
+    @experiment = @user.experiment         
+    @number_of_projects = 3
 
+    @preferences = CreatorPreference.where(:user_id => @user, :round_id => @current_round)
+    @preferences.each do |preference|
+      current_group = preference.group
+
+      if preference.finished_round == false    
+        Group.transaction do 
+          3.times do |itr|
+            @new_project = Project.new
+            @new_project.update_attributes(:user_id => @user.id, 
+              :group_id => current_group.id, :name => generate_project_name, 
+              :value => ["High", "Low"].sample, :popularity => ["Popular", "Niche"].sample
+            )     
+            current_group.projects << @new_project  
+            @number_of_projects += 1          
+          end  
+          
+          if current_group.save
+            preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT))
+            preference.set_finished_round
+            @current_round.check_if_part_a_finished            
+          else
+            raise ActiveRecord::Rollback
+          end
+        end
+      end        
+    end
+    redirect_to round_show_part_a2_path(@current_round)
+  end                             
 end

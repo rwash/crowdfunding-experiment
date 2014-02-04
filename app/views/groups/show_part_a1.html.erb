@@ -4,38 +4,10 @@
 			<div class="page-header">
 			  	<h2>Part A-1: Create Projects</h2>
 			</div>
-			<h4>Please create between 0 and <%= ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR %> projects:</h4>
+			<h4>Start Project</h4>
 			<br>     
 			                         
 			<%= nested_form_for @group, :url => create_projects_path, :method => :post do |f| %>  
-					
-				<table class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<td><h4>Value (credits)</h4></td>
-							<td><h4>Popularity</h4></td>   
-							<td></td>
-						 </tr>
-					</thead>
-					<tbody id="projects">
-						<%= f.fields_for :projects, :wrapper => false do |project_form| %>           
-							<%= render 'project_fields', :f => project_form %>
-						<% end %>   
-					</tbody>
-				</table>
-				
-				<%= f.link_to_add "Add Project", :projects, :data => { :target => "#projects" }, :id => "add_project_button", :class => 'btn btn-large btn-primary', :onclick => "add_project();" %>
-				   
-				<br>
-				<br>				                                     
-				<br>
-				<h3>Hints:</h3>
-				<br>
-				<p><b> - High Value Projects: </b>These projects are requesting <%= HIGH_VALUE_PROJECT_GOAL %> credits in funding.</p>
-				<p><b> - Low Value Projects: </b>These projects are requesting <%= LOW_VALUE_PROJECT_GOAL %> credits in funding.</p> 
-				<p><b> - Popular Projects: </b>If successfully funded, these projects will return the same, moderate amount to each of it's donors.</p> 
-				<p><b> - Niche Projects: </b>If successfully funded, these projects will return a large amount randomly to 2 of it's donors, and a lower amount to the remainder.</p> 
-			   <br>  		
 			                  
 				<div class="form-actions">
 			    	<%= f.submit "Submit", :id => "submit-button", :class => 'btn btn-large btn-success pull-right' %>
@@ -43,62 +15,23 @@
 			<% end %>
 
 		</div>
-		<div class="span3">
-			<%= render "rounds/countdown_timer_sidebar" %>
-			<div align="center">
-				<div class="page-header">
-				  	<h2>Credits</h2>
-				</div>
-				<h3>You have <span id="credits"></span> credits remaining.</h3>
-				<br> 
-			</div>
-  		</div>
 	</div>
 </div> 
 
 
-<script type="text/javascript">
-	var no_of_projects = 0;  
-	var credits = <%= AMOUNT_CREATOR_CAN_SPEND_PER_ROUND %>
-	$('#credits').text(credits)    
-
-	function add_project()
-	{
-		no_of_projects++;
-		var remaining_credits = (credits - (<%= COST_TO_CREATE_PROJECT %> * no_of_projects))   
-		$('#credits').text(remaining_credits); 
-		if (no_of_projects >= <%= ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR %>)
-		{
-			document.getElementById('add_project_button').style.visibility = 'hidden';
-		}   
-		return false;   
-	}
-
-	function remove_project()
-	{
-		no_of_projects--;
-		var remaining_credits = (credits - (<%= COST_TO_CREATE_PROJECT %> * no_of_projects))   	 
-		$('#credits').text(remaining_credits);                  
-		if (no_of_projects < <%= ALLOWED_NUMBER_OF_PROJECTS_PER_CREATOR %>)
-		{
-			document.getElementById('add_project_button').style.visibility = 'visible';
-		} 
-		return false;   
-	}     
-</script>
 
 
 <script type='text/javascript'>  
-	function countDown (count) {
-   	if (count > 0) 
-		{
-    		document.getElementById("timer").innerHTML = count;
-    		setTimeout (function() { countDown(count - 1); }, 1000);
-  		}
-  		else if (count == 0) 
-		{
- 			document.getElementById("submit-button").click(); 
-		}
- 	}
-	countDown(<%= ROUND_PART_A_COUNTDOWN_SECONDS %>);
+	// function countDown (count) {
+ //   	if (count > 0) 
+	// 	{
+ //    		document.getElementById("timer").innerHTML = count;
+ //    		setTimeout (function() { countDown(count - 1); }, 1000);
+ //  		}
+ //  		else if (count == 0) 
+	// 	{
+ // 			document.getElementById("submit-button").click(); 
+	// 	}
+ // 	}
+	//countDown(<%#= ROUND_PART_A_COUNTDOWN_SECONDS %>);
 </script> 

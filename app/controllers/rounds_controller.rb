@@ -1,15 +1,21 @@
 class RoundsController < InheritedResources::Base
         
 
-	def waiting_for_round
-	  @experiment = current_experiment
+	def waiting_for_round	  
 		@current_round = Round.find(params[:id])
-    @user = current_user       
+    @experiment = @current_round.experiment
+
+    if current_admin_user.present?
+      @user = @current_round.experiment.users.where("user_type = ?", "Creator").first
+    else
+      @user = current_user
+    end    
+
     @experiment.start_experiment
 		
     if @current_round.round_complete
 		  redirect_to summary_waiting_path(@current_round)
-    elsif @user.user_type == "Creator"
+    elsif current_admin_user.present?
       @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first       
       @preference.set_ready_to_start unless @preference.is_ready
       if @preference.finished_round
@@ -48,13 +54,17 @@ class RoundsController < InheritedResources::Base
 	
 	def show_part_b
 	  @current_round = Round.find(params[:id])
-		@user = current_user    
+    if current_admin_user.present?
+      @user = @current_round.experiment.users.where("user_type = ?", "Creator").first
+    else
+      @user = current_user
+    end
 		
     set_user_status(@user, "In Part B: Submit Contributions - Round ##{@current_round.number}")   
 
-    if @current_round.part_b_finished || @user.user_type == "Creator" 
+    if @current_round.part_b_finished || current_admin_user.present?
       redirect_to summary_waiting_path(@current_round)    
-    elsif @user.user_type == "Donor"
+    else
       @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round).first
       @current_group = @preference.group
       @preference.generate_project_display_order(@current_group)  
@@ -78,9 +88,14 @@ class RoundsController < InheritedResources::Base
 	
 	
 	def waiting_for_summary
-    @user = current_user
-		@current_round = Round.find(params[:id]) 
-		@experiment = current_experiment    
+    @current_round = Round.find(params[:id]) 
+    if current_admin_user.present?
+      @user = @current_round.experiment.users.where("user_type = ?", "Creator").first
+    else
+      @user = current_user
+    end
+    		
+		@experiment = @current_round.experiment    
 		@group = Group.where(:round_id => @current_round)
 
     set_user_status(@user, "Waiting for Round ##{@current_round.number} Summary")  
@@ -109,21 +124,16 @@ class RoundsController < InheritedResources::Base
       @next_round_number = @current_round.number + 1
       @experiment.set_current_round(@next_round_number)      # <TODO CL> Check this sets the current round to the experiment properly.
 
-      if @user.user_type == "Creator"
+      if current_admin_user.present?
         redirect_to creator_round_summary_path(@current_round)   
-      elsif @user.user_type == "Donor"
+      else
         redirect_to donor_round_summary_path(@current_round)  
       end
     else
-      if @user.user_type == "Creator"
-        @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
-        @current_group = @preference.group
-        @projects = @current_group.projects   
-        @projects.each do |project|
-          project.calculate_funding_details 
-        end
-      elsif @user.user_type == "Donor"
-        @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first 
+      if current_admin_user.present?
+        @preferences = CreatorPreference.where(:user_id => @user, :round_id => @current_round)
+      else
+        @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first
         @current_group = @preference.group
         @projects = @preference.get_project_list
         @projects.each do |project|
@@ -135,16 +145,19 @@ class RoundsController < InheritedResources::Base
 	
 	
 	def creator_summary
-		@user = current_user
-		@experiment = current_experiment
-		@current_round = Round.find(params[:id])
-	  @preference = CreatorPreference.where(:user_id => @user, :round_id => @current_round).first
-    @current_group = @preference.group
-		@projects = @current_group.projects   
-		@next_round_number = @current_round.number + 1
-		@next_round = @experiment.rounds.where(:number => @next_round_number).first  
-		
-    set_user_status(@user, "Viewing Round ##{@current_round.number} Summary") 		
+    if current_admin_user.present? 
+      @current_round = Round.find(params[:id])
+      @user = @current_round.experiment.users.where("user_type = ?", "Creator").first
+      @experiment = @current_round.experiment
+      @preferences = CreatorPreference.where(:user_id => @user, :round_id => @current_round)
+      @next_round_number = @current_round.number + 1
+      @next_round = @experiment.rounds.where(:number => @next_round_number).first  
+      
+      set_user_status(@user, "Viewing Round ##{@current_round.number} Summary")     
+    else
+      redirect_to root_path
+    end
+
 	end         
 	
 	
@@ -154,7 +167,7 @@ class RoundsController < InheritedResources::Base
 		@current_round = Round.find(params[:id]) 
     @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first 
     @current_group = @preference.group 
-    @projects = @preference.get_project_list 		     
+    @projects = @preference.get_project_list    
 		@next_round_number = @current_round.number + 1
 		@next_round = @experiment.rounds.where(:number => @next_round_number).first   
 		

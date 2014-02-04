@@ -2,13 +2,11 @@ ActiveAdmin.register User do
   actions :index, :show
   config.batch_actions = false  
   menu :parent => "USERS", :priority => 1
-  scope :all, :default => true
-  scope :creators do |user|
-    user.where(:user_type => "Creator")
-  end
-  scope :donors do |user|
+
+  scope :creators, :default => true do |user|
     user.where(:user_type => "Donor")
   end
+
   
   
   # Configuration for Sidebar Filters

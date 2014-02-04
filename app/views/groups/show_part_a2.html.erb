@@ -8,28 +8,31 @@
 			<h4>The projects you have chosen to create for this round are as follows:</h4>
 			<br>
 			
-			<table class="table table-striped table-bordered table-condensed">
-				<thead>
-					<tr>
-						<td><h4>Name</h4></td>
-						<td><h4>Value (credits)</h4></td>
-						<td><h4>Popularity</h4></td>
-					</tr>
- 			  	</thead>
-				<tbody>
-				   <% @projects.each do |project| %>
-					 	<tr>
-							<td><%= project.name %></td>
-							<% if project.value == "High" %>
-								<td><%= CREATOR_EARNINGS_HIGH_VALUE_PROJECT %> </td>
-							<% elsif project.value == "Low" %>
-								<td><%= CREATOR_EARNINGS_LOW_VALUE_PROJECT %> </td>							
-							<% end %>
-							<td><%= project.popularity %></td>
+			<% @preferences.each do |preference| %>
+				<h4>Group: <%= preference.group.name %></h4>
+				<table class="table table-striped table-bordered table-condensed">
+					<thead>
+						<tr>
+							<td><h4>Name</h4></td>
+							<td><h4>Value (credits)</h4></td>
+							<td><h4>Popularity</h4></td>
 						</tr>
-					<% end %> 
-	 			</tbody>
-			</table>   
+	 			  	</thead>
+					<tbody>
+					   <% preference.group.projects.each do |project| %>
+						 	<tr>
+								<td><%= project.name %></td>
+								<% if project.value == "High" %>
+									<td><%= CREATOR_EARNINGS_HIGH_VALUE_PROJECT %> </td>
+								<% elsif project.value == "Low" %>
+									<td><%= CREATOR_EARNINGS_LOW_VALUE_PROJECT %> </td>							
+								<% end %>
+								<td><%= project.popularity %></td>
+							</tr>
+						<% end %> 
+		 			</tbody>
+				</table>   
+			<% end %>
 			<br>     
 				<h4>Please click next when you are ready to proceed.</h4>
 			<br>

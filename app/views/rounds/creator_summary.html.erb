@@ -10,12 +10,13 @@
 				<div class="hero-unit">
 					<p>This round is a Practice Round and does not count towards your final return for this experiment.</p>
 				</div>
-			<% end %>
-			
-			<% if @projects.count > 0 %>   			
+			<% end %>		
 
-				<h3>Projects created this round:</h3>      
-				<br>
+			<h3>Projects created this round:</h3>      
+			<br>
+
+			<% @preferences.each do |preference| %>
+				<h4>Group: <%= preference.group.name %></h4>			
 				<table class="table table-bordered table-striped">
 					<thead>
 						<tr>
@@ -29,7 +30,7 @@
 						 </tr>
 					</thead>
 					<tbody>
-						<% @projects.each do |project| %>
+						<% preference.group.projects.each do |project| %>
 							<tr>
 								<td><%= project.name %></td>
 								<td><%= project.popularity %></td>       				
@@ -59,45 +60,30 @@
 						<% end %>
 					</tbody>
 				</table>                         
-				
-			<% else %>
-
-				<div class="hero-unit">
-					<h3>There were no projects created for your group in this round!</h3>
-				</div>
-				<br>
-
-			<% end %>                                 
-
- 			<h3>Your Return:</h3> 
-			<br>  	 
-			<table class="table table-striped table-bordered">
-				<tbody>
-					<tr>
-						<td>1. Credits not spent creating projects: </td>
-						<td><strong><%= @preference.credits_not_spent %></strong></td> 
-					</tr>
-					<tr>
-						<td>2. Credits awarded for successful projects: </td>
-						<td><strong><%= @preference.total_return_from_projects %></strong></td> 
-					</tr>
-					<tr>
-						<td><h3>Total earnings for this round: </h3></td>
-						<td><h3><%= @preference.total_return %></h3></td> 
-					</tr>					
-			   </tbody>
-			</table>
-
-		   <br>
-			<h3>Hints:</h3>
-			<br>
-			<p> - Your total return is calculated as follows: <strong>(Credits not spent creating projects + Credits awarded for successful projects.)</strong></p> 			
-			<p> - Returns are only shown for projects which you created.</p>
-			<br>
+							                   
+	 			<h3>Your Return:</h3> 
+				<br>  	 
+				<table class="table table-striped table-bordered">
+					<tbody>
+						<tr>
+							<td>1. Credits not spent creating projects: </td>
+							<td><strong><%= preference.credits_not_spent %></strong></td> 
+						</tr>
+						<tr>
+							<td>2. Credits awarded for successful projects: </td>
+							<td><strong><%= preference.total_return_from_projects %></strong></td> 
+						</tr>
+						<tr>
+							<td><h3>Total earnings for this round: </h3></td>
+							<td><h3><%= preference.total_return %></h3></td> 
+						</tr>					
+				   </tbody>
+				</table>
+			<% end %>
 
 			<div class="form-actions">
 				<% if @current_round.last_round? %>
-					<%= link_to "Experiment Summary", experiment_summary_path(@current_experiment), :class => 'btn-success btn-large pull-right' %>
+					<%= link_to "End Experiment", "/admin", :class => 'btn-success btn-large pull-right' %>
 				<% else %>
 					<%= link_to "Ready for Next Round", round_waiting_path(@next_round), :class => 'btn-success btn-large pull-right' %>  
 				<% end %>
