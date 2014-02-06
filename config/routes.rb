@@ -28,6 +28,7 @@ CrowdfundingExperiment::Application.routes.draw do
   match "/rounds/:id/round_history" => "rounds#round_history", :as => :round_history
   match "/rounds/:id/countdown" => "rounds#countdown", :as => :countdown    
   match "/rounds/:id/update_donation_results" => "rounds#update_donation_results", :as => :update_donation_results    
+  match "/rounds/:id/update_results_donation" => "rounds#update_results_donation", :as => :update_results_donation    
          
    
   # Routes for GROUPS

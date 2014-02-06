@@ -20,7 +20,7 @@
                </tr>
             </thead>
             <tbody>
-              <% preference.group.projects.each do |project| %>
+              <% preference.group.projects.sort{|x, y | x.id <=> y.id}.each do |project| %>
                 <tr>
                   <td><%= project.name %></td>
                   <td><%= project.popularity %></td>              

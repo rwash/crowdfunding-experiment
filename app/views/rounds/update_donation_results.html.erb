@@ -6,7 +6,7 @@
     <thead>
       <tr>
         <td><h4>Project</h4></td>
-        <td><h4>Popularity</h4></td>
+        <!-- <td><h4>Popularity</h4></td> -->
         <td><h4>Contributions</h4></td>  
         <td><h4>Funding</h4></td>        
         <td><h4>Status</h4></td>  
@@ -18,7 +18,7 @@
       <% @projects.each do |project| %>
         <tr>
           <td><%= project.name %></td>
-          <td><%= project.popularity %></td>              
+          <!-- <td><%#= project.popularity %></td>               -->
           <td><%= project.total_contributions %> / <%= project.goal_amount %></td>        
           <td>
             <div class="progress <%= "progress-success" if project.funded %>">

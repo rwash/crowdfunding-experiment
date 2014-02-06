@@ -69,6 +69,7 @@ class RoundsController < InheritedResources::Base
       @current_group = @preference.group
       @preference.generate_project_display_order(@current_group)  
       @projects = @preference.get_project_list
+      @projects = @projects.sort{|x, y | x.id <=> y.id}
       @projects.each do |project|
         project.calculate_funding_details 
       end
@@ -103,6 +104,7 @@ class RoundsController < InheritedResources::Base
     if @current_round.remaining_seconds == 0
       @current_round.set_finished_round
     end    
+
     if @current_round.check_if_round_complete
       Group.where(:round_id => @current_round).each do |group|
         group.projects.each do |project|
@@ -136,6 +138,7 @@ class RoundsController < InheritedResources::Base
         @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first
         @current_group = @preference.group
         @projects = @preference.get_project_list
+        @projects = @projects.sort{|x, y | x.id <=> y.id}
         @projects.each do |project|
           project.calculate_funding_details 
         end        
@@ -168,6 +171,7 @@ class RoundsController < InheritedResources::Base
     @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first 
     @current_group = @preference.group 
     @projects = @preference.get_project_list    
+    @projects = @projects.sort{|x, y | x.id <=> y.id}
 		@next_round_number = @current_round.number + 1
 		@next_round = @experiment.rounds.where(:number => @next_round_number).first   
 		
@@ -203,12 +207,38 @@ class RoundsController < InheritedResources::Base
       @current_group = @preference.group
       @preference.generate_project_display_order(@current_group)  
       @projects = @preference.get_project_list
+      @projects = @projects.sort{|x, y | x.id <=> y.id}
       @projects.each do |project|
         project.calculate_funding_details 
       end
     end    
 
     render layout: false
+  end
+
+  def update_results_donation
+    @current_round = Round.find(params[:id]) 
+    @round_finish = false
+
+    if current_admin_user.present?
+      @user = @current_round.experiment.users.where("user_type = ?", "Creator").first
+    else
+      @user = current_user
+    end
+        
+    @experiment = @current_round.experiment    
+    @group = Group.where(:round_id => @current_round)
+
+    set_user_status(@user, "Waiting for Round ##{@current_round.number} Summary")  
+    
+    if @current_round.remaining_seconds == 0
+      @current_round.set_finished_round
+      @round_finish = true
+    end    
+
+    @preferences = CreatorPreference.where(:user_id => @user, :round_id => @current_round)
+
+    render layout: false    
   end
 	
 end

@@ -2,13 +2,55 @@
 <h3>Please stand by while other participants finish the round.</h3>
 
 <% if @user.user_type == "Creator" %>
-  <%= render :partial => "creator_summary_results" %>
+  <span id="donation-results">
+    <%= render :partial => "creator_summary_results" %>
+  </span>  
 <% elsif @user.user_type == "Donor" %>
   <%= render :partial => "donatur_summary_results" %>
 <% end %>
 
-<script type="text/javascript">
-    window.setTimeout(function() {
-    	window.location.reload()
-    }, 2000);
-</script>
+
+<% if @user.user_type == "Creator" %>
+  <script type='text/javascript'>
+    $(document).ready(function() {
+      function updateResults(){
+        $.ajax({
+          url: "<%= update_results_donation_path(@current_round) %>",
+          dataType: "html"
+        }).done(function( data ) {
+          
+          if(data.trim() !== "done") {
+            document.getElementById("donation-results").innerHTML = data;
+            setTimeout (function() { updateResults(); }, 3000);
+          } else {
+            window.location.reload()
+          }
+        });
+      }
+      updateResults();      
+      // live countdown
+      // function countDown() {
+      //   $.ajax({
+      //     url: "<%= countdown_path(@current_round) %>",
+      //     dataType: "json"
+      //   }).done(function( data ) {
+      //     if (data.count === 0)  {
+      //       document.getElementById("submit-button").click(); 
+      //     } else {
+      //       document.getElementById("timer").innerHTML = data.count;
+      //       setTimeout (function() { countDown(); }, 1000);         
+      //     }
+      //   });
+      // }
+      // countDown();    
+
+      // update results
+    });
+  </script>
+<% elsif @user.user_type == "Donor" %>
+  <script type="text/javascript">
+      window.setTimeout(function() {
+      	window.location.reload()
+      }, 2000);
+  </script>
+<% end %>
