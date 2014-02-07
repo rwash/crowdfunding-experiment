@@ -14,7 +14,7 @@ NUMBER_OF_CREATORS = 1
 NUMBER_OF_DONORS =  12 # Default is 12
 NUMBER_SPECIAL_DONORS_PER_GROUP = 2
 NUMBER_OF_USERS = NUMBER_OF_CREATORS + NUMBER_OF_DONORS
-CREDITS_TO_DOLLAR_RATE = 200  
+CREDITS_TO_DOLLAR_RATE = 100  
     
                                                               
 # Groups

@@ -15,6 +15,7 @@
 			 	</thead>
 				<tbody>
 					<% @experiment.users.each do |user| %>
+						<% next if user.user_type == "Creator"%>
 						<tr>
 							<td><%= user.name %></td>
 							<td><%= user.user_type %></td>
