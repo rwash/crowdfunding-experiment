@@ -13,14 +13,19 @@ class Project < ActiveRecord::Base
     @user = user                                                                                   
     @current_group = group
     @amount_contributed = amount_contributed
-    
+    @user_total_contributions = @user.contributions.where("project_id = ?", self.id).collect(&:amount)
 
     self.calculate_funding_details
     totaled_contributions =  self.total_contributions + @amount_contributed
-    if self.goal_amount >= totaled_contributions      
-      self.contributions << Contribution.new(:user_id => @user.id, :project_id => self, :amount => @amount_contributed)
-      self.save!      
-      true
+    if self.goal_amount >= totaled_contributions 
+      if (@user_total_contributions.sum + amount_contributed) > 30
+        false
+      else
+        self.contributions << Contribution.new(:user_id => @user.id, 
+          :project_id => self, :amount => @amount_contributed)
+        self.save!      
+        true             
+      end
     else
       false
     end
