@@ -68,7 +68,7 @@ ActiveAdmin.register Experiment do
   # Configuration for Experiments Edit Page
   form do |f|                         
    f.inputs "New Experiment" do       
-     f.input :return_credits, :as => :select, :include_blank => false
+     f.input :return_credits, :as => :select, :include_blank => false, collection: options_for_select([["Yes", true], ["No", false]], true)
    end                               
    f.actions                         
   end  

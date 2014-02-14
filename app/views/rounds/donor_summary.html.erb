@@ -56,11 +56,12 @@
 								</td>
 								<td>
 									<% if project.funded? %>
-										<% if project.popularity == "Niche" && (project.special_user_1 == @user.id || project.special_user_2 == @user.id) %>
-											<h4><%= project.special_return_amount %></h4>
-										<% else %>
-										   <h4><%= project.standard_return_amount %></h4>
-										<% end %>                      
+										<h4><%= project.calculate_payout(@user, @preference) %></h4>
+										<%# if project.popularity == "Niche" && (project.special_user_1 == @user.id || project.special_user_2 == @user.id) %>
+											<!-- <h4><%#= project.special_return_amount %></h4> -->
+										<%# else %>
+										   <!-- <h4><%#= project.standard_return_amount %></h4> -->
+										<%# end %>                      
 									<% else %> 
 										<% if current_experiment.return_credits %>
 											<% if project.get_contribution(@user) %>

@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
 	has_many :projects, :dependent => :destroy 
 	has_many :contributions, :dependent => :destroy
 	has_one :survey, :dependent => :destroy
+
+  scope :donors, -> {where(user_type: "Donor").order("id ASC")}
 	
 	after_create :generate_name_and_password       
 	
@@ -43,5 +45,9 @@ class User < ActiveRecord::Base
 	  self.times_viewed_instructions =+ 1
 	  self.save
 	end
+
+  def order_number
+    self.experiment.users.donors.index(self) + 1
+  end
 
 end
