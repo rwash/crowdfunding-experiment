@@ -111,22 +111,7 @@ class Project < ActiveRecord::Base
       user_donate_amount = preference.credits_not_donated
     end        
 
-    user_payouts = [
-      {"1" => {"red" => 0, "green" => 30, "blue" => 45}}, 
-      {"2" => {"red" => 0, "green" => 30, "blue" => 45}}, 
-      {"3" => {"red" => 0, "green" => 30, "blue" => 45}}, 
-      {"4" => {"red" => 15, "green" => 30, "blue" => 15}}, 
-      {"5" => {"red" => 15, "green" => 30, "blue" => 15}}, 
-      {"6" => {"red" => 15, "green" => 30, "blue" => 15}}, 
-      {"7" => {"red" => 0, "green" => 30, "blue" => 45}}, 
-      {"8" => {"red" => 0, "green" => 30, "blue" => 45}}, 
-      {"9" => {"red" => 0, "green" => 30, "blue" => 45}}, 
-      {"10" => {"red" => 15, "green" => 30, "blue" => 15}}, 
-      {"11" => {"red" => 15, "green" => 30, "blue" => 15}}, 
-      {"12" => {"red" => 15, "green" => 30, "blue" => 15}}
-    ]
-
-    payout = user_payouts.map{|pay| pay[user.order_number.to_s] if pay.has_key?(user.order_number.to_s)}.compact.first
+    payout = user.experiment.payout_condition.data.map{|pay| pay[user.order_number.to_s] if pay.has_key?(user.order_number.to_s)}.compact.first
 
     return (payout[self.name.downcase].to_i + user_donate_amount.to_i)
 

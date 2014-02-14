@@ -58,6 +58,7 @@ ActiveAdmin.register Experiment do
       row :return_credits do |experiment|
         experiment.return_credits.yesno
       end      
+      row :payout_condition_id
       row :start_time
       row :end_time
     end
@@ -69,6 +70,7 @@ ActiveAdmin.register Experiment do
   form do |f|                         
    f.inputs "New Experiment" do       
      f.input :return_credits, :as => :select, :include_blank => false, collection: options_for_select([["Yes", true], ["No", false]], true)
+     f.input :payout_condition_id, :as => :select, :include_blank => false, collection: options_for_select(PayoutCondition.all.map{|x| [x.name, x.id] })
    end                               
    f.actions                         
   end  
