@@ -50,4 +50,9 @@ class User < ActiveRecord::Base
     self.experiment.users.donors.index(self) + 1
   end
 
+  def get_payoff(name)
+    payoff = self.experiment.payout_condition.data.map{|pay| pay[self.order_number.to_s] if pay.has_key?(self.order_number.to_s)}.compact.first
+    payoff[name.downcase]
+  end
+
 end

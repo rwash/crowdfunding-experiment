@@ -20,7 +20,6 @@
 					<thead>
 						<tr>
 							<td><h4>Project</h4></td>
-							<!-- <td><h4>Popularity</h4></td> -->
 							<td><h4>Contributions</h4></td>  
 							<td><h4>Funding</h4></td>        
 							<td><h4>Status</h4></td>  
@@ -32,7 +31,6 @@
 						<% @projects.each do |project| %>
 							<tr>
 								<td><%= project.name %></td>
-								<!-- <td><%#= project.popularity %></td>       				 -->
 								<td><%= project.total_contributions %> / <%= project.goal_amount %></td>        
 								<td>
 									<div class="progress <%= "progress-success" if project.funded %>">
@@ -57,11 +55,6 @@
 								<td>
 									<% if project.funded? %>
 										<h4><%= project.calculate_payout(@user, @preference) %></h4>
-										<%# if project.popularity == "Niche" && (project.special_user_1 == @user.id || project.special_user_2 == @user.id) %>
-											<!-- <h4><%#= project.special_return_amount %></h4> -->
-										<%# else %>
-										   <!-- <h4><%#= project.standard_return_amount %></h4> -->
-										<%# end %>                      
 									<% else %> 
 										<% if current_experiment.return_credits %>
 											<% if project.get_contribution(@user) %>

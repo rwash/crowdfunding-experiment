@@ -18,7 +18,7 @@ class Project < ActiveRecord::Base
     self.calculate_funding_details
     totaled_contributions =  self.total_contributions + @amount_contributed
     if self.goal_amount >= totaled_contributions 
-      if (@user_total_contributions.sum + amount_contributed) > 30
+      if (@user_total_contributions.sum + amount_contributed) > MAX_PROJECT_DONATION
         false
       else
         self.contributions << Contribution.new(:user_id => @user.id, 
@@ -111,9 +111,12 @@ class Project < ActiveRecord::Base
       user_donate_amount = preference.credits_not_donated
     end        
 
+    remaining_donation = MAX_PROJECT_DONATION
+    remaining_donation = MAX_PROJECT_DONATION - self.get_contribution(user).amount if self.get_contribution(user)
+
     payout = user.experiment.payout_condition.data.map{|pay| pay[user.order_number.to_s] if pay.has_key?(user.order_number.to_s)}.compact.first
 
-    return (payout[self.name.downcase].to_i + user_donate_amount.to_i)
+    return (payout[self.name.downcase].to_i + remaining_donation.to_i)
 
   end
 

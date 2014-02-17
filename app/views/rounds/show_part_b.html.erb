@@ -32,15 +32,11 @@
 										<!-- <td><%#= project.popularity %></td> -->
 										<td><%= project.goal_amount %> credits</td>
 										<td>
-		                        <% if project.popularity == "Niche" %>
-		                        	<% if project.special_user_1 == @user.id || project.special_user_2 == @user.id %>
-											 	<%= project.special_return_amount %>
-										   <% else %>
-												<%= project.standard_return_amount %>
+											<% if project.funded? %>
+												<%= project.calculate_payout(@user, @preference) %>
+											<% else %> 
+												<%= MAX_PROJECT_DONATION %>
 											<% end %>
-		                        <% elsif project.popularity == "Popular" %>
-											<%= project.standard_return_amount %>
-										<% end %>
 										</td>
 										<td>
 											<%= text_field_tag "amount_#{i}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{i}", :class => 'contribution-field' %><br>
@@ -119,7 +115,7 @@
 			});
 		}
 
-		countDown();		
+		// countDown();		
 		updateResults();
 	});
 </script>
