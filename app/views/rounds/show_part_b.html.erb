@@ -18,7 +18,6 @@
 						<thead>
 							<tr>
 								<td><h3>Project</h3></td>
-								<!-- <td><h3>Popularity</h3></td> -->
 								<td><h3>Goal</h3></td>
 								<td><h3>Your Payoff</h3></td>
 								<td><h3>Your Contributions</h3></td>															
@@ -29,7 +28,6 @@
 
 									<tr>
 										<td><%= project.name %></td>
-										<!-- <td><%#= project.popularity %></td> -->
 										<td><%= project.goal_amount %> credits</td>
 										<td>
 											<% if project.funded? %>
@@ -115,7 +113,7 @@
 			});
 		}
 
-		// countDown();		
+		countDown();		
 		updateResults();
 	});
 </script>

@@ -1,7 +1,6 @@
 <div class="row">
-  <div class="span12" id="donation-results">
+  <div class="span10" id="donation-results">
     <% if @projects.count > 0 %>
-
       <h3>Projects created this round:</h3>      
       <br>
       <table class="table table-bordered table-striped">
@@ -61,15 +60,38 @@
           <% end %>
         </tbody>
       </table> 
-        <br>                                             
-
+      <br>                                             
     <% else %>
-
       <div class="hero-unit">
         <h3>There were no projects created for your group in this round!</h3>
       </div>
       <br>
-
     <% end %>    
+  </div>
+  <div class="span2">
+    <h3>Your Potential Payoff</h3>
+    <br>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <td>&nbsp;</td>
+          <td><h4>Potential Payoff</h4></td>
+         </tr>
+      </thead>    
+      <tbody>
+        <tr>
+          <td>Red</td>
+          <td><%= current_user.get_payoff("red") %></td>
+        </tr>
+        <tr>
+          <td>Green</td>
+          <td><%= current_user.get_payoff("green") %></td>
+        </tr>
+        <tr>
+          <td>Blue</td>
+          <td><%= current_user.get_payoff("blue") %></td>
+        </tr>        
+      </tbody>
+    </table>
   </div>
 </div>   
