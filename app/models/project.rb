@@ -104,7 +104,7 @@ class Project < ActiveRecord::Base
 	  return false
 	end
 
-  def calculate_payout(user, preference)
+  def calculate_payout(user, preference, total_payout = true)
     if preference.credits_not_donated.blank?
       user_donate_amount = AMOUNT_DONOR_CAN_DONATE_PER_ROUND
     else
@@ -116,7 +116,14 @@ class Project < ActiveRecord::Base
 
     payout = user.experiment.payout_condition.data.map{|pay| pay[user.order_number.to_s] if pay.has_key?(user.order_number.to_s)}.compact.first
 
-    return (payout[self.name.downcase].to_i + remaining_donation.to_i)
+    total = nil
+    if total_payout
+      total = (payout[self.name.downcase].to_i + remaining_donation.to_i)
+    else
+      total = payout[self.name.downcase].to_i
+    end
+    
+    return total
 
   end
 

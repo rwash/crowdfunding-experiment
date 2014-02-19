@@ -54,7 +54,7 @@ class DonorPreference < ActiveRecord::Base
    
     @group.projects.each do |project| 
       if project.funded?
-        @total_return_from_projects += project.calculate_payout(@user, self)
+        @total_return_from_projects += project.calculate_payout(@user, self, false)
       else
         if @experiment.return_credits
           if project.get_contribution(@user)
