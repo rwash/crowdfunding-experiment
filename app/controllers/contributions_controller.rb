@@ -31,6 +31,8 @@ class ContributionsController < InheritedResources::Base
         if @amount_contributed > 0
           unless @project.create_contribution(@user, @amount_contributed)
             @total_amount_contributed = @total_amount_contributed - @amount_contributed
+            #The only reason for a false return would be if they have donated more than 30 to a project
+            redirect_to round_show_part_b_path(@current_round), :alert => "Cannot contribute more than #{MAX_PROJECT_DONATION} credits to a project" and return
           end          
         elsif @amount_contributed < 0
           redirect_to round_show_part_b_path(@current_round), :alert => "Cannot contribute negative amounts!" and return            

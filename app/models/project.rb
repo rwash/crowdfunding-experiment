@@ -17,17 +17,30 @@ class Project < ActiveRecord::Base
 
     self.calculate_funding_details
     totaled_contributions =  self.total_contributions + @amount_contributed
-    if self.goal_amount >= totaled_contributions 
-      if (@user_total_contributions.sum + amount_contributed) > MAX_PROJECT_DONATION
-        false
-      else
-        self.contributions << Contribution.new(:user_id => @user.id, 
-          :project_id => self, :amount => @amount_contributed)
-        self.save!      
-        true             
-      end
+    
+    #Commenting below to fix then test
+    
+    #if self.goal_amount >= totaled_contributions 
+    #  if (@user_total_contributions.sum + amount_contributed) > MAX_PROJECT_DONATION
+    #    false
+    #  else
+    #    self.contributions << Contribution.new(:user_id => @user.id, 
+    #      :project_id => self, :amount => @amount_contributed)
+    #    self.save!      
+    #    true             
+    #  end
+    #else
+    #  false
+    #end
+    
+    #New version of above
+    if (@user_total_contributions.sum + @amount_contributed) > MAX_PROJECT_DONATION
+	false
     else
-      false
+	self.contributions << Contribution.new(:user_id => @user.id,
+	    :project_id => self, :amount => @amount_contributed)
+	self.save!
+        true
     end
   end
 
@@ -96,10 +109,14 @@ class Project < ActiveRecord::Base
 	
 	def get_contribution(user)
 	  @user = user
+	  @total_amount_contributed_by_user = 0
 	  self.contributions.each do |contribution|
 	    if contribution.user_id == @user.id
-	      return contribution 
+	      @total_amount_contributed_by_user += contribution.amount
 	    end
+	  end
+	  if @total_amount_contributed_by_user > 0
+	    return @total_amount_contributed_by_user
 	  end
 	  return false
 	end

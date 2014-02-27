@@ -58,7 +58,7 @@ class DonorPreference < ActiveRecord::Base
       else
         if @experiment.return_credits
           if project.get_contribution(@user)
-            @credits_to_be_returned += project.get_contribution(@user).amount 
+            @credits_to_be_returned += project.get_contribution(@user) 
           end
         end  
       end                                           

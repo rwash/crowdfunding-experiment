@@ -19,7 +19,7 @@
 							<tr>
 								<td><h3>Project</h3></td>
 								<td><h3>Goal</h3></td>
-								<td><h3>Your Payoff</h3></td>
+								<td><h3>Remaining Credits</h3></td>
 								<td><h3>Your Contributions</h3></td>															
 							</tr>
 						</thead>
@@ -30,10 +30,15 @@
 										<td><%= project.name %></td>
 										<td><%= project.goal_amount %> credits</td>
 										<td>
-											<% if project.funded? %>
+											<!--<% if project.funded? %>
 												<%= project.calculate_payout(@user, @preference) %>
 											<% else %> 
 												<%= MAX_PROJECT_DONATION %>
+											<% end %>-->
+											<% if project.get_contribution(@user) %>
+											  <%= MAX_PROJECT_DONATION - project.get_contribution(@user) %>
+											<% else %>
+											  <%= MAX_PROJECT_DONATION %>
 											<% end %>
 										</td>
 										<td>
@@ -92,11 +97,14 @@
 				dataType: "json"
 			}).done(function( data ) {
 				if (data.count === 0)  {
-					document.getElementById("submit-button").click(); 
+					//document.getElementById("submit-button").click();
+					location.reload();
+					
 				} else {
 					document.getElementById("timer").innerHTML = data.count;
 					setTimeout (function() { countDown(); }, 1000);					
 				}
+				
 			});
 		}
 

@@ -35,13 +35,13 @@
           </td>
           <td>
             <% if project.get_contribution(@user) %>
-              <%= project.get_contribution(@user).amount %>
+              <%= project.get_contribution(@user) %>
             <% else %>
               0
              <% end %>
           </td>
           <td>
-            <% if project.funded? %>
+            <!--<% if project.funded? %>
               <% if project.popularity == "Niche" && (project.special_user_1 == @user.id || project.special_user_2 == @user.id) %>
                 <h4><%= project.special_return_amount %></h4>
               <% else %>
@@ -50,14 +50,15 @@
             <% else %> 
               <% if current_experiment.return_credits %>
                 <% if project.get_contribution(@user) %>
-                  <h4><%= project.get_contribution(@user).amount %></h4>
+                  <h4><%= project.get_contribution(@user) %></h4>
                 <% else %>
                   <h4>0</h4>
                 <% end %>
               <% else %>
                 0
               <% end %>  
-            <% end %>
+            <% end %>-->
+            <h4><%= current_user.get_payoff(project.name.downcase) %> </h4>
           </td>
          </tr>                                       
       <% end %>
