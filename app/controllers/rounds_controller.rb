@@ -89,7 +89,8 @@ class RoundsController < InheritedResources::Base
 	
 	
 	def waiting_for_summary
-    @current_round = Round.find(params[:id]) 
+    @current_round = Round.find(params[:id])
+    @time_remaining = @current_round.remaining_seconds
     if current_admin_user.present?
       @user = @current_round.experiment.users.where("user_type = ?", "Creator").first
     else
@@ -101,7 +102,7 @@ class RoundsController < InheritedResources::Base
 
     set_user_status(@user, "Waiting for Round ##{@current_round.number} Summary")  
 		
-    if @current_round.remaining_seconds == 0
+    if @time_remaining == 0
       @current_round.set_finished_round
     end    
 
@@ -141,7 +142,7 @@ class RoundsController < InheritedResources::Base
         @projects = @projects.sort{|x, y | x.id <=> y.id}
         @projects.each do |project|
           project.calculate_funding_details 
-        end        
+        end
       end      
     end
 	end

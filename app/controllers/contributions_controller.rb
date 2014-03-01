@@ -6,6 +6,7 @@ class ContributionsController < InheritedResources::Base
     @user = current_user
     @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round).first    
     @current_group = @preference.group 
+    @time_left = @current_round.remaining_seconds
     
     @total_amount_contributed = 0
     @current_group.projects.each_with_index do |project, i|
@@ -41,8 +42,11 @@ class ContributionsController < InheritedResources::Base
       
       @preference.credits_not_donated = (@user_donate_amount - @total_amount_contributed) 
       @preference.save!  
-
-      redirect_to round_show_part_b_path(@current_round), :notice => "Contributions submitted!"  
+      if @time_left < FINAL_DONATION_PERIOD_SECONDS
+	redirect_to summary_waiting_path(@current_round)
+      else
+	redirect_to round_show_part_b_path(@current_round), :notice => "Contributions submitted!"
+      end
     end
   end
 	

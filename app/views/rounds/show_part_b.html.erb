@@ -7,7 +7,7 @@
 			  	<h2>Part B: Contribute to Projects</h2>
 			</div>
 
-			<%= form_tag(contributions_submit_path) do %>
+			<%= form_tag(contributions_submit_path, :id => "contributions-form") do %>
 
 				<% if @projects.count > 0 %>     
 
@@ -70,7 +70,7 @@
 		    	<%= hidden_field_tag "current_round_id", @current_round.id %>
  
 				<div class="form-actions">
-			    	<%= submit_tag :submit, :id => "submit-button", :value => "Submit", :class => 'btn btn-large btn-success pull-right' %>
+			    	<%= submit_tag :submit, :id => "submit-button", :value => "Submit", :class => 'btn btn-large btn-success pull-right', :onclick => 'form.submit(); this.disabled=true;' %>
 			  	</div>
 		
 		</div> 
@@ -90,24 +90,40 @@
         
 <script type='text/javascript'>
 	$(document).ready(function() {
-		// live countdown
-		function countDown() {
+		// start live countdown
+		function startCountDown() {
 			$.ajax({
 				url: "<%= countdown_path(@current_round) %>",
 				dataType: "json"
 			}).done(function( data ) {
+				document.getElementById("last-call").innerHTML = "";
 				if (data.count === 0)  {
-					//document.getElementById("submit-button").click();
 					location.reload();
 					
 				} else {
 					document.getElementById("timer").innerHTML = data.count;
-					setTimeout (function() { countDown(); }, 1000);					
+					setTimeout (function() { countDown(data.count - 1); }, 1000);					
 				}
 				
 			});
 		}
-
+		
+		//Continue Live countdown and disable submit button when the timer gets to 0
+		function countDown(count) {
+			if (count > 0) 
+				{
+				document.getElementById("timer").innerHTML = count;
+				setTimeout (function() { countDown(count - 1); }, 1000);
+				}
+				else if (count == 0) 
+				{
+					$("#submit-button").prop("disabled",true);
+					location.reload(); 
+				}
+		}
+		
+		
+		
 		// update results
 		function updateResults(){
 			$.ajax({
@@ -115,13 +131,16 @@
 				dataType: "html"
 			}).done(function( data ) {
 				document.getElementById("donation-results").innerHTML = data;
-				if(document.getElementById("timer").innerHTML !== "0") {
-					setTimeout (function() { updateResults(); }, 5000);
+				if(parseInt(document.getElementById("timer").innerHTML, 10) > <%= FINAL_DONATION_PERIOD_SECONDS %>) {
+					setTimeout (function() { updateResults(); }, 1000);
+				}
+				else {
+					document.getElementById("last-call").innerHTML = "Last chance to donate";
 				}				
 			});
 		}
 
-		countDown();		
+		startCountDown();		
 		updateResults();
 	});
 </script>
