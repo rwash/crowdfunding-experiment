@@ -59,14 +59,19 @@ class Experiment < ActiveRecord::Base
       
       
       
-      # Jacob's comment- I am temporarily removing the random reassignment of groups.
-      # This is for two reasons- first, it needs to be reworked to match the details of the current experiment so that stay the same from round to round
-      # Second, it makes it much easier to test the system if users are always in the same group
-      # I am commenting out the line directly below, but it may need to be uncommented later
+
       # @random_donor_group = (0..(NUMBER_OF_DONORS-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_OF_DONORS_PER_GROUP-1)]
       
-      # My replacement for the above line to keep groups the same over the experiment
-      @random_donor_group = (0..(NUMBER_OF_DONORS-1)).to_a[0..(NUMBER_OF_DONORS_PER_GROUP-1)]
+      if GROUP_REMATCHING
+        @p1 = [0,1,2,6,7,8].sample(3)
+        @p2 = [3,4,5,8,10,11].sample(3)
+        @random_donor_group = @p1.concat(@p2)
+      else
+        @random_donor_group = (0..(NUMBER_OF_DONORS-1)).to_a[0..(NUMBER_OF_DONORS_PER_GROUP-1)]
+      end
+      
+      
+      
       @donors.each_with_index do |donor, m|
         if @random_donor_group.include?(m)
           donor.donor_preferences << DonorPreference.create(:group => @round_groups[0], :round => round)            

@@ -36,6 +36,7 @@ class Round < ActiveRecord::Base
       end
     end
     self.part_a_finished = true
+    self.start_time = DateTime.now
     self.part_b_started = true
     self.save!
   end
@@ -44,10 +45,15 @@ class Round < ActiveRecord::Base
 	def start_round_part_a
     if self.part_a_started != true
       self.part_a_started = true
-      self.start_time = DateTime.now
+      #self.start_time = DateTime.now
       self.save! 
     end
-  end
+	end
+	
+  #def start_round_part_b
+  #  self.start_time = DateTime.now
+  #  self.save!
+  #end
       
   
   def check_if_round_part_b_ready_to_start
@@ -59,6 +65,7 @@ class Round < ActiveRecord::Base
       return false if !donor_preference.is_ready
     end
     self.part_b_started = true
+    self.start_time = DateTime.now
     self.save!
   end
 
@@ -112,6 +119,14 @@ class Round < ActiveRecord::Base
       remaining_seconds = 60 - diff
     end
     remaining_seconds
+  end
+  
+  #Check that all donors are ready
+  def check_if_all_donors_ready
+    self.donor_preferences.each do |donor_preference|
+      return false if !donor_preference.is_ready
+    end
+    return true
   end
 	
 end

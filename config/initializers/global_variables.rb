@@ -78,3 +78,8 @@ Q12_B_TEXT = "A niche project that requires #{HIGH_VALUE_PROJECT_GOAL} credits"
 Q12_C_TEXT = "A popular project that requires #{LOW_VALUE_PROJECT_GOAL} credits" 
 Q12_D_TEXT = "A popular project that requires #{HIGH_VALUE_PROJECT_GOAL} credits"   
 SURVEY_RISK_SELECTION = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "Not Sure"]
+
+
+# Some variables to assist in testing, turning on and off random regrouping and forcing all 12 users to keep up
+GROUP_REMATCHING = true
+ALL_USERS_KEEP_PACE = true

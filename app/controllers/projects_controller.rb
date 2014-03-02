@@ -31,7 +31,8 @@ class ProjectsController < InheritedResources::Base
           if current_group.save
             preference.credits_not_spent = (AMOUNT_CREATOR_CAN_SPEND_PER_ROUND - (@number_of_projects * COST_TO_CREATE_PROJECT))
             preference.set_finished_round
-            @current_round.check_if_part_a_finished            
+            @current_round.check_if_part_a_finished
+            
           else
             raise ActiveRecord::Rollback
           end

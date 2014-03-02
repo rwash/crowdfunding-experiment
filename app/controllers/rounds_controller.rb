@@ -21,8 +21,16 @@ class RoundsController < InheritedResources::Base
       if @preference.finished_round
         redirect_to summary_waiting_path(@current_round) 
       else
-        @current_round.start_round_part_a 
-        redirect_to round_show_part_a1_path(@current_round)
+	if ALL_USERS_KEEP_PACE
+	  if @current_round.check_if_all_donors_ready
+	    @current_round.start_round_part_a
+	    redirect_to round_show_part_a1_path(@current_round)
+	  end
+	  
+	else
+	  @current_round.start_round_part_a 
+          redirect_to round_show_part_a1_path(@current_round)
+        end
       end
     elsif @user.user_type == "Donor" 
       @preference = DonorPreference.where(:user_id => @user, :round_id => @current_round.id).first 
