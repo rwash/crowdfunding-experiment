@@ -5,12 +5,13 @@
 
 <p>You will be taken to a simulated crowdfunding website where project creators have created 3 projects soliciting funding. Each project requires 100 credits. You will be given <strong><%= AMOUNT_DONOR_CAN_DONATE_PER_ROUND %></strong> credits that you may donate to projects. You can donate up to 30 credits to each project, but you may choose not to donate any credits as well.</p>
 
-<p>A round lasts <%= ROUND_PART_B_COUNTDOWN_SECONDS %> seconds. You may donate at any time during the round. You may also make multiple donations. As soon as you make a donation, all others in your group will see the total amount each project has received. </p>
+<p>A round lasts <%= ROUND_PART_B_COUNTDOWN_SECONDS %> seconds. You may donate at any time during the round. You may also make multiple donations. As soon as you make a donation, all others in your group will see the total amount each project has received. Also, any time someone else donates to a project, you will immediately see the new total for that project on your screen. </p>
                                                                                                                             
 <p>Each project will list a payoff that you will earn of that project is completed and receives its requested donations. In this simulation, you will earn payoffs for every project that is fully funded, <strong>regardless of whether you donated to that project yourself.</strong> There are <strong><%= NUMBER_OF_DONORS_PER_GROUP %></strong> donors in your group, including yourself, who also earn payouts for when projects are funded. However, the other donors’ payouts may be different from your own payouts, so others will not necessarily prefer the same projects as you. Below is a picture of the interface you will use to make your donations:</p>
 <br>
-<%= image_tag("donor_interface.png", :width => "450px", :height => "400px", :style => "border: 1px solid black") %>
+<%= image_tag("donor_interface.png", :width => "700px", :height => "600px", :style => "border: 1px solid black") %>
 
+	
 <h3>Payout Calculation:</h3>
 <br>
 <% if current_experiment.return_credits %>

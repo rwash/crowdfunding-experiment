@@ -17,7 +17,7 @@ class ProjectsController < InheritedResources::Base
 
       if preference.finished_round == false    
         Group.transaction do 
-          name_projects = ["Red", "Green", "Blue"]
+          name_projects = ["Red", "Yellow", "Blue"]
           3.times do |itr|
             @new_project = Project.new
             @new_project.update_attributes(:user_id => @user.id, 
