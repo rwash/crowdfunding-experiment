@@ -7,7 +7,6 @@ set :deploy_to, "/projects/crowdfunding-experiment"
 ssh_options[:forward_agent] = true
 set :rvm_type, :system
 set :rails_env, :production
-set :normalize_asset_timestamps, false
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
@@ -37,3 +36,9 @@ namespace :customs do
   end
 end
 before 'bundle:install', 'customs:symlink_db_yml'
+
+namespace :deploy do
+namespace :assets do
+  task :update_asset_mtimes do ; end
+end
+end
