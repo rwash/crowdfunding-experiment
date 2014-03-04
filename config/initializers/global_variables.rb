@@ -65,11 +65,11 @@ Q5_TEXT = "In the crowdfunding simulation, if a donor donated to a project and i
 Q6_TEXT = "In the crowdfunding simulation, did you receive payouts for a completed project regardless of whether you donated to that project or not?"
 Q7_TEXT_1 = "How risky was investment in these types of projects?"
 Q7_TEXT_2 = "(1 = Not Risky, 5 = Moderately Risky, 10 = Extremely Risky)"
-Q7_A_TEXT = "Project requires #{LOW_VALUE_PROJECT_GOAL} credits"
+Q7_A_TEXT = "When a project was receiving lots of donations from others, it made me more likely to donate to that project."
 Q7_B_TEXT = "Project requires #{HIGH_VALUE_PROJECT_GOAL} credits"
 Q8_TEXT = "Did you take any risks with your credits in this experiment?"
-Q9_TEXT = "Were some projects more likely to be funded than others?  Please explain."
-Q10_TEXT = "Were some projects too risky to invest in?  Please explain."
+Q9_TEXT = "Please describe how you made decisions about when to donate to a project. How did you determine the best time in the round to donate?"
+Q10_TEXT = "Did you use any particular strategy in deciding when to donate to a project?"
 Q11_TEXT = "Including yourself, how many project creators were posting projects to the site in each round?"
 Q12_TEXT_1 = "How risky was it to create each of the following types of projects?"
 Q12_TEXT_2 = "(1 = Not Risky, 5 = Moderately Risky, 10 = Extremely Risky)"
@@ -78,6 +78,7 @@ Q12_B_TEXT = "A niche project that requires #{HIGH_VALUE_PROJECT_GOAL} credits"
 Q12_C_TEXT = "A popular project that requires #{LOW_VALUE_PROJECT_GOAL} credits" 
 Q12_D_TEXT = "A popular project that requires #{HIGH_VALUE_PROJECT_GOAL} credits"   
 SURVEY_RISK_SELECTION = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "Not Sure"]
+SURVEY_LIKERT = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
 
 
 # Some variables to assist in testing, turning on and off random regrouping and forcing all 12 users to keep up

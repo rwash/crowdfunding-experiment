@@ -75,8 +75,20 @@
 												:item_wrapper_class => 'inline', 
 												:error => false %></td> 
 							<td><%= f.error :q6 %></td>																								 
-						</tr>							  						
-				 		<tr>                                                    
+						</tr>
+						
+						<tr>
+							<td><h4>7. </h4></td>
+							<td><%=Q7_A_TEXT %></td>
+							<td><%= f.input :q7_a,
+												label: false,
+												as: :select,
+												:collection => SURVEY_LIKERT,
+												:include_blank => true,
+												:selected => @survey.q7_a,
+												:error => false %></td>
+							<td><%= f.error :q7_a %></td>
+<!--				 		<tr>                                                    
 							<td rowspan="3"><h4>7. </h4></td>					
 							<td colspan="3"><%= Q7_TEXT_1 %>	- <strong><%= Q7_TEXT_2 %></strong></td>
 						</tr>
@@ -85,7 +97,7 @@
 							<td><%= f.input :q7_a, 
 												label: false, 
 												as: :select, 
-												:collection => SURVEY_RISK_SELECTION, 
+												:collection => SURVEY_LIKERT, 
 												:include_blank => true, 
 												:selected => @survey.q7_a,
 												:error => false %></td>
@@ -101,7 +113,7 @@
 												:selected => @survey.q7_b, 
 												:error => false %></td>  
 							<td><%= f.error :q7_b %></td>																								
-						</tr>
+						</tr>-->
 				 		<tr>
 							<td><h4>8. </h4></td>	 					
 							<td><%= Q8_TEXT %></td>
