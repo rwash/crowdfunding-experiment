@@ -37,7 +37,7 @@ class Project < ActiveRecord::Base
     if (@user_total_contributions.sum + @amount_contributed) > MAX_PROJECT_DONATION
 	false
     else
-	self.contributions << Contribution.new(:user_id => @user_id,
+	self.contributions << Contribution.new(:user_id => @user.id,
 	    :project_id => self, :amount => @amount_contributed)
 	self.save!
         true
