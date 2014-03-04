@@ -37,7 +37,7 @@ class Project < ActiveRecord::Base
     if (@user_total_contributions.sum + @amount_contributed) > MAX_PROJECT_DONATION
 	false
     else
-	self.contributions << Contribution.new(:user_id => @user.id,
+	self.contributions << Contribution.new(:user_id => @user_id,
 	    :project_id => self, :amount => @amount_contributed)
 	self.save!
         true
@@ -129,7 +129,7 @@ class Project < ActiveRecord::Base
     end        
 
     remaining_donation = MAX_PROJECT_DONATION
-    remaining_donation = MAX_PROJECT_DONATION - self.get_contribution(user).amount if self.get_contribution(user)
+    remaining_donation = MAX_PROJECT_DONATION - self.get_contribution(user) if self.get_contribution(user)
 
     payout = user.experiment.payout_condition.data.map{|pay| pay[user.order_number.to_s] if pay.has_key?(user.order_number.to_s)}.compact.first
 
