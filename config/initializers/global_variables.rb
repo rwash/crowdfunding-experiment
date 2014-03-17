@@ -82,5 +82,5 @@ SURVEY_LIKERT = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly 
 
 
 # Some variables to assist in testing, turning on and off random regrouping and forcing all 12 users to keep up
-GROUP_REMATCHING = false
-ALL_USERS_KEEP_PACE = false
+GROUP_REMATCHING = true
+ALL_USERS_KEEP_PACE = true
