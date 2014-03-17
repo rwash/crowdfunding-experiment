@@ -42,19 +42,6 @@
                  <% end %>
               </td>
               <td>
-                <!--<% if project.funded? %>
-                  <h4><%= project.calculate_payout(@user, @preference) %></h4>
-                <% else %> 
-                  <% if current_experiment.return_credits %>
-                    <% if project.get_contribution(@user) %>
-                      <h4><%= project.get_contribution(@user) %></h4>
-                    <% else %>
-                      <h4>0</h4>
-                    <% end %>
-                  <% else %>
-                    0
-                  <% end %>  
-                <% end %>-->
                 <h4><%= current_user.get_payoff(project.name.downcase) %> </h4>
               </td>
              </tr>                                       
@@ -69,30 +56,5 @@
       <br>
     <% end %>    
   </div>
-<!--  <div class="span2">
-    <h3>Your Potential Payoff</h3>
-    <br>
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <td>&nbsp;</td>
-          <td><h4>Potential Payoff</h4></td>
-         </tr>
-      </thead>    
-      <tbody>
-        <tr>
-          <td>Red</td>
-          <td><%= current_user.get_payoff("red") %></td>
-        </tr>
-        <tr>
-          <td>Green</td>
-          <td><%= current_user.get_payoff("green") %></td>
-        </tr>
-        <tr>
-          <td>Blue</td>
-          <td><%= current_user.get_payoff("blue") %></td>
-        </tr>        
-      </tbody>
-    </table>
-  </div>-->
+
 </div>   

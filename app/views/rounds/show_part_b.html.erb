@@ -29,12 +29,7 @@
 									<tr>
 										<td><%= project.name %></td>
 										<td><%= project.goal_amount %> credits</td>
-										<td>
-											<!--<% if project.funded? %>
-												<%= project.calculate_payout(@user, @preference) %>
-											<% else %> 
-												<%= MAX_PROJECT_DONATION %>
-											<% end %>-->
+										<td class="<%= "remaining_credits_#{i}"%>" id="<%="remaining_credits_#{i}" %>" >
 											<% if project.get_contribution(@user) %>
 											  <%= MAX_PROJECT_DONATION - project.get_contribution(@user) %>
 											<% else %>
@@ -42,7 +37,11 @@
 											<% end %>
 										</td>
 										<td>
-											<%= text_field_tag "amount_#{i}", nil, :placeholder => '0', :in => 1...150, :id => "contribution_#{i}", :class => 'contribution-field' %><br>
+											<% if project.get_contribution(@user) %>
+											  <%= number_field_tag "amount_#{i}", nil, :placeholder => '0', :min => 0, :max => (MAX_PROJECT_DONATION - project.get_contribution(@user)), :id => "contribution_#{i}", :class => 'contribution-field' %><span style = "color:'red';" id=<%= "errmsg_#{i}" %> ></span><br>
+											<% else %>
+											  <%= number_field_tag "amount_#{i}", nil, :placeholder => '0', :min => 0, :max => MAX_PROJECT_DONATION, :id => "contribution_#{i}", :class => 'contribution-field' %><span id=<%= "errmsg_#{i}" %> ></span><br>
+											<% end %>
 								    		<%= hidden_field_tag "project_id_#{i}", project.id %>
 										</td>
 									</tr>						
@@ -51,13 +50,13 @@
 						</tbody>				
 					</table>
 
-		         <br>
-					<h3>Hints:</h3>
+		         <!--<br>-->
+<!--					<h3>Hints:</h3>
 					<br>
 					<p> - Contributions must be positive.</p>
 					<p> - Total contributed amount cannot be more than your allowed credits.</p>
 					<p> - You do not need to allocate all of your credits to projects.</p>
-					<p> - "Your Payoff" is the amount you will receive if the project is successfully funded.</p>    
+					<p> - "Your Payoff" is the amount you will receive if the project is successfully funded.</p>  -->  
 					
 				<% else %>                
 				
@@ -76,18 +75,11 @@
 		</div> 
 		<div class="span3">
 			<%= render "countdown_timer_sidebar" %>  
-			<div align="center">
-				<div class="page-header">
-				  	<h2>Credits</h2>
-				</div>
 
-				<h3>You have <span id="credits"></span> credits remaining.</h3>
-				<br>  
-			</div>			
 		</div>
 	</div>   
 </div>
-        
+
 <script type='text/javascript'>
 	$(document).ready(function() {
 		// start live countdown
@@ -118,6 +110,7 @@
 				else if (count == 0) 
 				{
 					$("#submit-button").prop("disabled",true);
+					document.getElementById("timing-message").innerHTML = "The round has finished";
 					location.reload(); 
 				}
 		}
@@ -146,27 +139,29 @@
 </script>
 
 <script type='text/javascript'>
-	$(document).ready(function() {
-   	var credits = <%= @user_donate_amount %>
-    	$('#credits').text(credits)
-	 	<% number_of_projects = @current_group.projects.count %>
-
+	$(document).ready(function () {
 		<% @current_group.projects.each_with_index do |project, i| %>
-    		<%= "$('#contribution_#{i}').keyup(function()" %> 
+		<%= "$('#contribution_#{i}').keypress(function(e)" %>
 			{
-    			var remaining_credits = (credits<% number_of_projects.times do |i| %> - <%= "$('#contribution_#{i}').val()" %><% end %>)
-       		$('#credits').text(remaining_credits);
-	       	if(remaining_credits < 0)
-	       	{
-		        	$('#credits').css("color", "red");
-	       	}
-	       	else
-	       	{
-		        	$('#credits').css("color", "black");
-	       	}
-   		});		
-	   <% end %>
-	}); 
-</script>   
+			if (e.which != 8 && e.which != 0 && e.which != 13 && (e.which < 48 || e.which > 57)){
+				<%= "$('#errmsg_#{i}').html('Digits only').show().delay(1000).fadeOut(1000)" %>;
+				return false;
+				}
+			var letter = String.fromCharCode(e.which);
+			if <%= "($('#contribution_#{i}').val()+letter" %> > <%= "parseInt($('#remaining_credits_#{i}').html()))" %> {
+				<%= "$('#errmsg_#{i}').html('Too many').show().delay(1000).fadeOut(1000)" %>;
+				return false;
+			}
+			});
+		
+		
+		<% end %>
+		
+	});
+</script>
 
-<% end %>   
+
+
+<% end %>
+
+ 
