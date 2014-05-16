@@ -22,7 +22,7 @@ class Experiment < ActiveRecord::Base
 	
 	
 	def generate_users     
-    @rand_array = (0..(NUMBER_OF_USERS-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_OF_CREATORS-1)]
+    @rand_array = (0..(NUMBER_OF_USERS-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_OF_CREATORS-1)] # .shuffle?
     NUMBER_OF_USERS.times do |i|  
       if @rand_array.include?(i)
         self.users << User.create(:name => "temp", :user_type => "Creator") 
@@ -61,11 +61,22 @@ class Experiment < ActiveRecord::Base
       
 
       # @random_donor_group = (0..(NUMBER_OF_DONORS-1)).to_a.sort{ rand() - 0.5 }[0..(NUMBER_OF_DONORS_PER_GROUP-1)]
-      
+
+
       if GROUP_REMATCHING
-        @p1 = [0,1,2,6,7,8].sample(3)
-        @p2 = [3,4,5,8,10,11].sample(3)
-        @random_donor_group = @p1.concat(@p2)
+        user_preferences = [
+         [1,7],
+         [2,8],
+         [3,9],
+         [4,10],
+         [5,11],
+         [6,12]
+        ]
+  
+        @random_donor_group = []
+        @user_preferences.each_with_index do |user_preference, i|
+          @random_donor_group << user_preference.sample 
+        end
       else
         @random_donor_group = (0..(NUMBER_OF_DONORS-1)).to_a[0..(NUMBER_OF_DONORS_PER_GROUP-1)]
       end
@@ -74,9 +85,9 @@ class Experiment < ActiveRecord::Base
       
       @donors.each_with_index do |donor, m|
         if @random_donor_group.include?(m)
-          donor.donor_preferences << DonorPreference.create(:group => @round_groups[0], :round => round)            
+          donor.donor_preferences << DonorPreference.create(:group => @round_groups[0], :round => round, :preference_type => (m % 6) + 1)
         else
-          donor.donor_preferences << DonorPreference.create(:group => @round_groups[1], :round => round)              
+          donor.donor_preferences << DonorPreference.create(:group => @round_groups[1], :round => round, :preference_type => (m % 6) + 1) 
         end        
       end
     end

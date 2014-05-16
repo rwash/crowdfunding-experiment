@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140214064029) do
+ActiveRecord::Schema.define(:version => 20140516183508) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20140214064029) do
     t.integer  "total_return_from_projects"
     t.integer  "credits_to_be_returned"
     t.string   "project_display_order"
+    t.integer  "preference_type"
   end
 
   create_table "experiments", :force => true do |t|
@@ -106,6 +107,17 @@ ActiveRecord::Schema.define(:version => 20140214064029) do
     t.text     "data"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "payouts", :force => true do |t|
+    t.integer  "round"
+    t.string   "project_type"
+    t.string   "project_name"
+    t.integer  "user"
+    t.integer  "condition"
+    t.integer  "payout"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "projects", :force => true do |t|
