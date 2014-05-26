@@ -2,7 +2,6 @@ class Experiment < ActiveRecord::Base
 	has_many :rounds, :dependent => :destroy
   has_many :groups, :through => :rounds
 	has_many :users, :dependent => :destroy  
-  belongs_to :payout_condition
 	
 	after_create :generate_rounds 
   after_create :generate_users
