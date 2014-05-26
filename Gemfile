@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
 gem "mysql2","~>0.3.11"
-gem 'pg'
 gem 'sass-rails',   '~> 3.2.3'
 gem 'coffee-rails', '~> 3.2.1'
 gem 'therubyracer'
@@ -12,7 +11,6 @@ gem 'capistrano'
 gem 'rvm-capistrano'
 gem 'inherited_resources'
 gem "twitter-bootstrap-rails"
-gem 'therubyracer'
 gem 'authlogic'
 gem 'activeadmin'               # For Administration Interfaces
 gem 'nested_form'               # For Nested Models and JS Forms
@@ -42,4 +40,4 @@ end
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-gem 'debugger', group: [:development, :test]
+# gem 'debugger', group: [:development, :test]

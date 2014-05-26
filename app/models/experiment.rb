@@ -74,7 +74,7 @@ class Experiment < ActiveRecord::Base
         ]
   
         @random_donor_group = []
-        @user_preferences.each_with_index do |user_preference, i|
+        user_preferences.each_with_index do |user_preference, i|
           @random_donor_group << user_preference.sample 
         end
       else
