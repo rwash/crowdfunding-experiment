@@ -128,5 +128,11 @@ class Round < ActiveRecord::Base
     end
     return true
   end
+
+  def group_with_user(user)
+    self.groups.each do |g|
+      return g if g.has_user(user)
+    end
+  end
 	
 end

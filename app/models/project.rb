@@ -131,7 +131,8 @@ class Project < ActiveRecord::Base
     remaining_donation = MAX_PROJECT_DONATION
     remaining_donation = MAX_PROJECT_DONATION - self.get_contribution(user) if self.get_contribution(user)
 
-    payout = user.experiment.payout_condition.data.map{|pay| pay[user.order_number.to_s] if pay.has_key?(user.order_number.to_s)}.compact.first
+    #payout = user.experiment.payout_condition.data.map{|pay| pay[user.order_number.to_s] if pay.has_key?(user.order_number.to_s)}.compact.first
+    payout = user.get_payoff(self.name, self.group.round)
 
     total = nil
     if total_payout

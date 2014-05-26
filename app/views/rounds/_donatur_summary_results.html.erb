@@ -42,7 +42,7 @@
                  <% end %>
               </td>
               <td>
-                <h4><%= current_user.get_payoff(project.name.downcase) %> </h4>
+                <h4><%= current_user.get_payoff(project.name.downcase, @current_round) %> </h4>
               </td>
              </tr>                                       
           <% end %>
