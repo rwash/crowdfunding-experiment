@@ -51,11 +51,16 @@ class User < ActiveRecord::Base
   end
 
   def get_payoff(name, round)
-    Payouts.where(condition_name: self.experiment.payout_condition).
+    out = Payouts.where(condition_name: self.experiment.payout_condition).
             where(project_name: name).
             where(round: round.number).
             where(user: round.group_with_user(self).users.index(self)+1 ).
-            first.payout
+            first
+    if out.nil?
+      return 42
+    else
+       return out.payout
+    end
   end
 
 end
