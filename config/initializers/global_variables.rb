@@ -1,8 +1,8 @@
 # ENVIRONMENTAL VARIABLES
 
 # Rounds
-NUMBER_OF_PRACTICE_ROUNDS = 3 # Default is 3
-NUMBER_OF_LIVE_ROUNDS = 15 # Default is 15
+NUMBER_OF_PRACTICE_ROUNDS = 2 # Default is 3
+NUMBER_OF_LIVE_ROUNDS = 18 # Default is 15
 TOTAL_NUMBER_OF_ROUNDS = NUMBER_OF_PRACTICE_ROUNDS + NUMBER_OF_LIVE_ROUNDS
 AMOUNT_DONOR_CAN_DONATE_PER_ROUND = 90                   
 ROUND_PART_A_COUNTDOWN_SECONDS = 60   
@@ -83,4 +83,4 @@ SURVEY_LIKERT = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly 
 
 # Some variables to assist in testing, turning on and off random regrouping and forcing all 12 users to keep up
 GROUP_REMATCHING = true
-ALL_USERS_KEEP_PACE = true
+ALL_USERS_KEEP_PACE = false
