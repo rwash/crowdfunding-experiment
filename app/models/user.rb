@@ -54,7 +54,8 @@ class User < ActiveRecord::Base
     out = Payouts.where(condition_name: self.experiment.payout_condition).
             where(project_name: name).
             where(round: round.number).
-            where(user: round.group_with_user(self).users.index(self)+1 ).
+	    where(user: self.donor_preferences.where(round_id: round.id).first.preference_type ).
+#            where(user: round.group_with_user(self).users.index(self)+1 ).
             first
     if out.nil?
       return 42
