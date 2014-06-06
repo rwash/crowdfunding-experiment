@@ -136,9 +136,9 @@ class Project < ActiveRecord::Base
 
     total = nil
     if total_payout
-      total = (payout[self.name.downcase].to_i + remaining_donation.to_i)
+      total = (payout.to_i+ remaining_donation.to_i)
     else
-      total = payout[self.name.downcase].to_i
+      total = payout.to_i
     end
     
     return total
