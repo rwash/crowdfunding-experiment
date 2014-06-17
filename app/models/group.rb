@@ -11,4 +11,9 @@ class Group < ActiveRecord::Base
 	def has_user(user)
 		self.users.where(id: user.id).exists?
 	end	
+
+  def cache_key
+    proj_info = self.projects.map {|p| "#{p.id}-#{p.number_donors}"}.join("-")
+    "groups/#{id}-#{proj_info}"
+  end
 end

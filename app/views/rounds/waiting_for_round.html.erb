@@ -1,3 +1,4 @@
+<% cache [ @current_round ] do %>
 <%= render :partial => 'shared/waiting', :locals => { :message => "Waiting..." } %>
 <h3>Stand by for next round. </h3>
 
@@ -6,3 +7,4 @@
     	window.location.reload()
     }, 2000);
 </script>
+ <% end %>

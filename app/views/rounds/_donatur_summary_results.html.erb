@@ -1,5 +1,6 @@
-<div class="row">
-  <div class="span10" id="donation-results">
+<% cache [ @current_group ] do %>
+<div class="row" id="donation-results">
+  <div class="span10">
     <% if @projects.count > 0 %>
       <h3>Projects created this round:</h3>      
       <br>
@@ -58,3 +59,4 @@
   </div>
 
 </div>   
+<% end %>

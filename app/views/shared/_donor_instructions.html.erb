@@ -1,3 +1,4 @@
+<% cache [ @current_experiment ] do %>
 <h2>Crowdfunding Experiment - Project Donor</h2>       
 <br>
 
@@ -34,3 +35,4 @@
 <p> - You will play <strong><%= NUMBER_OF_PRACTICE_ROUNDS %></strong> practice rounds and <strong><%= NUMBER_OF_LIVE_ROUNDS %></strong> live rounds of this simulation. In each round, you will play with  a different set of people. You will not know who else you are playing with.</p>    
 
 <p> - In each round, the credits you earn will be added to a running total. At the end of the experiment, your credits will be exchanged for cash at a rate of (<strong><%= CREDITS_TO_DOLLAR_RATE %> credits for $1</strong>).</p>
+<% end %>
