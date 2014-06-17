@@ -1,5 +1,5 @@
 class RoundsController < InheritedResources::Base
-        
+  before_filter :set_no_cache
 
 	def waiting_for_round	  
 		@current_round = Round.find(params[:id])
@@ -248,6 +248,13 @@ class RoundsController < InheritedResources::Base
     @preferences = CreatorPreference.where(:user_id => @user, :round_id => @current_round)
 
     render layout: false    
+  end
+
+private
+  def set_no_cache
+     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate" 
+     response.headers["Pragma"] = "no-cache"
+     response.headers["Expires"] = "0"
   end
 	
 end
