@@ -1,9 +1,10 @@
+<% cache [ @current_round ] do %>
 <%= render :partial => 'shared/waiting', :locals => { :message => "Waiting..." } %>
-<br>
-<h3>Please wait whilst Projects are being created.  Part B will load shortly.</h3>
+<h3>Stand by for next round. </h3>
 
 <script type="text/javascript">
-	window.setTimeout(function() {
-    	window.location.reload()
+        window.setTimeout(function() {
+        window.location.reload()
     }, 2000);
 </script>
+ <% end %>
