@@ -15,7 +15,7 @@ NUMBER_OF_CREATORS = 1
 NUMBER_OF_DONORS =  12 # Default is 12
 NUMBER_SPECIAL_DONORS_PER_GROUP = 2
 NUMBER_OF_USERS = NUMBER_OF_CREATORS + NUMBER_OF_DONORS
-CREDITS_TO_DOLLAR_RATE = 100  
+CREDITS_TO_DOLLAR_RATE = 125  
     
                                                               
 # Groups
@@ -83,4 +83,4 @@ SURVEY_LIKERT = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly 
 
 # Some variables to assist in testing, turning on and off random regrouping and forcing all 12 users to keep up
 GROUP_REMATCHING = true
-ALL_USERS_KEEP_PACE = true
+ALL_USERS_KEEP_PACE = false
