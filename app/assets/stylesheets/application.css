@@ -9,12 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require colorbox
- *= require bootstrap
- *= require bootstrap_and_overrides
- *= require bootstrap-responsive
- *= require active_admin
- *= require rounds
- *= require surveys
+ *= require_tree .
 */
 
 
