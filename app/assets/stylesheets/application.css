@@ -21,6 +21,6 @@ body {
     background-color: transparent;
 }
 
-.btn-primary a:visited {
+.btn-warning a:visited {
     color: #fff;
 }
