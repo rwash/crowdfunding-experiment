@@ -34,4 +34,8 @@ CrowdfundingExperiment::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Temporarily enable caching in development (COMMENT OUT WHEN DONE!)
+  config.action_controller.perform_caching = true
+  config.action_dispatch.rack_cache = false
 end
