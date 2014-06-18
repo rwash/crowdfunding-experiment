@@ -21,6 +21,6 @@ body {
     background-color: transparent;
 }
 
-a.btn-warning, a.btn-warning:hover, a.btn-warning:visited {
+a.btn-large, a.btn-large:hover, a.btn-large:visited {
     color: #fff;
 }
