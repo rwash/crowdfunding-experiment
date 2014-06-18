@@ -37,8 +37,15 @@ namespace :customs do
 end
 before 'bundle:install', 'customs:symlink_db_yml'
 
+namespace :customs do
+  task :update_assets_permissions do
+    run "sudo chown -R jacobbs:crowdfunding #{shared_path}/assets/*"
+  end
+end
+
 namespace :deploy do
 namespace :assets do
   task :update_asset_mtimes do ; end
 end
 end
+before 'deploy:assets:update_asset_mtimes', 'customs:update_assets_permissions'
