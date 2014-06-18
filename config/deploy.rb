@@ -48,4 +48,4 @@ namespace :assets do
   task :update_asset_mtimes do ; end
 end
 end
-before 'deploy:assets:update_asset_mtimes', 'customs:update_assets_permissions'
+after 'deploy:assets:precompile', 'customs:update_assets_permissions'
