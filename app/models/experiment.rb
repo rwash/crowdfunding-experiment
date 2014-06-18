@@ -83,7 +83,7 @@ class Experiment < ActiveRecord::Base
       
       
       @donors.each_with_index do |donor, m|
-        if @random_donor_group.include?(m)
+        if @random_donor_group.include?(m+1)
           donor.donor_preferences << DonorPreference.create(:group => @round_groups[0], :round => round, :preference_type => (m % 6) + 1)
         else
           donor.donor_preferences << DonorPreference.create(:group => @round_groups[1], :round => round, :preference_type => (m % 6) + 1) 
